@@ -1,0 +1,11 @@
+# Used by: lib/auth/repositories/auth_repository.dart
+
+mutation SendOTPAuth($input: sendOTPInput!) {
+  sendOTP: sendOTP(input: $input) {
+    error: error
+    errors: errors
+    send: send
+  }
+}
+
+# Path: lib/auth/schemas/send_otp_auth.graphql

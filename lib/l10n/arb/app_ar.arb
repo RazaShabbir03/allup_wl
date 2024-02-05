@@ -1,0 +1,23 @@
+{
+  "@@locale": "ar",
+  "loginTitle": "رقم تليفونك",
+  "@loginTitle": {
+    "description": "Login page title 1"
+  },
+  "loginSubtitle1": "للانضمام أو تسجيل الدخول، يرجى تحديد الفرع وإدخال رقم هاتفك.",
+  "@loginSubtitle1": {
+    "description": "Login page subtitle 1"
+  },
+  "brandBottomSheetTitle": "اختر فرعا",
+  "@brandBottomSheetTitle": {
+    "description": "Brand bottom sheet title"
+  },
+  "loginButton": "الدخول التسجيل فى الموقع",
+  "@loginButton": {
+    "description": "Login button text"
+  },
+  "phoneNumberError": "رقم الهاتف غير صحيح",
+  "@phoneNumberError": {
+    "description": "Phone number error message"
+  }
+}

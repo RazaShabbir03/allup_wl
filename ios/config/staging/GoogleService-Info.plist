@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>464491720454-kdclsplou7crf1cag8o1qh94dcemg9pf.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.464491720454-kdclsplou7crf1cag8o1qh94dcemg9pf</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>464491720454-4latn8j489cdta1bvu5lhq5qt7pfjb12.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDjYChsBrd5s08-NMuAmtWUbRd6PA8r2Cc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>464491720454</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.allup.gympro</string>
+	<key>PROJECT_ID</key>
+	<string>gym-staging</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gym-staging.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:464491720454:ios:12ce52fbef9e9d884c3887</string>
+	<key>DATABASE_URL</key>
+	<string>https://gym-staging.firebaseio.com</string>
+</dict>
+</plist>

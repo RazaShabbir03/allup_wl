@@ -1,0 +1,15 @@
+query BrandsList($params: BrandsFilter) {
+  brandList: brandsList(params: $params) {
+    list: list {
+      name: name
+      id: id
+      country: country {
+        id: id
+      }
+      gyms: gyms {
+        id: id
+        name: name
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "@@locale": "en",
+  "loginTitle": "Your Phone Number",
+  "@loginTitle": {
+    "description": "Login page title 1"
+  },
+  "loginSubtitle1": "To join or log in, please select a branch and enter your phone number.",
+  "@loginSubtitle1": {
+    "description": "Text shown in the AppBar of the Counter Page"
+  },
+  "brandBottomSheetTitle": "Select a Branch",
+  "@brandBottomSheetTitle": {
+    "description": "Title of the bottom sheet to select a branch"
+  },
+  "loginButton": "Login / Sign Up",
+  "@loginButton": {
+    "description": "Login button text"
+  },
+  "phoneNumberError": "Please enter a valid phone number",
+  "@phoneNumberError": {
+    "description": "Error message for invalid phone number"
+  }
+}

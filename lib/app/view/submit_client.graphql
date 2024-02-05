@@ -1,0 +1,14 @@
+mutation {
+  saveProductCategory {
+    productCategory: productCategory
+    error: error
+    errors: errors
+  }
+}
+input SaveProductCategoryInput {
+  id: ID
+  name: String!
+  image: String
+  createdBy: ID
+  status: GlobalStatusType!
+}
