@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class OTPVerificationScreen extends StatelessWidget {
-  const OTPVerificationScreen({super.key});
+  final String phone;
+  const OTPVerificationScreen({super.key, required this.phone});
 
   @override
   Widget build(BuildContext context) {
@@ -9,13 +10,16 @@ class OTPVerificationScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('OTP Verification'),
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               'OTP Verification Screen',
             ),
+            Text(
+              'Phone: $phone',
+            )
           ],
         ),
       ),

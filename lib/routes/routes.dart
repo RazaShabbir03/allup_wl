@@ -17,9 +17,11 @@ final router = GoRouter(navigatorKey: NavigationService.navigatorKey, routes: [
     },
   ),
   GoRoute(
-      path: Routes.otpRoute,
+      path: '${Routes.otpRoute}/:phone',
       builder: (context, state) {
-        return const OTPVerificationScreen();
+        return OTPVerificationScreen(
+          phone: state.pathParameters['phone']!,
+        );
       }),
   GoRoute(
       path: Routes.homeRoute,

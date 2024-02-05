@@ -251,12 +251,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 hintText:
                                     '+${(_countryData?.phoneCode ?? _bufferCountryData?.phoneCode) ?? '971'} ${(PhoneNumber.getPlaceholder(_countryData?.countryCode) ?? PhoneNumber.getPlaceholder(_bufferCountryData?.countryCode)) ?? '50 123 4567'}',
-                                hintStyle: TextStyle(
+                                hintStyle: AppTextStyle.rubikStyle(
                                   color: Theme.of(context)
                                       .colorScheme
                                       .onError
                                       .withOpacity(0.7),
-                                  locale: const Locale('en'),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16.sp,
                                 ),
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -305,7 +306,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 onPressed: isEnabled
                                     ? () {
-                                        context.push(Routes.otpRoute);
+                                        context.push(
+                                            '${Routes.otpRoute}/${_phoneController!.text.trim().replaceAll(' ', '')}');
                                       }
                                     : null,
                                 child: Text(
@@ -367,6 +369,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ],
+                      ),
+                      SizedBox(
+                        height: 20.h,
                       ),
                     ],
                   ),

@@ -34,7 +34,8 @@ class HomePage extends StatelessWidget {
           }
           return Stack(
             children: [
-              Image.asset(Assets.homePageBg),
+              Positioned.fill(
+                  child: Image.asset(Assets.homePageBg, fit: BoxFit.fill)),
               Positioned(
                 top: 0,
                 bottom: 0,
