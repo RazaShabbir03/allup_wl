@@ -498,6 +498,18 @@ type AnyUserSchema {
   parentLead(gymId: ID): Lead
 }
 
+type AppId {
+  id: String
+  appId: String!
+  status: GlobalStatusType
+  name: String
+  brands: [Brand]
+  wlAndroidAppLink: String
+  wlIosAppLink: String
+  minVersionIOS: String
+  minVersionAndroid: String
+}
+
 type AppIdBrand {
   id: ID!
   name: String!
@@ -514,28 +526,25 @@ type AppIdBrand {
   appId: ID
 }
 
-input AppIdCreationInput {
-  appId: String!
-  brandIds: [String!]
-  androidLink: String
-  iosLink: String
+enum AppIdErrors {
+  ALREADY_EXIST
+  NOT_FOUND
+  INTERNAL_SERVER_ERROR
 }
 
-type AppIdOutput {
-  id: ID!
-  appId: String!
-  status: String!
-  androidLink: String
-  iosLink: String
-  allBrands: [AppIdBrand]
+type AppIdPayload {
+  appId: AppId
+  errors: [AppIdErrors]
+  error: AppIdErrors
+  errorMessage: String
 }
 
-input AppIdStatusUpdateInput {
-  status: String!
-  appId: String!
-  androidLink: String
-  iosLink: String
-  brandIds: [String]
+type AppIdsPayload {
+  list: [AppId]
+  paging: PaginatorOutputUpdated
+  errors: [AppIdErrors]
+  error: AppIdErrors
+  errorMessage: String
 }
 
 enum ApplicationEnum {
@@ -1039,6 +1048,7 @@ type Brand {
   createdAt: Datetime!
   updatedAt: Datetime!
   admins: [Admin!]
+  signupEnabled: Boolean
 }
 
 # BrandAdmin
@@ -2666,6 +2676,17 @@ type CourtVideoType {
   thumbnail: String!
 }
 
+input CrateAppIdInput {
+  appId: String!
+  status: GlobalStatusType
+  name: String
+  brandIds: [String!]
+  wlIosAppLink: String
+  wlAndroidAppLink: String
+  minVersionIOS: String
+  minVersionAndroid: String
+}
+
 type CRatingTypes {
   type: String!
   score: Float!
@@ -2674,6 +2695,13 @@ type CRatingTypes {
 input CRatingTypesInput {
   type: String!
   score: Float!
+}
+
+type CreateAppIdPayload {
+  appId: AppId
+  errors: [AppIdErrors]
+  error: AppIdErrors
+  errorMessage: String
 }
 
 input CreateCustomerInput {
@@ -5638,6 +5666,7 @@ type Gym {
   classBookingBlockDays: Int
   allowMembershipOnFullPayment: Boolean
   allowPTOnFullPayment: Boolean
+  signupEnabled: Boolean
 }
 
 type Gym_POS {
@@ -7833,6 +7862,15 @@ enum InvoiceComponentType {
   AMOUNT_DUE
 }
 
+enum InvoicePaymentStatus {
+  inactive
+  success
+  pending
+  failure
+  scheduled
+  scheduled_installment
+}
+
 enum InvoiceType {
   REFUND
   CHARGE
@@ -9647,9 +9685,11 @@ type Mutation {
   invalidateAllRedisVendors: Boolean
   importAdmins(input: ImportAdminInput!): ImportAdminsPayload
   amenityUpsert(input: AmenityInput!): SaveAmenityPayload
-  createAppId(input: AppIdCreationInput!): Boolean!
-  updateAppIdStatus(input: AppIdStatusUpdateInput!): Boolean!
-  updateAppIdMinVersion(input: UpdateAppIdMinVersionInput!): Boolean!
+  createAppId(input: CrateAppIdInput!): CreateAppIdPayload!
+  updateAppIdBasicInfo(input: UpdateAppIdBasicInfoInput!): UpdateAppIdPayload!
+  updateAppIdMinVersion(input: UpdateAppIdMinVersionInput!): UpdateAppIdPayload!
+  updateAppIdBrands(input: UpdateAppIdBrandsInput!): UpdateAppIdBrandsPayload!
+  updateAppId(input: UpdateAppIdInput!): UpdateAppIdPayload!
   saveBrand(input: SaveBrandInput!): SaveBrandPayload
   saveBrandStatusUpdate(input: SaveBrandStatusInput!): SaveBrandPayload
   triggerAllBrandsEvents: Boolean
@@ -9688,6 +9728,7 @@ type Mutation {
   updateGymWebsiteIntegration(
     input: UpdateGymWebsiteIntegrationInput!
   ): SaveGymPayload
+  toggleGymSignupEnabled(input: toggleGymSignupEnabledInput!): SaveGymPayload
   generateWebsiteIntegrationSecretKey(
     gymId: ID!
   ): GenerateWebsiteIntegrationSecretKeyPayload
@@ -11117,7 +11158,7 @@ type PaymentPlan {
   installmentAmount: Float
   surcharge: Float
   installmentRounds: Int
-  installmentFrequencyType: InstallmentFrequencyTypeEnum!
+  installmentFrequencyType: InstallmentFrequencyTypeEnum
   createdAt: String!
   updatedAt: String!
 }
@@ -12185,8 +12226,9 @@ type Query {
   currentVisitors(input: AnaltyicsInput!): VisitorCountResponse
   newVisitors(input: AnaltyicsInput!): VisitorCountResponse
   gymUsageDuration(input: AnaltyicsInput!): VisitorDurationResponse
-  getAppIds: [AppIdOutput]
-  getMinVersion(brandGroupId: ID!): MinVersionPayload!
+  getAppIds(paging: PaginatorInput): AppIdsPayload!
+  getMinVersion(appId: ID!): MinVersionPayload!
+  getAppId(appId: ID!): AppIdPayload
   brand(id: ID!): Brand!
   brands(paging: PaginatorInput, params: BrandsFilter): BrandsPayload!
   brandsList(paging: PaginatorInput, params: BrandsFilter): BrandsPayload!
@@ -15715,8 +15757,23 @@ type SingleTransaction {
   chargeAmount: Float
   refundAmount: Float
   qrCode: String
-  invoices: [SingleTransaction]
+  invoices: [SingleTransactionInvoice]
   isSplitPayment: Boolean
+  isInstallmentPayment: Boolean
+}
+
+type SingleTransactionInvoice {
+  amount: Float
+  currency: String
+  date: Datetime
+  installmentScheduledDate: Datetime
+  paymentMethod: SingleTransactionPaymentMethod
+  status: InvoicePaymentStatus
+}
+
+type SingleTransactionPaymentMethod {
+  paymentScheme: OrderPaymentScheme
+  cardType: String
 }
 
 type SocialAccount {
@@ -16031,6 +16088,11 @@ input ToggleAdminInput {
 
 type ToggleAdminPayload {
   status: Boolean!
+}
+
+input toggleGymSignupEnabledInput {
+  gymId: ID!
+  signupEnabled: Boolean!
 }
 
 type topMembers {
@@ -16498,10 +16560,45 @@ type UpdateAPosStoreOrderFromAdminPlatformPayload {
   errorMessage: String
 }
 
+input UpdateAppIdBasicInfoInput {
+  appId: String!
+  status: GlobalStatusType!
+  name: String
+}
+
+input UpdateAppIdBrandsInput {
+  appId: String!
+  brandIds: [String!]!
+}
+
+type UpdateAppIdBrandsPayload {
+  brandIds: [String]
+  errors: [AppIdErrors]
+  error: AppIdErrors
+  errorMessage: String
+}
+
+input UpdateAppIdInput {
+  appId: String!
+  name: String
+  status: GlobalStatusType
+  wlAndroidAppLink: String
+  wlIosAppLink: String
+  minVersionIOS: String
+  minVersionAndroid: String
+}
+
 input UpdateAppIdMinVersionInput {
   appId: String!
   minVersionIOS: String
   minVersionAndroid: String
+}
+
+type UpdateAppIdPayload {
+  appId: AppId
+  errors: [AppIdErrors]
+  error: AppIdErrors
+  errorMessage: String
 }
 
 input UpdateCountryCityInput {
@@ -16915,6 +17012,10 @@ input UpdatePaymentPlanMutationInput {
   groupMembershipPlanId: String
   sessionPackPlanId: String
   servicePacks: [ServicePackInputType]
+  installmentAmount: Float
+  surcharge: Float
+  installmentRounds: Int
+  installmentFrequencyType: InstallmentFrequencyTypeEnum
 }
 
 type UpdatePaymentPlanMutationResponse {
@@ -17314,6 +17415,7 @@ enum VerifyMobileError {
   OTP_EXPIRED
   NO_MEMBERSHIP_ASSIGNED
   ALREADY_A_MEMBER
+  GYM_SIGNUP_DISABLED
   INVALID_SALES_MANAGER
 }
 
@@ -17609,3 +17711,4 @@ type ZkUserDetailPayload {
   message: String
   data: ZkUserDetail
 }
+

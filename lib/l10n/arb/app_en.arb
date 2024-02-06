@@ -19,5 +19,21 @@
   "phoneNumberError": "Please enter a valid phone number",
   "@phoneNumberError": {
     "description": "Error message for invalid phone number"
+  },
+  "softDeleteError": "This account is already requested for deletion by the customer and is under process. If you want to cancel this request, please talk to the Gym admin.",
+  "@softDeleteError": {
+    "description": "Error message for soft deleted account"
+  },
+  "otpTitle": "Enter 6 digit code  we sent you on",
+  "@otpTitle": {
+    "description": "Title of the OTP page"
+  },
+  "otp_field_title": "Please enter it below",
+  "@otp_field_title": {
+    "description": "Subtitle of the OTP page"
+  },
+  "otpButton": "Verify",
+  "@otpButton": {
+    "description": "OTP button text"
   }
 }

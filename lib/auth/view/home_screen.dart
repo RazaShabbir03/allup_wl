@@ -16,16 +16,13 @@ class HomePage extends StatelessWidget {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state.authResponseStatus == AuthResponseStatus.valid) {
-            // context.pushNamed(Routes.otpRoute);
+            context.pushReplacement(Routes.dashboardRoute);
           }
           if (state.authResponseStatus == AuthResponseStatus.nouser) {
-            //delayed push
-
-            context.push(Routes.loginRoute);
+            context.pushReplacement(Routes.loginRoute);
           }
           if (state.authResponseStatus == AuthResponseStatus.error) {
-            //delayed push
-            print('error');
+            context.pushReplacement(Routes.loginRoute);
           }
         },
         builder: (context, state) {
@@ -43,15 +40,11 @@ class HomePage extends StatelessWidget {
                 right: 0,
                 child: Center(
                   child: CupertinoActivityIndicator(
-                    color: Colors.red,
+                    color: Theme.of(context).colorScheme.onError,
                     radius: 20.r,
                   ),
                 ),
               )
-              // if (state.authResponseStatus == AuthResponseStatus.loading)
-
-              // else
-              //   Container(),
             ],
           );
         },

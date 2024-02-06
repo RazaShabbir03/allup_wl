@@ -1,5 +1,6 @@
 import 'package:allup_user_app/auth/schemas/brand_list.graphql.dart';
 import 'package:allup_user_app/auth/schemas/send_otp_auth.graphql.dart';
+import 'package:allup_user_app/auth/schemas/verify_otp.graphql.dart';
 import 'package:allup_user_app/schema.graphql.dart';
 import 'package:allup_user_app/services/graph_ql_service.dart';
 
@@ -31,6 +32,25 @@ class AuthRepository {
       Options$Query$BrandsList(
           variables: Variables$Query$BrandsList(
               params: Input$BrandsFilter(appId: appId))),
+    );
+    return response.parsedData!;
+  }
+
+  Future<Mutation$VerifyOTPAuth> verifyOTP({
+    required String contactNumber,
+    required String gymId,
+    required String otp,
+  }) async {
+    final response = await client.getclient.mutate$VerifyOTPAuth(
+      Options$Mutation$VerifyOTPAuth(
+        variables: Variables$Mutation$VerifyOTPAuth(
+          input: Input$VerifyOTPInput(
+            contactNumber: contactNumber,
+            gymId: gymId,
+            otp: otp,
+          ),
+        ),
+      ),
     );
     return response.parsedData!;
   }

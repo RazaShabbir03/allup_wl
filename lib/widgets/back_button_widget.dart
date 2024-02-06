@@ -8,10 +8,13 @@ class BackButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SvgWidget(
-      path: Assets.backButtonSvg,
-      width: 40,
-      height: 40,
+    return InkWell(
+      onTap: onPressed,
+      child: const SvgWidget(
+        path: Assets.backButtonSvg,
+        width: 40,
+        height: 40,
+      ),
     );
   }
 }

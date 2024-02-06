@@ -9,7 +9,17 @@ sealed class AuthEvent extends Equatable {
 
 enum AuthResponseStatus { initial, loading, valid, nouser, error }
 
-enum AuthSubmitStatus { initial, loading, success, validated, error, signup }
+enum AuthSubmitStatus {
+  initial,
+  loading,
+  success,
+  validated,
+  error,
+  signup,
+  softDelete
+}
+
+enum OTPStatus { initial, loading, success, error }
 
 ///To check if user is already signed in or not
 class CheckAuth extends AuthEvent {
@@ -41,6 +51,17 @@ final class RegisterEvent extends AuthEvent {
   List<Object> get props => [firstName, lastName, email];
 }
 
+///To verify the OTP
+
+final class VerifyOTPEvent extends AuthEvent {
+  const VerifyOTPEvent({required this.otp, required this.phoneNumber});
+  final String otp;
+  final String phoneNumber;
+
+  @override
+  List<Object> get props => [otp];
+}
+
 ///To select a gym from login page
 final class SelectGymEvent extends AuthEvent {
   const SelectGymEvent({required this.gymId});
@@ -48,4 +69,9 @@ final class SelectGymEvent extends AuthEvent {
 
   @override
   List<Object> get props => [gymId];
+}
+
+///To logout the user
+final class LogoutEvent extends AuthEvent {
+  const LogoutEvent();
 }
