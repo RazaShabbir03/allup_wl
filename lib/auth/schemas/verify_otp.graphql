@@ -1,0 +1,8 @@
+mutation VerifyOTPAuth($input: VerifyOTPInput) {
+  verifyOTP: verifyOTP(input: $input) {
+    accessToken: accessToken
+    error: error
+    errors: errors
+    errorMessage: errorMessage
+  }
+}

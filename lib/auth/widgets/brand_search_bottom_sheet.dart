@@ -1,9 +1,7 @@
 import 'package:allup_user_app/auth/schemas/brand_list.graphql.dart';
 import 'package:allup_user_app/l10n/l10n.dart';
-import 'package:allup_user_app/theme/c_theme.dart';
 import 'package:allup_user_app/utils/app_text_style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Future<void> showBrandModalSheet(
@@ -11,7 +9,7 @@ Future<void> showBrandModalSheet(
   required List<Query$BrandsList$brandList$list$gyms?> brands,
   required void Function(Query$BrandsList$brandList$list$gyms?) onSelected,
 }) async {
-  await showModalBottomSheet(
+  await showModalBottomSheet<void>(
       elevation: 0,
       backgroundColor: Colors.transparent,
       shape: const RoundedRectangleBorder(

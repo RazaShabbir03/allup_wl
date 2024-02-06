@@ -32,4 +32,9 @@ class CacheHelper {
   static Future<void> cacheLanguage(String code) async {
     await prefs.setString(_appLocale, code);
   }
+
+  //function to clear all the cache
+  static Future<void> clearCache() async {
+    await prefs.clear();
+  }
 }

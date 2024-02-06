@@ -46,6 +46,35 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           loginSubmitResponseStatus: AuthSubmitStatus.initial));
     });
 
+    ///To verify the OTP
+
+    on<VerifyOTPEvent>((event, emit) async {
+      try {
+        emit(state.copyWith(otpStatus: OTPStatus.loading));
+        final response = await authRepository.verifyOTP(
+          gymId: state.selectedGymId!,
+          contactNumber: event.phoneNumber,
+          otp: event.otp,
+        );
+        if (response.verifyOTP.error != null) {
+          if (response.verifyOTP.errorMessage == 'INVALID_OTP') {
+            emit(state.copyWith(
+                otpStatus: OTPStatus.error,
+                otpErrorMessage: 'The OTP entered is invalid'));
+          } else {
+            emit(state.copyWith(
+                otpStatus: OTPStatus.error,
+                otpErrorMessage: response.verifyOTP.errorMessage));
+          }
+        } else {
+          await CacheHelper.cacheAccessToken(response.verifyOTP.accessToken!);
+          emit(state.copyWith(otpStatus: OTPStatus.success));
+        }
+      } catch (e) {
+        emit(state.copyWith(loginSubmitResponseStatus: AuthSubmitStatus.error));
+      }
+    });
+
     ///To try to verify if phone number is associated with a user or not
     on<LoginEvent>(
       (event, emit) async {
@@ -65,7 +94,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 Enum$SendOTPPError.LEAD_SOFT_DELETED) {
               print(response.sendOTP.error);
               emit(state.copyWith(
-                  loginSubmitResponseStatus: AuthSubmitStatus.error));
+                  loginSubmitResponseStatus: AuthSubmitStatus.softDelete));
             } else {
               print(response.sendOTP.error);
               emit(state.copyWith(
@@ -85,6 +114,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       },
       transformer: droppable(),
     );
+
+    ///Logout the user
+    on<LogoutEvent>((event, emit) async {
+      final response =
+          await authRepository.getBrandsList(appId: '1684285034-ufc');
+      await CacheHelper.clearCache();
+      emit(state.copyWith(
+        gyms: response.brandList.list!.first!.gyms,
+      ));
+    });
   }
   final AuthRepository authRepository;
 }

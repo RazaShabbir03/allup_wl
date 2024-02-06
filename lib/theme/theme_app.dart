@@ -25,7 +25,7 @@ class ThemeModeLight {
           fontSize: 19.sp,
         ),
       ),
-
+      focusColor: const Color(0xFFCC3C86),
       dividerColor: const Color(0xFFD8E0E4),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.black,
@@ -42,7 +42,7 @@ class ThemeModeLight {
         onBackground: Color(0xFF000000),
         error: Color(0xFFB00020),
         onError: Color(0xFFF95365),
-        onPrimary: Color(0xFFFFFFFF),
+        onPrimary: Colors.white,
         onSecondary: Color(0xFF000000),
         onSurface: Color(0xFF000000),
       ),

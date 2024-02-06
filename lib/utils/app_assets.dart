@@ -5,5 +5,7 @@ class Assets {
   static const String loginTextfieldDumbellIcon =
       'assets/svgs/login_textfield_dumbbell.svg';
   static const String homePageBg = 'assets/skinnable_images/splash_bg.png';
-  static const String arrow_down_icon = 'assets/svgs/arrow_downward_icon.svg';
+  static const String arrowDownIcon = 'assets/svgs/arrow_downward_icon.svg';
+  static const toastCheck = 'assets/svgs/toast_check.svg';
+  static const toastError = 'assets/svgs/toast_error.svg';
 }

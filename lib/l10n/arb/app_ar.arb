@@ -19,5 +19,21 @@
   "phoneNumberError": "رقم الهاتف غير صحيح",
   "@phoneNumberError": {
     "description": "Phone number error message"
+  },
+  "softDeleteError": "لقد تم بالفعل طلب حذف هذا الحساب من قبل العميل وهو قيد المعالجة. إذا كنت ترغب في إلغاء هذا الطلب، يرجى التحدث إلى مسؤول الصالة الرياضية.",
+  "@softDeleteError": {
+    "description": "Soft delete account message"
+  },
+  "otpTitle": "أدخل رمز التحقق",
+  "@otpTitle": {
+    "description": "OTP page title"
+  },
+  "otp_field_title": "الرجاء إدخاله أدناه",
+  "@otp_field_title": {
+    "description": "OTP field title"
+  },
+  "otpButton": "يؤكد",
+  "@otpButton": {
+    "description": "OTP button text"
   }
 }

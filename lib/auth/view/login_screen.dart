@@ -1,10 +1,13 @@
 import 'package:allup_user_app/auth/blocs/bloc/auth_bloc.dart';
 import 'package:allup_user_app/auth/widgets/brand_search_bottom_sheet.dart';
+import 'package:allup_user_app/auth/widgets/loading_dialog_full_screen.dart';
 import 'package:allup_user_app/l10n/cubit/locale_cubit.dart';
 import 'package:allup_user_app/l10n/l10n.dart';
 import 'package:allup_user_app/routes/route_names.dart';
 import 'package:allup_user_app/utils/app_assets.dart';
 import 'package:allup_user_app/utils/app_text_style.dart';
+import 'package:allup_user_app/utils/custom_toast_bottom.dart';
+import 'package:allup_user_app/utils/decorations.dart';
 import 'package:allup_user_app/widgets/country_flags_class.dart';
 import 'package:allup_user_app/widgets/image_asset_widget.dart';
 import 'package:allup_user_app/widgets/phone_number_random_generator.dart';
@@ -15,6 +18,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:collection/collection.dart';
 
 PhoneCountryData? _countryData;
 PhoneCountryData? _bufferCountryData;
@@ -57,8 +61,22 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Theme.of(context).colorScheme.background,
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
+          if (state.loginSubmitResponseStatus == AuthSubmitStatus.success) {
+            Navigator.of(context).pop();
+            context.push(
+                '${Routes.otpRoute}/${_phoneController!.text.trim().replaceAll(' ', '')}');
+          }
+          if (state.loginSubmitResponseStatus == AuthSubmitStatus.loading) {
+            DialogBox.showLoadingDialog(context);
+          }
+          if (state.loginSubmitResponseStatus == AuthSubmitStatus.softDelete) {
+            Navigator.of(context).pop();
+            ToastUtils.showErrorToast(context, context.l10n.softDeleteError);
+          }
           if (state.loginSubmitResponseStatus == AuthSubmitStatus.signup) {
-            Navigator.of(context).pushNamed('/otp-screen');
+            Navigator.of(context).pop();
+            context.push(
+                '${Routes.registerRoute}/${_phoneController!.text.trim().replaceAll(' ', '')}');
           }
         },
         builder: (context, state) {
@@ -106,20 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           horizontal: 20.w,
                           vertical: 20.h,
                         ),
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withOpacity(0.2),
-                              blurRadius: 20.r,
-                              spreadRadius: 10.r,
-                            ),
-                          ],
-                          color: Theme.of(context).colorScheme.background,
-                          borderRadius: BorderRadius.circular(20.r),
-                        ),
+                        decoration: Decorations.boxShadowDecorator(context),
                         margin: EdgeInsets.symmetric(
                           horizontal: 30.w,
                           vertical: 20.h,
@@ -159,12 +164,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                     width: 10.w,
                                   ),
                                   Text(
-                                    state.gyms
-                                        .firstWhere(
-                                          (element) =>
-                                              element!.id ==
-                                              state.selectedGymId,
-                                        )!
+                                    (state.gyms.firstWhereOrNull(
+                                              (element) =>
+                                                  element!.id ==
+                                                  state.selectedGymId,
+                                            ) ??
+                                            state.gyms.first!)
                                         .name,
                                     style: Theme.of(context)
                                         .textTheme
@@ -178,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   const Spacer(),
                                   const SvgWidget(
-                                    path: Assets.arrow_down_icon,
+                                    path: Assets.arrowDownIcon,
                                   ),
                                 ],
                               ),
@@ -306,8 +311,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 onPressed: isEnabled
                                     ? () {
-                                        context.push(
-                                            '${Routes.otpRoute}/${_phoneController!.text.trim().replaceAll(' ', '')}');
+                                        context.read<AuthBloc>().add(
+                                              LoginEvent(
+                                                gymId: state.selectedGymId!,
+                                                phoneNumber: _phoneController!
+                                                    .text
+                                                    .trim()
+                                                    .replaceAll(' ', ''),
+                                              ),
+                                            );
                                       }
                                     : null,
                                 child: Text(

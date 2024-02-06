@@ -4,13 +4,17 @@ class AuthState extends Equatable {
   const AuthState({
     this.loginSubmitResponseStatus = AuthSubmitStatus.initial,
     this.authResponseStatus = AuthResponseStatus.initial,
+    this.otpErrorMessage = '',
+    this.otpStatus = OTPStatus.initial,
     this.loginErrorMessage = '',
     this.brandList = const [],
     this.selectedGymId,
     this.gyms = const [],
   });
-  final AuthSubmitStatus loginSubmitResponseStatus;
+  final AuthSubmitStatus? loginSubmitResponseStatus;
   final AuthResponseStatus? authResponseStatus;
+  final OTPStatus? otpStatus;
+  final String otpErrorMessage;
   final String loginErrorMessage;
   final List<Query$BrandsList$brandList$list?> brandList;
   final List<Query$BrandsList$brandList$list$gyms?> gyms;
@@ -20,14 +24,17 @@ class AuthState extends Equatable {
   AuthState copyWith(
       {AuthSubmitStatus? loginSubmitResponseStatus,
       AuthResponseStatus? authResponseStatus,
+      OTPStatus? otpStatus,
+      String? otpErrorMessage,
       String? loginErrorMessage,
       List<Query$BrandsList$brandList$list?>? brandList,
       List<Query$BrandsList$brandList$list$gyms?>? gyms,
       String? selectedGymId}) {
     return AuthState(
-        loginSubmitResponseStatus:
-            loginSubmitResponseStatus ?? this.loginSubmitResponseStatus,
+        loginSubmitResponseStatus: loginSubmitResponseStatus,
         loginErrorMessage: loginErrorMessage ?? this.loginErrorMessage,
+        otpStatus: otpStatus,
+        otpErrorMessage: otpErrorMessage ?? this.otpErrorMessage,
         authResponseStatus: authResponseStatus,
         brandList: brandList ?? this.brandList,
         selectedGymId: selectedGymId ?? this.selectedGymId,
@@ -36,8 +43,10 @@ class AuthState extends Equatable {
 
   @override
   List<Object> get props => [
-        loginSubmitResponseStatus,
+        loginSubmitResponseStatus ?? '',
         loginErrorMessage,
+        otpStatus ?? '',
+        otpErrorMessage ?? '',
         authResponseStatus ?? '',
         brandList,
         selectedGymId ?? '',
@@ -46,5 +55,3 @@ class AuthState extends Equatable {
 }
 
 final class AuthInitial extends AuthState {}
-
-final class LogoutEvent extends AuthState {}
