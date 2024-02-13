@@ -13,7 +13,17 @@ class ProfileDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: true,
         title: Text('Profile Detail'),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            context.pop();
+          },
+        ),
       ),
       body: SafeArea(
         child: Column(
