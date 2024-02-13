@@ -13,9 +13,11 @@ class SvgWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SvgPicture.asset(
       path!,
+      //remove any padding
       height: height,
       width: width,
-      color: color,
+      colorFilter:
+          color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
     );
   }
 }

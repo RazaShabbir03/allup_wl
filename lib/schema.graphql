@@ -8553,7 +8553,7 @@ type LeadsPayload {
 }
 
 type LeadsPayloadV2 {
-  list: [LeadV2]
+  list: [LeadV3]
   totalLeads: String
   totalAppointments: String
   totalCalls: String
@@ -8727,7 +8727,42 @@ type LeadV2 {
   middleName: String
   lastName: String
   fullName: String
-  phoneNumber: String!
+  phoneNumber: String
+  membership: String
+  customerCode: String
+  membershipEndDate: Date
+  membershipStatus: String
+  source: LeadSource
+  gender: CustomerGenderType
+  dob: Date
+  photo: String
+  age: Int
+  leadStatus: LeadStatus
+  leadSubStatus: LeadSubStatus
+  leadType: LeadType
+  assignedTo: ID
+  assignedToName: String
+  createdAt: Date
+  leadDuration: Int
+  latestAction: String
+  latestActionDuration: Int
+  leadCreatedById: String
+  leadCreatedByName: String
+  customer: Customer
+  isClassBookingBlocked: Boolean
+  dateOfClassBlock: Date
+  dateOfLastClassUnblocked: Date
+  paymentStatus: LeadPaymentStatus
+}
+
+type LeadV3 {
+  id: ID!
+  customerId: ID!
+  firstName: String!
+  middleName: String
+  lastName: String
+  fullName: String
+  phoneNumber: String
   membership: String
   customerCode: String
   membershipEndDate: Date

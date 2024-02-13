@@ -1,0 +1,20 @@
+query UserByAuth($gymId: ID) {
+  userByAuth: userByAuth {
+    found: found
+    type: type
+    user: user {
+      id: id
+      firstName: firstName
+      lastName: lastName
+      isEmailVerified: isEmailVerified
+      isPhoneVerified: isPhoneVerified
+      parentLead: parentLead(gymId: $gymId) {
+        id: id
+        firstName: firstName
+        lastName: lastName
+        photo: photo
+        dob: dob
+      }
+    }
+  }
+}

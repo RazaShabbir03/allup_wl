@@ -1,0 +1,14 @@
+query GymBanners($params: GymBannerFilter, $paging: PaginatorInput!) {
+  gymBanners: gymBanners(params: $params, paging: $paging) {
+    list: list {
+      id: id
+      image: image
+      link: link
+    }
+    paging: paging {
+      totalPages: totalPages
+      page: page
+      limit: limit
+    }
+  }
+}

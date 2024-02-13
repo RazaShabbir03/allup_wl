@@ -1,11 +1,11 @@
 import 'package:allup_user_app/auth/blocs/bloc/auth_bloc.dart';
 import 'package:allup_user_app/auth/widgets/loading_dialog_full_screen.dart';
+import 'package:allup_user_app/dashboard/blocs/bloc/dashboard_bloc.dart';
 import 'package:allup_user_app/l10n/l10n.dart';
 import 'package:allup_user_app/routes/route_names.dart';
 import 'package:allup_user_app/utils/app_assets.dart';
 import 'package:allup_user_app/utils/custom_toast_bottom.dart';
 import 'package:allup_user_app/utils/decorations.dart';
-import 'package:allup_user_app/utils/helper_functions.dart';
 import 'package:allup_user_app/widgets/back_button_widget.dart';
 import 'package:allup_user_app/widgets/image_asset_widget.dart';
 import 'package:flutter/material.dart';
@@ -51,10 +51,12 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
           }
           if (state.otpStatus == OTPStatus.error) {
             Navigator.pop(context);
-            ToastUtils.showErrorToast(
-                context, state.otpErrorMessage ?? 'Something went wrong');
+            ToastUtils.showErrorToast(context, state.otpErrorMessage);
           }
           if (state.otpStatus == OTPStatus.success) {
+            BlocProvider.of<DashboardBloc>(context).add(
+              GetDashboardEvents(gymId: state.selectedGymId!),
+            );
             Navigator.pop(context);
             context.go(Routes.dashboardRoute);
           }

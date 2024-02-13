@@ -1,0 +1,25 @@
+query GymMembershipInfo($smId: ID, $gmId: ID, $memId: ID!, $gymId: ID) {
+  gymQrSessionCount: gymQrSessionCount(
+    filter: { singleMembershipId: $smId, groupMembershipId: $gmId }
+  ) {
+    data: data {
+      count: count
+    }
+  }
+  membership: membership(filter: { membershipId: $memId }) {
+    data: data {
+      membership: membership {
+        startDate: startDate
+        endDate: endDate
+      }
+    }
+  }
+  membershipDueAmount: membershipDueAmount(
+    filter: { singleMembershipId: $smId, groupMembershipId: $gmId }
+  ) {
+    data: data {
+      amount: amount
+    }
+  }
+  countUnseenMessages: countUnseenMessages(gymId: $gymId)
+}

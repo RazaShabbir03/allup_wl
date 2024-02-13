@@ -35,5 +35,53 @@
   "otpButton": "يؤكد",
   "@otpButton": {
     "description": "OTP button text"
+  },
+  "pull2Refresh": "سحب لتحديث",
+  "@pull2Refresh": {
+    "description": "Pull to refresh text"
+  },
+  "somethingWentWrongErrorMessage": "هناك خطأ ما!",
+  "@somethingWentWrongErrorMessage": {
+    "description": "Something went wrong error message"
+  },
+  "checkIns": "تحقق الإضافية",
+  "@checkIns": {
+    "description": "Check-ins text"
+  },
+  "daysToExpire": "الأيام التي تنتهي صلاحيتها",
+  "@daysToExpire": {
+    "description": "Days to expire text"
+  },
+  "messages": "رسائل",
+  "@messages": {
+    "description": "Messages text"
+  },
+  "dueAmount": "مبلغ مستحق",
+  "@dueAmount": {
+    "description": "Due amount text"
+  },
+  "gymAccess": "الوصول إلى صالة الألعاب الرياضية",
+  "@gymAccess": {
+    "description": "Gym access text"
+  },
+  "myBookings": "حجوزاتي",
+  "@myBookings": {
+    "description": "My bookings text"
+  },
+  "classSchedule": "جدول الحصص",
+  "@classSchedule": {
+    "description": "Class schedule text"
+  },
+  "trainingVideos": "فيديوهات التدريب",
+  "@trainingVideos": {
+    "description": "Training videos text"
+  },
+  "referAFriend": "أوص أحد الأصدقاء",
+  "@referAFriend": {
+    "description": "Refer a friend text"
+  },
+  "offers": "عروض",
+  "@offers": {
+    "description": "Offers text"
   }
 }

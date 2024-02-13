@@ -1,4 +1,11 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:allup_user_app/auth/blocs/bloc/auth_bloc.dart';
+import 'package:allup_user_app/services/custom_header.dart';
 import 'package:allup_user_app/services/flavor_config.dart';
+import 'package:allup_user_app/services/navigation_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:http/io_client.dart';
 
@@ -14,9 +21,15 @@ class GraphQLService {
     final httpLink = HttpLink(
       FlavorConfig.instance!.values.baseUrl,
     );
+    final authLink = CustomAuthLink(
+        token: BlocProvider.of<AuthBloc>(
+      NavigationService.navigatorKey.currentContext!,
+    ).state.accessToken);
+
+    final link = authLink.concat(httpLink);
 
     return GraphQLClient(
-      link: httpLink,
+      link: link,
       cache: GraphQLCache(),
     );
   }

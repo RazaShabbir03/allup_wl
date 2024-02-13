@@ -61,6 +61,8 @@ class ToastUtils {
                 flex: 2,
                 child: SvgWidget(
                   path: isError ? Assets.toastError : Assets.toastCheck,
+                  height: 40,
+                  width: 40,
                 ),
               ),
               const SizedBox(
