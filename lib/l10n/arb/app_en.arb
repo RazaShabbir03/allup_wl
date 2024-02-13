@@ -24,7 +24,7 @@
   "@softDeleteError": {
     "description": "Error message for soft deleted account"
   },
-  "otpTitle": "Enter 6 digit code  we sent you on",
+  "otpTitle": "Enter 6 digit code we sent you on",
   "@otpTitle": {
     "description": "Title of the OTP page"
   },
@@ -35,5 +35,53 @@
   "otpButton": "Verify",
   "@otpButton": {
     "description": "OTP button text"
+  },
+  "pull2Refresh": "Pull to refresh",
+  "@pull2Refresh": {
+    "description": "Pull to refresh text"
+  },
+  "somethingWentWrongErrorMessage": "Something went wrong. Please try again.",
+  "@somethingWentWrongErrorMessage": {
+    "description": "Error message for something went wrong"
+  },
+  "checkIns": "Check Ins",
+  "@checkIns": {
+    "description": "Check Ins text"
+  },
+  "daysToExpire": "Days to Expire",
+  "@daysToExpire": {
+    "description": "Days to Expire text"
+  },
+  "messages": "Messages",
+  "@messages": {
+    "description": "Messages text"
+  },
+  "dueAmount": "Due Amount",
+  "@dueAmount": {
+    "description": "Due Amount text"
+  },
+  "gymAccess": "Gym Access",
+  "@gymAccess": {
+    "description": "Gym Access text"
+  },
+  "myBookings": "My Bookings",
+  "@myBookings": {
+    "description": "My Bookings text"
+  },
+  "classSchedule": "Class Schedule",
+  "@classSchedule": {
+    "description": "Class Schedule text"
+  },
+  "trainingVideos": "Training Videos",
+  "@trainingVideos": {
+    "description": "Training Videos text"
+  },
+  "referAFriend": "Refer a Friend",
+  "@referAFriend": {
+    "description": "Refer a Friend text"
+  },
+  "offers": "Offers",
+  "@offers": {
+    "description": "Offers text"
   }
 }

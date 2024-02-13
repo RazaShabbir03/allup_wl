@@ -1,5 +1,7 @@
 import 'package:allup_user_app/auth/blocs/bloc/auth_bloc.dart';
 import 'package:allup_user_app/auth/repositories/auth_repository.dart';
+import 'package:allup_user_app/dashboard/blocs/bloc/dashboard_bloc.dart';
+import 'package:allup_user_app/dashboard/repositories/dashboard_repository.dart';
 import 'package:allup_user_app/l10n/cubit/locale_cubit.dart';
 import 'package:allup_user_app/l10n/l10n.dart';
 import 'package:allup_user_app/routes/routes.dart';
@@ -25,12 +27,21 @@ class App extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, _) => BlocBuilder<LocaleCubit, LocalState>(
           builder: (context, state) {
-            return BlocProvider(
-              create: (context) => AuthBloc(
-                authRepository: AuthRepository(
-                  client: GraphQLService.instance,
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => AuthBloc(
+                    authRepository: AuthRepository(
+                      client: GraphQLService.instance,
+                    ),
+                  ),
                 ),
-              ),
+                BlocProvider(
+                  create: (context) => DashboardBloc(
+                      repository:
+                          DashboardRepository(client: GraphQLService.instance)),
+                ),
+              ],
               child: MaterialApp.router(
                 routeInformationParser: router.routeInformationParser,
                 routeInformationProvider: router.routeInformationProvider,

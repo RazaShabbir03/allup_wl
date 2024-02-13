@@ -27,6 +27,7 @@ class ThemeModeLight {
       ),
       focusColor: const Color(0xFFCC3C86),
       dividerColor: const Color(0xFFD8E0E4),
+
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.black,
         titleTextStyle: AppTextStyle.bebasNeue(
@@ -37,6 +38,7 @@ class ThemeModeLight {
       colorScheme: const ColorScheme.light(
         primary: Colors.black,
         secondary: Color(0xFFD8E0E4),
+        secondaryContainer: Color(0xFF465E8D),
         background: Color(0xFFEFF3F6),
         surface: Color(0xFFFFFFFF),
         onBackground: Color(0xFF000000),

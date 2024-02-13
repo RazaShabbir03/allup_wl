@@ -1,0 +1,41 @@
+query PurchasedGymMemberships($filter: GetMembershipsQueryFilter) {
+  memberships: memberships(filter: $filter) {
+    status: status {
+      reason: reason
+      success: success
+    }
+    data: data {
+      singleMemberships: singleMemberships {
+        id: id
+        name: name
+        qrCode: qrCode
+        currency: currency
+        startDate: startDate
+        endDate: endDate
+        status: status
+        membershipId: membershipId
+        membershipCode: membershipCode
+      }
+      groupMemberships: groupMemberships {
+        id: id
+        name: name
+        qrCode: qrCode
+        currency: currency
+        startDate: startDate
+        endDate: endDate
+        status: status
+        membershipId: membershipId
+        membershipCode: membershipCode
+      }
+      sessionPacks: sessionPacks {
+        id: id
+        name: name
+        qrCode: qrCode
+        currency: currency
+        startDate: startDate
+        status: status
+        membershipCode: membershipCode
+      }
+    }
+  }
+}

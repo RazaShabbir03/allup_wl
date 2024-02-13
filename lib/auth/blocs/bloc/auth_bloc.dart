@@ -1,5 +1,6 @@
 import 'package:allup_user_app/auth/repositories/auth_repository.dart';
 import 'package:allup_user_app/auth/schemas/brand_list.graphql.dart';
+import 'package:allup_user_app/constants/app_constants.dart';
 import 'package:allup_user_app/schema.graphql.dart';
 import 'package:allup_user_app/widgets/cache_helper.dart';
 import 'package:bloc/bloc.dart';
@@ -19,8 +20,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(state.copyWith(
             loginSubmitResponseStatus: AuthSubmitStatus.loading));
         final response =
-            await authRepository.getBrandsList(appId: '1684285034-ufc');
+            await authRepository.getBrandsList(appId: AppConstants.appId);
         final accessToken = CacheHelper.getCachedAccessToken();
+        // final gymId = CacheHelper.getCachedGymId();
         if (accessToken == null) {
           emit(state.copyWith(
               selectedGymId: response.brandList.list!.first!.gyms!.first!.id,
@@ -28,7 +30,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               gyms: response.brandList.list!.first!.gyms,
               brandList: response.brandList.list));
         } else {
+          final selectedGymId = CacheHelper.getCachedGymId();
+          final gymName = CacheHelper.getCachedGymName();
+
           emit(state.copyWith(
+              gymName: gymName,
+              accessToken: accessToken,
+              selectedGymId: selectedGymId,
               gyms: response.brandList.list!.first!.gyms,
               authResponseStatus: AuthResponseStatus.valid,
               brandList: response.brandList.list));
@@ -67,8 +75,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
                 otpErrorMessage: response.verifyOTP.errorMessage));
           }
         } else {
+          final gymName = state.gyms
+              .firstWhere((element) => element!.id == state.selectedGymId)!
+              .name;
+          await CacheHelper.cacheGymName(gymName);
           await CacheHelper.cacheAccessToken(response.verifyOTP.accessToken!);
-          emit(state.copyWith(otpStatus: OTPStatus.success));
+          await CacheHelper.cacheGymId(state.selectedGymId!);
+          emit(state.copyWith(
+            gymName: gymName,
+            otpStatus: OTPStatus.success,
+            accessToken: response.verifyOTP.accessToken,
+          ));
         }
       } catch (e) {
         emit(state.copyWith(loginSubmitResponseStatus: AuthSubmitStatus.error));
@@ -119,6 +136,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LogoutEvent>((event, emit) async {
       final response =
           await authRepository.getBrandsList(appId: '1684285034-ufc');
+
       await CacheHelper.clearCache();
       emit(state.copyWith(
         gyms: response.brandList.list!.first!.gyms,

@@ -13,6 +13,12 @@ class DialogBox {
       },
     );
   }
+
+  static void hideLoadingDialog(BuildContext context) {
+    if (Navigator.of(context).canPop()) {
+      Navigator.of(context).pop();
+    }
+  }
 }
 //function to show loading dialog
 
