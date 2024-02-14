@@ -31,18 +31,28 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState>
         final banners = gymBannersResponse.gymBanners.list;
         final gymMembershipInfoResponse = await repository.getGymMembershipInfo(
             gymId: state.gymId!,
-            smId: singleMembers!.isNotEmpty
-                ? purchasedMembershipResponse
-                    .memberships?.data?.singleMemberships?.first?.id
-                : null,
-            gmId: groupMembers!.isNotEmpty ? groupMembers.first?.id : null,
-            memId: (singleMembers.isNotEmpty
+            smId: singleMembers != null
+                ? singleMembers.isNotEmpty
                     ? purchasedMembershipResponse
                         .memberships?.data?.singleMemberships?.first?.id
-                    : groupMembers.isNotEmpty
-                        ? groupMembers.first?.id
-                        : purchasedMembershipResponse
-                            .memberships?.data?.sessionPacks?.first?.id) ??
+                    : null
+                : null,
+            gmId: groupMembers != null
+                ? groupMembers.isNotEmpty
+                    ? groupMembers.first?.id
+                    : null
+                : null,
+            memId: (singleMembers != null
+                    ? singleMembers.isNotEmpty
+                        ? purchasedMembershipResponse
+                            .memberships?.data?.singleMemberships?.first?.id
+                        : groupMembers != null
+                            ? groupMembers.isNotEmpty
+                                ? groupMembers.first?.id
+                                : purchasedMembershipResponse
+                                    .memberships?.data?.sessionPacks?.first?.id
+                            : null
+                    : '') ??
                 '');
 
         emit(
@@ -77,18 +87,28 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState>
             purchasedMembershipResponse.memberships?.data?.singleMemberships;
         final gymMembershipInfoResponse = await repository.getGymMembershipInfo(
             gymId: state.gymId!,
-            smId: singleMembers!.isNotEmpty
-                ? purchasedMembershipResponse
-                    .memberships?.data?.singleMemberships?.first?.id
-                : null,
-            gmId: groupMembers!.isNotEmpty ? groupMembers.first?.id : null,
-            memId: (singleMembers.isNotEmpty
+            smId: singleMembers != null
+                ? singleMembers.isNotEmpty
                     ? purchasedMembershipResponse
                         .memberships?.data?.singleMemberships?.first?.id
-                    : groupMembers.isNotEmpty
-                        ? groupMembers.first?.id
-                        : purchasedMembershipResponse
-                            .memberships?.data?.sessionPacks?.first?.id) ??
+                    : null
+                : null,
+            gmId: groupMembers != null
+                ? groupMembers.isNotEmpty
+                    ? groupMembers.first?.id
+                    : null
+                : null,
+            memId: (singleMembers != null
+                    ? singleMembers.isNotEmpty
+                        ? purchasedMembershipResponse
+                            .memberships?.data?.singleMemberships?.first?.id
+                        : groupMembers != null
+                            ? groupMembers.isNotEmpty
+                                ? groupMembers.first?.id
+                                : purchasedMembershipResponse
+                                    .memberships?.data?.sessionPacks?.first?.id
+                            : null
+                    : '') ??
                 '');
 
         emit(
@@ -98,7 +118,10 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState>
             user: userByAuthResponse.userByAuth.user,
           ),
         );
-      } catch (e) {
+      } catch (e, s) {
+        print(e);
+        print(s);
+
         emit(state.copyWith(
             refreshDashboardStatus: RefreshDashboardStatus.error));
       }
