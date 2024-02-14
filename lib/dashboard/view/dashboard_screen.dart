@@ -51,7 +51,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           if (state.dashboardStatus == DashboardStatus.error) {
             DialogBox.hideLoadingDialog(context);
             ToastUtils.showErrorToast(
-                context, context.l10n.somethingWentWrongErrorMessage);
+              context,
+              context.l10n.somethingWentWrongErrorMessage,
+            );
           }
         },
         builder: (context, state) {
@@ -79,10 +81,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         child: Row(
                           children: [
                             InkWell(
-                                onTap: () {
-                                  context.push(Routes.profileDetailRoute);
-                                },
-                                child: const DpPlaceHolderWidget()),
+                              onTap: () {
+                                context.push(Routes.profileDetailRoute);
+                              },
+                              child: const DpPlaceHolderWidget(),
+                            ),
                             SizedBox(
                               width: 20.w,
                             ),
@@ -91,27 +94,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(state.user?.firstName ?? '',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium!
-                                          .copyWith(
-                                              letterSpacing: 0.5,
-                                              fontSize: 27.sp,
-                                              fontWeight: FontWeight.w700)),
                                   Text(
-                                      BlocProvider.of<AuthBloc>(context)
-                                              .state
-                                              .gymName ??
-                                          'N/A',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium!
-                                          .copyWith(
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w400)),
+                                    state.user?.firstName ?? '',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(
+                                          letterSpacing: 0.5,
+                                          fontSize: 27.sp,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                  ),
+                                  Text(
+                                    BlocProvider.of<AuthBloc>(context)
+                                            .state
+                                            .gymName ??
+                                        'N/A',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -123,7 +131,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 print(state.gymId);
                               },
                               child: const SvgWidget(
-                                  path: Assets.scanIcon, height: 40, width: 40),
+                                path: Assets.scanIcon,
+                                height: 40,
+                                width: 40,
+                              ),
                             ),
                           ],
                         ),
@@ -133,126 +144,138 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ],
               ),
               SafeArea(
-                  bottom: false,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 100),
-                    child: CupertinoScrollbar(
-                      child: CustomScrollView(
-                          physics: const BouncingScrollPhysics(
-                              parent: AlwaysScrollableScrollPhysics()),
-                          slivers: [
-                            CupertinoSliverRefreshControl(
-                              refreshTriggerPullDistance: 100.h,
-                              builder: (
-                                BuildContext context,
-                                RefreshIndicatorMode refreshState,
-                                double pulledExtent,
-                                double refreshTriggerPullDistance,
-                                double refreshIndicatorExtent,
-                              ) {
-                                final percentageComplete = clampDouble(
-                                    pulledExtent / refreshTriggerPullDistance,
-                                    0.0,
-                                    1.0);
-                                return Center(
-                                  child: Stack(
-                                    clipBehavior: Clip.none,
-                                    children: <Widget>[
-                                      Positioned(
-                                        top: 20.0,
-                                        left: 0.0,
-                                        right: 0.0,
-                                        child: HelperFunctions
-                                            .buildIndicatorForRefreshState(
-                                                refreshState,
-                                                15.r,
-                                                percentageComplete,
-                                                context),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                              refreshIndicatorExtent: 100.h,
-                              onRefresh: () async {
-                                BlocProvider.of<DashboardBloc>(context)
-                                    .add(RefreshDashboard());
-                                await Future<void>.delayed(
-                                    const Duration(seconds: 2));
-                              },
-                            ),
-                            SliverFillRemaining(
-                              hasScrollBody: false,
-                              child: Column(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .background,
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(30),
-                                        topRight: Radius.circular(30),
-                                      ),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 5.w),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(30),
-                                                topRight: Radius.circular(30),
-                                              ),
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .background,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary
-                                                      .withOpacity(0.2),
-                                                  spreadRadius: 10,
-                                                  blurRadius: 10,
-                                                  offset: const Offset(0, -5),
-                                                ),
-                                              ],
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                SizedBox(
-                                                  height: 10.h,
-                                                ),
-                                                HomeKPIWidget(
-                                                    gymMembershipInfo: state
-                                                        .gymMembershipInfo),
-                                                const HomeTabsHorizontalWidget(),
-                                              ],
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .background,
-                                      child: Column(
-                                        children: [
-                                          DashboardCarouselBannerWidget(),
-                                        ],
-                                      ),
+                bottom: false,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 100),
+                  child: CupertinoScrollbar(
+                    child: CustomScrollView(
+                      physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics(),
+                      ),
+                      slivers: [
+                        CupertinoSliverRefreshControl(
+                          refreshTriggerPullDistance: 100.h,
+                          builder: (
+                            BuildContext context,
+                            RefreshIndicatorMode refreshState,
+                            double pulledExtent,
+                            double refreshTriggerPullDistance,
+                            double refreshIndicatorExtent,
+                          ) {
+                            final percentageComplete = clampDouble(
+                              pulledExtent / refreshTriggerPullDistance,
+                              0,
+                              1,
+                            );
+                            return Center(
+                              child: Stack(
+                                clipBehavior: Clip.none,
+                                children: <Widget>[
+                                  Positioned(
+                                    top: 20,
+                                    left: 0,
+                                    right: 0,
+                                    child: HelperFunctions
+                                        .buildIndicatorForRefreshState(
+                                      refreshState,
+                                      15.r,
+                                      percentageComplete,
+                                      context,
                                     ),
                                   ),
                                 ],
                               ),
+                            );
+                          },
+                          refreshIndicatorExtent: 100.h,
+                          onRefresh: () async {
+                            BlocProvider.of<DashboardBloc>(context)
+                                .add(const RefreshDashboard());
+                            await Future<void>.delayed(
+                              const Duration(seconds: 2),
+                            );
+                          },
+                        ),
+                        SliverFillRemaining(
+                          hasScrollBody: false,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.background,
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(30),
+                                topRight: Radius.circular(30),
+                              ),
                             ),
-                          ]),
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(30),
+                                      topRight: Radius.circular(30),
+                                    ),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 5.w,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(30),
+                                            topRight: Radius.circular(30),
+                                          ),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .background,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary
+                                                  .withOpacity(0.2),
+                                              spreadRadius: 10,
+                                              blurRadius: 10,
+                                              offset: const Offset(0, -5),
+                                            ),
+                                          ],
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            SizedBox(
+                                              height: 10.h,
+                                            ),
+                                            HomeKPIWidget(
+                                              gymMembershipInfo:
+                                                  state.gymMembershipInfo,
+                                            ),
+                                            const HomeTabsHorizontalWidget(),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const Expanded(
+                                  child: Column(
+                                    children: [
+                                      DashboardCarouselBannerWidget(),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  )),
+                  ),
+                ),
+              ),
             ],
           );
         },

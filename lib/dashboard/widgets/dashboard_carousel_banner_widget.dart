@@ -25,6 +25,7 @@ class DashboardCarouselBannerWidget extends StatelessWidget {
                     // onPageChanged: (index, reason) {
                     //   current.value = index;
                     // },
+                    enableInfiniteScroll: false,
 
                     autoPlayInterval: const Duration(seconds: 3),
                     enlargeCenterPage: true,
