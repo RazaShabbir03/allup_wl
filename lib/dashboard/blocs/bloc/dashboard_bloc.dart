@@ -14,46 +14,58 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState>
   DashboardBloc({required this.repository}) : super(DashboardInitial()) {
     hydrate();
     on<GetDashboardEvents>((event, emit) async {
-      emit(state.copyWith(
-          dashboardStatus: DashboardStatus.loading, gymId: event.gymId));
+      emit(
+        state.copyWith(
+          dashboardStatus: DashboardStatus.loading,
+          gymId: event.gymId,
+        ),
+      );
       try {
         final userByAuthResponse =
             await repository.getUserByAuth(gymId: event.gymId);
         final purchasedMembershipResponse =
             await repository.getPurchasedGymMemberships(
-                gymId: event.gymId, appId: AppConstants.appId);
+          gymId: event.gymId,
+          appId: AppConstants.appId,
+        );
         final gymBannersResponse =
             await repository.getGymBanners(gymId: event.gymId);
         final groupMembers =
             purchasedMembershipResponse.memberships?.data?.groupMemberships;
         final singleMembers =
             purchasedMembershipResponse.memberships?.data?.singleMemberships;
+        final sessionPacks =
+            purchasedMembershipResponse.memberships?.data?.sessionPacks;
         final banners = gymBannersResponse.gymBanners.list;
         final gymMembershipInfoResponse = await repository.getGymMembershipInfo(
-            gymId: state.gymId!,
-            smId: singleMembers != null
-                ? singleMembers.isNotEmpty
-                    ? purchasedMembershipResponse
-                        .memberships?.data?.singleMemberships?.first?.id
-                    : null
-                : null,
-            gmId: groupMembers != null
-                ? groupMembers.isNotEmpty
-                    ? groupMembers.first?.id
-                    : null
-                : null,
-            memId: (singleMembers != null
-                    ? singleMembers.isNotEmpty
-                        ? purchasedMembershipResponse
-                            .memberships?.data?.singleMemberships?.first?.id
-                        : groupMembers != null
-                            ? groupMembers.isNotEmpty
-                                ? groupMembers.first?.id
-                                : purchasedMembershipResponse
-                                    .memberships?.data?.sessionPacks?.first?.id
-                            : null
-                    : '') ??
-                '');
+          gymId: state.gymId!,
+          smId: singleMembers != null
+              ? singleMembers.isNotEmpty
+                  ? purchasedMembershipResponse
+                      .memberships?.data?.singleMemberships?.first?.id
+                  : null
+              : null,
+          gmId: groupMembers != null
+              ? groupMembers.isNotEmpty
+                  ? groupMembers.first?.id
+                  : null
+              : null,
+          memId: (singleMembers != null
+                  ? singleMembers.isNotEmpty
+                      ? purchasedMembershipResponse
+                          .memberships?.data?.singleMemberships?.first?.id
+                      : groupMembers != null
+                          ? groupMembers.isNotEmpty
+                              ? groupMembers.first?.id
+                              : sessionPacks != null
+                                  ? sessionPacks.isNotEmpty
+                                      ? sessionPacks.first?.id
+                                      : null
+                                  : null
+                          : null
+                  : '') ??
+              '',
+        );
 
         emit(
           state.copyWith(
@@ -70,14 +82,19 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState>
     });
 
     on<RefreshDashboard>((event, emit) async {
-      emit(state.copyWith(
-          refreshDashboardStatus: RefreshDashboardStatus.loading));
+      emit(
+        state.copyWith(
+          refreshDashboardStatus: RefreshDashboardStatus.loading,
+        ),
+      );
       try {
         final userByAuthResponse =
             await repository.getUserByAuth(gymId: state.gymId!);
         final purchasedMembershipResponse =
             await repository.getPurchasedGymMemberships(
-                gymId: state.gymId!, appId: AppConstants.appId);
+          gymId: state.gymId!,
+          appId: AppConstants.appId,
+        );
         final gymBannersResponse =
             await repository.getGymBanners(gymId: state.gymId!);
         final banners = gymBannersResponse.gymBanners.list;
@@ -85,31 +102,37 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState>
             purchasedMembershipResponse.memberships?.data?.groupMemberships;
         final singleMembers =
             purchasedMembershipResponse.memberships?.data?.singleMemberships;
+        final sessionPacks =
+            purchasedMembershipResponse.memberships?.data?.sessionPacks;
         final gymMembershipInfoResponse = await repository.getGymMembershipInfo(
-            gymId: state.gymId!,
-            smId: singleMembers != null
-                ? singleMembers.isNotEmpty
-                    ? purchasedMembershipResponse
-                        .memberships?.data?.singleMemberships?.first?.id
-                    : null
-                : null,
-            gmId: groupMembers != null
-                ? groupMembers.isNotEmpty
-                    ? groupMembers.first?.id
-                    : null
-                : null,
-            memId: (singleMembers != null
-                    ? singleMembers.isNotEmpty
-                        ? purchasedMembershipResponse
-                            .memberships?.data?.singleMemberships?.first?.id
-                        : groupMembers != null
-                            ? groupMembers.isNotEmpty
-                                ? groupMembers.first?.id
-                                : purchasedMembershipResponse
-                                    .memberships?.data?.sessionPacks?.first?.id
-                            : null
-                    : '') ??
-                '');
+          gymId: state.gymId!,
+          smId: singleMembers != null
+              ? singleMembers.isNotEmpty
+                  ? purchasedMembershipResponse
+                      .memberships?.data?.singleMemberships?.first?.id
+                  : null
+              : null,
+          gmId: groupMembers != null
+              ? groupMembers.isNotEmpty
+                  ? groupMembers.first?.id
+                  : null
+              : null,
+          memId: (singleMembers != null
+                  ? singleMembers.isNotEmpty
+                      ? purchasedMembershipResponse
+                          .memberships?.data?.singleMemberships?.first?.id
+                      : groupMembers != null
+                          ? groupMembers.isNotEmpty
+                              ? groupMembers.first?.id
+                              : sessionPacks != null
+                                  ? sessionPacks.isNotEmpty
+                                      ? sessionPacks.first?.id
+                                      : null
+                                  : null
+                          : null
+                  : '') ??
+              '',
+        );
 
         emit(
           state.copyWith(
@@ -122,8 +145,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState>
         print(e);
         print(s);
 
-        emit(state.copyWith(
-            refreshDashboardStatus: RefreshDashboardStatus.error));
+        emit(
+          state.copyWith(
+            refreshDashboardStatus: RefreshDashboardStatus.error,
+          ),
+        );
       }
     });
   }
