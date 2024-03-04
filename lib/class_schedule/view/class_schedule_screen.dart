@@ -29,6 +29,9 @@ class ClassScheduleScreen extends StatefulWidget {
 
 class _ClassScheduleScreenState extends State<ClassScheduleScreen> {
   ScrollController? _scrollController;
+  final SliverOverlapAbsorberHandle appBar = SliverOverlapAbsorberHandle();
+  final SliverOverlapAbsorberHandle calendarWidget =
+      SliverOverlapAbsorberHandle();
 
   @override
   void initState() {
@@ -59,85 +62,106 @@ class _ClassScheduleScreenState extends State<ClassScheduleScreen> {
           return NestedScrollView(
             // controller: _scrollController,
             headerSliverBuilder: (ctx, innerBoxIsScrolled) => [
-              SliverAppBar(
-                centerTitle: true,
-                titleSpacing: 0,
-                leading: IconButton(
-                  icon: Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.background,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(Icons.arrow_back),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                automaticallyImplyLeading: false,
-                expandedHeight: size.height * 0.20,
-                flexibleSpace: FlexibleSpaceBar(
-                  expandedTitleScale: 1.2,
-                  title: Text(widget.title,
-                      style: Theme.of(context).textTheme.displayMedium),
+              SliverOverlapAbsorber(
+                handle: appBar,
+                sliver: SliverAppBar(
                   centerTitle: true,
-                  titlePadding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-                  background: Stack(children: [
-                    CachedNetworkImage(
-                      imageUrl: widget.bannerImage,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                    ),
-                    Container(
+                  titleSpacing: 0,
+                  leading: IconButton(
+                    icon: Container(
+                      padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.transparent,
-                            Colors.black.withOpacity(0.8)
-                          ],
-                        ),
+                        color: Theme.of(context).colorScheme.background,
+                        shape: BoxShape.circle,
                       ),
+                      child: const Icon(Icons.arrow_back),
                     ),
-                  ]),
-                ),
-                pinned: true,
-              ),
-              const ScheduleClassesCalendarWidget(),
-            ],
-            body:
-                BlocConsumer<ScheduledGymClassesBloc, ScheduledGymClassesState>(
-              listener: (context, state) {},
-              builder: (context, state) {
-                if (state.status == ScheduledGymClassesStatus.loading) {
-                  return const Center(child: LoadingDialogFullScreen());
-                } else if (state.gymClasses.isEmpty) {
-                  return const NoClassesWidget();
-                }
-                return MediaQuery.removePadding(
-                  context: context,
-                  removeTop: true,
-                  child: ListView.builder(
-                    padding: EdgeInsets.only(top: 20.h),
-                    // controller: _scrollController,
-                    itemCount: state.gymClasses.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return InkWell(
-                        onTap: () {
-                          context.push(
-                              '${Routes.classScheduleDetail}?scheduleId=${state.gymClasses[index].scheduleId}&bookedFor=${HelperFunctions.getFormattedDate(state.selectedDate)}&bookedTime=${state.gymClasses[index].openTime}',
-                              extra: context);
-                        },
-                        child: ClassScheduleTileWidget(
-                            gymClass: state.gymClasses[index]),
-                      );
+                    onPressed: () {
+                      Navigator.pop(context);
                     },
                   ),
-                );
-              },
+                  automaticallyImplyLeading: false,
+                  expandedHeight: size.height * 0.20,
+                  flexibleSpace: FlexibleSpaceBar(
+                    expandedTitleScale: 1.2,
+                    title: Text(widget.title,
+                        style: Theme.of(context).textTheme.displayMedium),
+                    centerTitle: true,
+                    titlePadding:
+                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                    background: Stack(children: [
+                      CachedNetworkImage(
+                        imageUrl: widget.bannerImage,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Colors.black.withOpacity(0.8)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ]),
+                  ),
+                  pinned: true,
+                ),
+              ),
+              SliverOverlapAbsorber(
+                  handle: calendarWidget,
+                  sliver: ScheduleClassesCalendarWidget()),
+            ],
+            body: CustomScrollView(
+              slivers: [
+                SliverOverlapInjector(handle: appBar),
+                SliverOverlapInjector(handle: calendarWidget),
+                SliverToBoxAdapter(
+                  child: BlocConsumer<ScheduledGymClassesBloc,
+                      ScheduledGymClassesState>(
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      if (state.status == ScheduledGymClassesStatus.loading) {
+                        return SizedBox(
+                            height: size.height * 0.5,
+                            width: double.infinity,
+                            child: LoadingDialogFullScreen());
+                      } else if (state.gymClasses.isEmpty) {
+                        return SizedBox(
+                            height: size.height * 0.5,
+                            width: double.infinity,
+                            child: const NoClassesWidget());
+                      } else {
+                        return MediaQuery.removePadding(
+                          context: context,
+                          removeTop: true,
+                          child: ListView.builder(
+                            padding: EdgeInsets.only(top: 20.h),
+                            controller: _scrollController,
+                            shrinkWrap: true,
+                            itemCount: state.gymClasses.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return InkWell(
+                                onTap: () {
+                                  context.push(
+                                      '${Routes.classScheduleDetail}?scheduleId=${state.gymClasses[index].scheduleId}&bookedFor=${HelperFunctions.getFormattedDate(state.selectedDate)}&bookedTime=${state.gymClasses[index].openTime}',
+                                      extra: context);
+                                },
+                                child: ClassScheduleTileWidget(
+                                    gymClass: state.gymClasses[index]),
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
           );
         },
