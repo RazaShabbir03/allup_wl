@@ -4,6 +4,7 @@ import 'package:allup_user_app/class_schedule/widgets/cancel_button_widget.dart'
 import 'package:allup_user_app/class_schedule/widgets/subscribe_button_widget.dart';
 import 'package:allup_user_app/l10n/l10n.dart';
 import 'package:allup_user_app/utils/app_assets.dart';
+import 'package:allup_user_app/utils/dialogs.dart';
 import 'package:allup_user_app/utils/helper_functions.dart';
 import 'package:allup_user_app/widgets/price_tag_painter.dart';
 import 'package:allup_user_app/widgets/svg_widget.dart';
@@ -151,7 +152,17 @@ class ClassScheduleTileWidget extends StatelessWidget {
                     Container(),
                   SubscribeButtonWidget(
                     isSubscribed: gymClass.isPurchased ?? false,
-                    onPressed: () {},
+                    onPressed: () {
+                      DialogBoxes.showLoadingDialog(context,
+                          barrierDismissible: true,
+                          title: 'Are you sure?',
+                          description:
+                              'Your age and/or gender details are missing. Classes may have age and gender restrictions. Are you sure you want subscribe to ${gymClass.name}?',
+                          confirmText: 'Yes',
+                          dismissText: 'Dismiss', onConfirm: () {
+                        Navigator.pop(context);
+                      }, onDismiss: () {});
+                    },
                   ),
                   if (gymClass.isPurchased ?? false)
                     Container(

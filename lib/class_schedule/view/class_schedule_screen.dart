@@ -1,12 +1,15 @@
-import 'package:allup_user_app/auth/widgets/loading_dialog_full_screen.dart';
 import 'package:allup_user_app/class_schedule/blocs/scheduled_gym_classes/scheduled_gym_classes_bloc.dart';
 import 'package:allup_user_app/class_schedule/widgets/class_schedule_tile_widget.dart';
 import 'package:allup_user_app/class_schedule/widgets/no_classes_widget.dart';
 import 'package:allup_user_app/class_schedule/widgets/schedule_classes_calendar_widget.dart';
+import 'package:allup_user_app/routes/route_names.dart';
+import 'package:allup_user_app/utils/helper_functions.dart';
+import 'package:allup_user_app/utils/loading_dialog_full_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class ClassScheduleScreen extends StatefulWidget {
   const ClassScheduleScreen(
@@ -54,7 +57,7 @@ class _ClassScheduleScreenState extends State<ClassScheduleScreen> {
             ));
           }
           return NestedScrollView(
-            controller: _scrollController,
+            // controller: _scrollController,
             headerSliverBuilder: (ctx, innerBoxIsScrolled) => [
               SliverAppBar(
                 centerTitle: true,
@@ -101,11 +104,9 @@ class _ClassScheduleScreenState extends State<ClassScheduleScreen> {
                     ),
                   ]),
                 ),
-                floating: true,
                 pinned: true,
-                snap: true,
               ),
-              ScheduleClassesCalendarWidget()
+              const ScheduleClassesCalendarWidget(),
             ],
             body:
                 BlocConsumer<ScheduledGymClassesBloc, ScheduledGymClassesState>(
@@ -124,8 +125,15 @@ class _ClassScheduleScreenState extends State<ClassScheduleScreen> {
                     // controller: _scrollController,
                     itemCount: state.gymClasses.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return ClassScheduleTileWidget(
-                          gymClass: state.gymClasses[index]);
+                      return InkWell(
+                        onTap: () {
+                          context.push(
+                              '${Routes.classScheduleDetail}?scheduleId=${state.gymClasses[index].scheduleId}&bookedFor=${HelperFunctions.getFormattedDate(state.selectedDate)}&bookedTime=${state.gymClasses[index].openTime}',
+                              extra: context);
+                        },
+                        child: ClassScheduleTileWidget(
+                            gymClass: state.gymClasses[index]),
+                      );
                     },
                   ),
                 );

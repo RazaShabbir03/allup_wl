@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
           },
           builder: (context, state) {
             if (state is AuthInitial) {
-              BlocProvider.of<AuthBloc>(context).add(CheckAuth());
+              BlocProvider.of<AuthBloc>(context).add(const CheckAuth());
             }
             return Stack(
               children: [

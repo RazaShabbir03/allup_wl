@@ -2,8 +2,11 @@ import 'package:allup_user_app/auth/view/home_screen.dart';
 import 'package:allup_user_app/auth/view/login_screen.dart';
 import 'package:allup_user_app/auth/view/otp_verfication_screen.dart';
 import 'package:allup_user_app/auth/view/register_screen.dart';
+import 'package:allup_user_app/class_schedule/blocs/schedule_gymc_class_detail/schedule_gym_class_detail_bloc.dart';
 import 'package:allup_user_app/class_schedule/blocs/scheduled_gym_classes/scheduled_gym_classes_bloc.dart';
+import 'package:allup_user_app/class_schedule/repositories/schedule_gym_class_detail_repository.dart';
 import 'package:allup_user_app/class_schedule/repositories/scheduled_gym_classes_repository.dart';
+import 'package:allup_user_app/class_schedule/view/class_schedule_detail_screen.dart';
 import 'package:allup_user_app/class_schedule/view/class_schedule_screen.dart';
 import 'package:allup_user_app/dashboard/view/dashboard_screen.dart';
 import 'package:allup_user_app/profile/view/profile_detail_screen.dart';
@@ -11,6 +14,7 @@ import 'package:allup_user_app/routes/route_names.dart';
 import 'package:allup_user_app/services/graph_ql_service.dart';
 import 'package:allup_user_app/services/navigation_service.dart';
 import 'package:allup_user_app/utils/custom_page_route.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -83,7 +87,7 @@ final router = GoRouter(navigatorKey: NavigationService.navigatorKey, routes: [
 
   /// Class Schedule
   GoRoute(
-    path: '${Routes.classSchedule}',
+    path: Routes.classSchedule,
     builder: (context, state) => RepositoryProvider(
       create: (context) =>
           ScheduledGymClassesRepository(client: GraphQLService.instance),
@@ -98,5 +102,31 @@ final router = GoRouter(navigatorKey: NavigationService.navigatorKey, routes: [
         ),
       ),
     ),
-  )
+  ),
+
+  /// Class Schedule Detail
+  GoRoute(
+    path: Routes.classScheduleDetail,
+    builder: (context, state) {
+      return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => ScheduleGymClassDetailBloc(
+              repository: ScheduleGymClassDetailRepository(
+                  client: GraphQLService.instance),
+            ),
+          ),
+          BlocProvider.value(
+            value: BlocProvider.of<ScheduledGymClassesBloc>(
+                state.extra! as BuildContext),
+          ),
+        ],
+        child: ClassScheduleDetailScreen(
+          scheduleId: state.uri.queryParameters['scheduleId']!,
+          bookedFor: state.uri.queryParameters['bookedFor']!,
+          bookedTime: state.uri.queryParameters['bookedTime']!,
+        ),
+      );
+    },
+  ),
 ]);

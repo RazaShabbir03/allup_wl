@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ThemeModeLight {
+  ThemeModeLight._internal();
   static ThemeData themeData(BuildContext context) {
     return ThemeData(
       //text style for app

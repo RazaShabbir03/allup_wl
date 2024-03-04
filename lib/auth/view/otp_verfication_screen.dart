@@ -1,5 +1,5 @@
 import 'package:allup_user_app/auth/blocs/bloc/auth_bloc.dart';
-import 'package:allup_user_app/auth/widgets/loading_dialog_full_screen.dart';
+import 'package:allup_user_app/utils/loading_dialog_full_screen.dart';
 import 'package:allup_user_app/dashboard/blocs/bloc/dashboard_bloc.dart';
 import 'package:allup_user_app/l10n/l10n.dart';
 import 'package:allup_user_app/routes/route_names.dart';
