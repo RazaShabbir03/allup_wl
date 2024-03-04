@@ -2,6 +2,7 @@ import 'package:allup_user_app/auth/blocs/bloc/auth_bloc.dart';
 import 'package:allup_user_app/auth/widgets/loading_dialog_full_screen.dart';
 import 'package:allup_user_app/dashboard/blocs/bloc/dashboard_bloc.dart';
 import 'package:allup_user_app/dashboard/widgets/dashboard_carousel_banner_widget.dart';
+import 'package:allup_user_app/dashboard/widgets/explore_upcoming_classes_widget.dart';
 import 'package:allup_user_app/dashboard/widgets/home_kpi_widget.dart';
 import 'package:allup_user_app/dashboard/widgets/home_tabs_horizontal_widget.dart';
 import 'package:allup_user_app/l10n/l10n.dart';
@@ -29,7 +30,6 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
-    BlocProvider.of<DashboardBloc>(context).add(const RefreshDashboard());
     super.initState();
   }
 
@@ -40,12 +40,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: BlocConsumer<DashboardBloc, DashboardState>(
         listener: (context, state) {
-          // if (state.dashboardStatus == DashboardStatus.loading) {
-          //   DialogBox.showLoadingDialog(context);
-          // }
+          if (state.dashboardStatus == DashboardStatus.loading) {
+            DialogBox.showLoadingDialog(context);
+          }
           if (state.dashboardStatus == DashboardStatus.success) {
-            // BlocProvider.of<DashboardBloc>(context)
-            //     .add(const RefreshDashboard());
             DialogBox.hideLoadingDialog(context);
           }
           if (state.dashboardStatus == DashboardStatus.error) {
@@ -84,7 +82,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               onTap: () {
                                 context.push(Routes.profileDetailRoute);
                               },
-                              child: const DpPlaceHolderWidget(),
+                              child: DpPlaceHolderWidget(
+                                imagePath: state.user?.photo,
+                                radius: 30.r,
+                              ),
                             ),
                             SizedBox(
                               width: 20.w,
@@ -107,18 +108,67 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           fontWeight: FontWeight.w700,
                                         ),
                                   ),
-                                  Text(
-                                    BlocProvider.of<AuthBloc>(context)
-                                            .state
-                                            .gymName ??
-                                        'N/A',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium!
-                                        .copyWith(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w400,
-                                        ),
+                                  Row(
+                                    children: [
+                                      if (state
+                                              .purchasedMembershipResponse
+                                              ?.singleMemberships
+                                              ?.firstOrNull
+                                              ?.membershipCode !=
+                                          null)
+                                        Row(
+                                          children: [
+                                            Text(
+                                              state
+                                                      .purchasedMembershipResponse
+                                                      ?.singleMemberships
+                                                      ?.first
+                                                      ?.membershipCode ??
+                                                  'N/A',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .copyWith(
+                                                    fontSize: 12.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                            ),
+                                            SizedBox(
+                                              width: 5.w,
+                                            ),
+                                            SizedBox(
+                                              height: 20.h,
+                                              child: VerticalDivider(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .surface,
+                                                width: 1,
+                                                thickness: 1,
+                                                indent: 5,
+                                                endIndent: 5,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 5.w,
+                                            ),
+                                          ],
+                                        )
+                                      else
+                                        SizedBox(),
+                                      Text(
+                                        BlocProvider.of<AuthBloc>(context)
+                                                .state
+                                                .gymName ??
+                                            'N/A',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium!
+                                            .copyWith(
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -190,7 +240,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           refreshIndicatorExtent: 100.h,
                           onRefresh: () async {
                             BlocProvider.of<DashboardBloc>(context)
-                                .add(const RefreshDashboard());
+                                .add(RefreshDashboard(
+                              gymId: BlocProvider.of<AuthBloc>(context)
+                                  .state
+                                  .selectedGymId!,
+                            ));
                             await Future<void>.delayed(
                               const Duration(seconds: 2),
                             );
@@ -254,16 +308,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                   state.gymMembershipInfo,
                                             ),
                                             const HomeTabsHorizontalWidget(),
+                                            SizedBox(
+                                              height: 15.h,
+                                            )
                                           ],
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                                const Expanded(
+                                Expanded(
                                   child: Column(
                                     children: [
-                                      DashboardCarouselBannerWidget(),
+                                      const DashboardCarouselBannerWidget(),
+                                      ExploreClassesWidget(
+                                          classCategories:
+                                              state.classCategories)
                                     ],
                                   ),
                                 ),

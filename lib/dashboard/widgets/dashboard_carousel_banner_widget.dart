@@ -1,5 +1,4 @@
 import 'package:allup_user_app/dashboard/blocs/bloc/dashboard_bloc.dart';
-import 'package:allup_user_app/dashboard/schemas/gym_banners.graphql.dart';
 import 'package:allup_user_app/widgets/shimmer_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -21,12 +20,7 @@ class DashboardCarouselBannerWidget extends StatelessWidget {
                   options: CarouselOptions(
                     aspectRatio: 16 / 10,
                     viewportFraction: 1,
-                    autoPlay: false,
-                    // onPageChanged: (index, reason) {
-                    //   current.value = index;
-                    // },
                     enableInfiniteScroll: false,
-
                     autoPlayInterval: const Duration(seconds: 3),
                     enlargeCenterPage: true,
                     enlargeFactor: 0,
@@ -36,7 +30,7 @@ class DashboardCarouselBannerWidget extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 10.w),
                             child: ClipRRect(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
+                                  const BorderRadius.all(Radius.circular(15)),
                               child: CachedNetworkImage(
                                 imageUrl: e!.image,
                                 fit: BoxFit.fill,

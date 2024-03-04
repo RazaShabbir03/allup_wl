@@ -5,6 +5,7 @@ query UserByAuth($gymId: ID) {
     user: user {
       id: id
       firstName: firstName
+      photo: photo
       lastName: lastName
       isEmailVerified: isEmailVerified
       isPhoneVerified: isPhoneVerified

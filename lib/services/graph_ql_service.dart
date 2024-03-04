@@ -29,6 +29,17 @@ class GraphQLService {
     final link = authLink.concat(httpLink);
 
     return GraphQLClient(
+      defaultPolicies: DefaultPolicies(
+        watchQuery: Policies(
+          fetch: FetchPolicy.noCache,
+        ),
+        query: Policies(
+          fetch: FetchPolicy.noCache,
+        ),
+        mutate: Policies(
+          fetch: FetchPolicy.noCache,
+        ),
+      ),
       link: link,
       cache: GraphQLCache(),
     );

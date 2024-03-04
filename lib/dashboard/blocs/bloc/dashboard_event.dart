@@ -20,5 +20,8 @@ class GetDashboardEvents extends DashboardEvent {
 }
 
 class RefreshDashboard extends DashboardEvent {
-  const RefreshDashboard();
+  const RefreshDashboard({
+    required this.gymId,
+  });
+  final String gymId;
 }

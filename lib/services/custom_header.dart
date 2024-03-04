@@ -14,6 +14,7 @@ class CustomAuthLink extends Link {
     // Some logic here
 
     // TIP: do not forget getting new Request instance!
+    print('token: $token');
     final req = request.updateContextEntry<HttpLinkHeaders>(
       (HttpLinkHeaders? headers) => HttpLinkHeaders(
         headers: <String, String>{

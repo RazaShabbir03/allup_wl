@@ -33,6 +33,7 @@ dependencies:
   pinput: ^3.0.1
   shared_preferences: ^2.2.2
   shimmer: ^3.0.0
+  table_calendar: ^3.0.9
 
 dev_dependencies:
   bloc_test: ^9.1.4

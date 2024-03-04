@@ -1,5 +1,3 @@
-import 'package:allup_user_app/utils/app_assets.dart';
-import 'package:allup_user_app/widgets/svg_widget.dart';
 import 'package:flutter/material.dart';
 
 class BackButtonWidget extends StatelessWidget {
@@ -8,13 +6,16 @@ class BackButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      child: const SvgWidget(
-        path: Assets.backButtonSvg,
-        width: 40,
-        height: 40,
+    return IconButton(
+      icon: Container(
+        padding: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.background,
+          shape: BoxShape.circle,
+        ),
+        child: const Icon(Icons.arrow_back),
       ),
+      onPressed: onPressed,
     );
   }
 }

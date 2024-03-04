@@ -267,6 +267,13 @@ const documentNodeQueryUserByAuth = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'photo'),
+                alias: NameNode(value: 'photo'),
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'lastName'),
                 alias: NameNode(value: 'lastName'),
                 arguments: [],
@@ -657,6 +664,7 @@ class Query$UserByAuth$userByAuth$user {
   Query$UserByAuth$userByAuth$user({
     required this.id,
     required this.firstName,
+    this.photo,
     required this.lastName,
     required this.isEmailVerified,
     required this.isPhoneVerified,
@@ -666,6 +674,7 @@ class Query$UserByAuth$userByAuth$user {
   factory Query$UserByAuth$userByAuth$user.fromJson(Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$firstName = json['firstName'];
+    final l$photo = json['photo'];
     final l$lastName = json['lastName'];
     final l$isEmailVerified = json['isEmailVerified'];
     final l$isPhoneVerified = json['isPhoneVerified'];
@@ -673,6 +682,7 @@ class Query$UserByAuth$userByAuth$user {
     return Query$UserByAuth$userByAuth$user(
       id: (l$id as String),
       firstName: (l$firstName as String),
+      photo: (l$photo as String?),
       lastName: (l$lastName as String),
       isEmailVerified: (l$isEmailVerified as bool),
       isPhoneVerified: (l$isPhoneVerified as bool),
@@ -686,6 +696,8 @@ class Query$UserByAuth$userByAuth$user {
   final String id;
 
   final String firstName;
+
+  final String? photo;
 
   final String lastName;
 
@@ -701,6 +713,8 @@ class Query$UserByAuth$userByAuth$user {
     _resultData['id'] = l$id;
     final l$firstName = firstName;
     _resultData['firstName'] = l$firstName;
+    final l$photo = photo;
+    _resultData['photo'] = l$photo;
     final l$lastName = lastName;
     _resultData['lastName'] = l$lastName;
     final l$isEmailVerified = isEmailVerified;
@@ -716,6 +730,7 @@ class Query$UserByAuth$userByAuth$user {
   int get hashCode {
     final l$id = id;
     final l$firstName = firstName;
+    final l$photo = photo;
     final l$lastName = lastName;
     final l$isEmailVerified = isEmailVerified;
     final l$isPhoneVerified = isPhoneVerified;
@@ -723,6 +738,7 @@ class Query$UserByAuth$userByAuth$user {
     return Object.hashAll([
       l$id,
       l$firstName,
+      l$photo,
       l$lastName,
       l$isEmailVerified,
       l$isPhoneVerified,
@@ -747,6 +763,11 @@ class Query$UserByAuth$userByAuth$user {
     final l$firstName = firstName;
     final lOther$firstName = other.firstName;
     if (l$firstName != lOther$firstName) {
+      return false;
+    }
+    final l$photo = photo;
+    final lOther$photo = other.photo;
+    if (l$photo != lOther$photo) {
       return false;
     }
     final l$lastName = lastName;
@@ -794,6 +815,7 @@ abstract class CopyWith$Query$UserByAuth$userByAuth$user<TRes> {
   TRes call({
     String? id,
     String? firstName,
+    String? photo,
     String? lastName,
     bool? isEmailVerified,
     bool? isPhoneVerified,
@@ -818,6 +840,7 @@ class _CopyWithImpl$Query$UserByAuth$userByAuth$user<TRes>
   TRes call({
     Object? id = _undefined,
     Object? firstName = _undefined,
+    Object? photo = _undefined,
     Object? lastName = _undefined,
     Object? isEmailVerified = _undefined,
     Object? isPhoneVerified = _undefined,
@@ -828,6 +851,7 @@ class _CopyWithImpl$Query$UserByAuth$userByAuth$user<TRes>
         firstName: firstName == _undefined || firstName == null
             ? _instance.firstName
             : (firstName as String),
+        photo: photo == _undefined ? _instance.photo : (photo as String?),
         lastName: lastName == _undefined || lastName == null
             ? _instance.lastName
             : (lastName as String),
@@ -863,6 +887,7 @@ class _CopyWithStubImpl$Query$UserByAuth$userByAuth$user<TRes>
   call({
     String? id,
     String? firstName,
+    String? photo,
     String? lastName,
     bool? isEmailVerified,
     bool? isPhoneVerified,

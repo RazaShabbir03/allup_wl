@@ -8,7 +8,7 @@ class DialogBox {
   static void showLoadingDialog(BuildContext context) {
     showDialog<void>(
       context: context,
-      builder: (context) {
+      builder: (_) {
         return const LoadingDialogFullScreen();
       },
     );
@@ -32,7 +32,7 @@ class LoadingDialogFullScreen extends StatelessWidget {
       backgroundColor: Colors.transparent,
       child: Center(
         child: CupertinoActivityIndicator(
-          color: Theme.of(context).colorScheme.onError,
+          color: Theme.of(context).colorScheme.onSecondary,
           radius: 20.r,
         ),
       ),
