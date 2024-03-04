@@ -367,6 +367,7 @@ type AllupProLead {
   isParent: Boolean!
   customerCode: String
   paymentStatus: LeadPaymentStatus
+  leadSubStatus: LeadSubStatus
 }
 
 type AllupProLeadMembership {
@@ -1049,6 +1050,7 @@ type Brand {
   updatedAt: Datetime!
   admins: [Admin!]
   signupEnabled: Boolean
+  appId: AppId
 }
 
 # BrandAdmin
@@ -1982,6 +1984,11 @@ type ConfigurationPayload {
   paging: PaginatorOutputUpdated
 }
 
+input ConnectedBrandsFilter {
+  searchText: String
+  brandId: ID!
+}
+
 enum ConsentStatusEnum {
   APPROVED
   REJECTED
@@ -2870,6 +2877,7 @@ input CreatePaymentPlanMutationInput {
   groupMembershipPlanId: String
   sessionPackPlanId: String
   servicePacks: [ServicePackInputType]
+  status: PaymentPlanStatus
 }
 
 type CreatePaymentPlanMutationResponse {
@@ -4387,6 +4395,7 @@ input FetchLeadsFilterV2 {
   dateRange: LeadDateRange
   leadKPIs: LeadKPIs
   paymentStatus: LeadPaymentStatus
+  isParent: Boolean
 }
 
 input FetchMembersFilter {
@@ -4406,6 +4415,7 @@ input FetchMembersFilter {
   memberSince: LeadDateRange
   memberKPIs: MemberKPIs
   paymentStatus: LeadPaymentStatus
+  isParent: Boolean
 }
 
 type File {
@@ -5235,6 +5245,7 @@ input GetMembershipPlansQueryFilter {
   type: PaymentTypeEnum
   recursionPeriod: MembershipPlanTypePeriod
   text: String
+  paymentPlanStatus: PaymentPlanStatus
 }
 
 type GetMembershipPlansQueryResponse {
@@ -5303,6 +5314,7 @@ input getMembersStatusesQueryFilters {
 
 input GetPaymentPlansQueryFilter {
   adminId: ID
+  status: PaymentPlanStatus
 }
 
 type GetPaymentPlansQueryResponse {
@@ -8035,6 +8047,7 @@ type Lead {
   emergencyContact: LeadContact
   companyInfo: LeadCompany
   linkedAccounts: [Lead!]
+  parentAccount: Lead
   customer: Customer
   customerId: ID
   leadNo: Int
@@ -8553,7 +8566,7 @@ type LeadsPayload {
 }
 
 type LeadsPayloadV2 {
-  list: [LeadV3]
+  list: [LeadV2]
   totalLeads: String
   totalAppointments: String
   totalCalls: String
@@ -8750,41 +8763,7 @@ type LeadV2 {
   leadCreatedByName: String
   customer: Customer
   isClassBookingBlocked: Boolean
-  dateOfClassBlock: Date
-  dateOfLastClassUnblocked: Date
-  paymentStatus: LeadPaymentStatus
-}
-
-type LeadV3 {
-  id: ID!
-  customerId: ID!
-  firstName: String!
-  middleName: String
-  lastName: String
-  fullName: String
-  phoneNumber: String
-  membership: String
-  customerCode: String
-  membershipEndDate: Date
-  membershipStatus: String
-  source: LeadSource
-  gender: CustomerGenderType
-  dob: Date
-  photo: String
-  age: Int
-  leadStatus: LeadStatus
-  leadSubStatus: LeadSubStatus
-  leadType: LeadType
-  assignedTo: ID
-  assignedToName: String
-  createdAt: Date
-  leadDuration: Int
-  latestAction: String
-  latestActionDuration: Int
-  leadCreatedById: String
-  leadCreatedByName: String
-  customer: Customer
-  isClassBookingBlocked: Boolean
+  isParent: Boolean
   dateOfClassBlock: Date
   dateOfLastClassUnblocked: Date
   paymentStatus: LeadPaymentStatus
@@ -8903,7 +8882,7 @@ type Member {
   middleName: String
   lastName: String
   fullName: String
-  phoneNumber: String!
+  phoneNumber: String
   membership: String
   customerCode: String
   membershipEndDate: Date
@@ -8924,6 +8903,7 @@ type Member {
   leadCreatedByName: String
   customer: Customer
   isClassBookingBlocked: Boolean
+  isParent: Boolean
   dateOfClassBlock: Date
   dateOfLastClassUnblocked: Date
   paymentStatus: LeadPaymentStatus
@@ -9959,6 +9939,9 @@ type Mutation {
   ): CustomerCocSavePayload!
   buyAQrSession(input: BuyAQrSessionInput!): BuyAQrSessionPayload
   buyAQrSessionDebt(input: BuyADebQrSessionInput!): BuyAQrSessionPayload
+  sendEmailsToPurchasedMemberships(
+    params: SendEmailsToPurchasedMembershipsFilters
+  ): SendEmailsToPurchasedMembershipsPayload!
   ProductOrder(input: ProductOrderInput!): ProductOrderPayload
   registerFBDevice(input: RegisteredDeviceInput!): RegisteredDevicePayload
   createSingleMembershipPlan(
@@ -11194,12 +11177,18 @@ type PaymentPlan {
   surcharge: Float
   installmentRounds: Int
   installmentFrequencyType: InstallmentFrequencyTypeEnum
+  status: PaymentPlanStatus
   createdAt: String!
   updatedAt: String!
 }
 
 type paymentPlans {
   paymentPlans: [PaymentPlan]
+}
+
+enum PaymentPlanStatus {
+  active
+  inactive
 }
 
 enum PaymentProvider {
@@ -12309,6 +12298,10 @@ type Query {
     params: PrefixAvailabilityInput!
   ): PrefixAvailabilityPayload!
   gymPaymentGatewayDetail(id: ID!): GymPaymentGatewayDetail!
+  gymsOfConnectedBrands(
+    paging: PaginatorInput!
+    params: ConnectedBrandsFilter
+  ): GymsPayload!
   getGymAccessGates(paging: PaginatorInput, gymId: ID!): GatesPayload
   getGymAccessGateById(id: ID!): GymAccessGate
   getGymAccessLevels(paging: PaginatorInput, gymId: ID!): AccessLevelsPayload
@@ -14401,6 +14394,7 @@ input SaveGymInput {
   isAccessGateEnabled: Boolean
   accessGateVendor: GateVendorType
   gateApiKey: String
+  signupEnabled: Boolean
 }
 
 input SaveGymOperatingHourlyPricesInput {
@@ -15176,6 +15170,16 @@ input ScheduleInput {
   openDuration: Int
 }
 
+input SendEmailsToPurchasedMembershipsFilters {
+  gymId: ID
+  startDate: String!
+  endDate: String!
+}
+
+type SendEmailsToPurchasedMembershipsPayload {
+  count: Int!
+}
+
 input sendOTPInput {
   contactNumber: String!
   gymId: String!
@@ -15685,6 +15689,7 @@ type SingleMembership {
   price: Float!
   discountedPrice: Float
   joiningFee: Float!
+  installmentSurcharge: Float
   currency: String
   frozenById: String
   paymentRecursionType: PaymentRecursionTypeEnum
@@ -15799,6 +15804,7 @@ type SingleTransaction {
 
 type SingleTransactionInvoice {
   amount: Float
+  discountedAmount: Float
   currency: String
   date: Datetime
   installmentScheduledDate: Datetime
@@ -16456,6 +16462,7 @@ type TransactionSingleMembership {
   price: Float
   discountedPrice: Float
   joiningFee: Float
+  installmentSurcharge: Float
   paymentType: String
   currency: String
   startDate: String
@@ -17051,6 +17058,7 @@ input UpdatePaymentPlanMutationInput {
   surcharge: Float
   installmentRounds: Int
   installmentFrequencyType: InstallmentFrequencyTypeEnum
+  status: PaymentPlanStatus
 }
 
 type UpdatePaymentPlanMutationResponse {
@@ -17746,4 +17754,3 @@ type ZkUserDetailPayload {
   message: String
   data: ZkUserDetail
 }
-

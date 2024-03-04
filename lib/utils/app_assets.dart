@@ -20,4 +20,11 @@ class Assets {
   static const trainingVideosIcon = 'assets/svgs/training_videos_icon.svg';
   static const referAFriendIcon = 'assets/svgs/refer_a_friend_icon.svg';
   static const offersIcon = 'assets/svgs/offers_icon.svg';
+  static const backgroundBgPicture = 'assets/images/background_bg.png';
+  static const emptyScreen = 'assets/svgs/empty_screen_vector.svg';
+  static const spotsIcon = 'assets/svgs/spots.svg';
+  static const subscribeIcon = 'assets/svgs/subscribe_icon.svg';
+  static const subscribedIcon = 'assets/svgs/check_mark.svg';
+  static const attendQRIcon = 'assets/svgs/attend_qr.svg';
+  static const cancelButtonIcon = 'assets/svgs/cancel_button_icon.svg';
 }

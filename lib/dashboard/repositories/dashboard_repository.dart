@@ -1,5 +1,6 @@
 import 'package:allup_user_app/dashboard/schemas/country.graphql.dart';
 import 'package:allup_user_app/dashboard/schemas/gym_banners.graphql.dart';
+import 'package:allup_user_app/dashboard/schemas/gym_classes_by_categories.graphql.dart';
 import 'package:allup_user_app/dashboard/schemas/gym_membership_info.graphql.dart';
 import 'package:allup_user_app/dashboard/schemas/purchase_memberhip.graphql.dart';
 import 'package:allup_user_app/dashboard/schemas/user_by_auth.graphql.dart';
@@ -84,6 +85,40 @@ class DashboardRepository {
         params: Input$GymBannerFilter(gymId: gymId),
         paging: Input$PaginatorInput(page: 1, limit: 100),
       )),
+    );
+    final data = response.parsedData;
+    if (data == null) {
+      throw Exception();
+    } else {
+      return data;
+    }
+  }
+
+  Future<Query$GymClassesByCategory> getClassCategories(
+      {required String gymId}) async {
+    final response = await client.getclient.query$GymClassesByCategory(
+      Options$Query$GymClassesByCategory(
+        variables: Variables$Query$GymClassesByCategory(
+          gymId: gymId,
+        ),
+      ),
+    );
+    final data = response.parsedData;
+    if (data == null) {
+      throw Exception();
+    } else {
+      return data;
+    }
+  }
+
+  Future<Query$PurchasedGymMemberships> getGymMembershipDetails(
+      {required String gymId, required String appId}) async {
+    final response = await client.getclient.query$PurchasedGymMemberships(
+      Options$Query$PurchasedGymMemberships(
+        variables: Variables$Query$PurchasedGymMemberships(
+          filter: Input$GetMembershipsQueryFilter(gymId: gymId, appId: appId),
+        ),
+      ),
     );
     final data = response.parsedData;
     if (data == null) {

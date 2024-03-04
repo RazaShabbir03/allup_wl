@@ -7,11 +7,22 @@ targets:
           scalars:
             URL:
               type: String
-            ISODateTime:
-              type: DateTime
-              fromJsonFunctionName: dateTimeFromJson
-              toJsonFunctionName: dateTimeToJson
-              import: package:graphql_codegen_example/scalars.dart
+            Datetime:
+              type: Datetime
+              fromJsonFunctionName: customDateTimeFromJson
+              toJsonFunctionName: customDateTimeToJson
+              import: package:allup_user_app/scalars.dart
+            CurrencyValue:
+              type: CurrencyValue
+              fromJsonFunctionName: currencyValueFromJson
+              toJsonFunctionName: currencyValueToJson
+              import: package:allup_user_app/scalars.dart
+            # LocalTime:
+            #   type: LocalTime
+            #   fromJsonFunctionName: localTimeFromJson
+            #   toJsonFunctionName: localTimeToJson
+            #   import: package:allup_user_app/scalars.dart
+
           clients:
             - graphql
             - graphql_flutter

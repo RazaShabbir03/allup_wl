@@ -83,5 +83,57 @@
   "offers": "Offers",
   "@offers": {
     "description": "Offers text"
+  },
+  "classesOnThisGym": "Classes on this gym",
+  "@classesOnThisGym": {
+    "description": "Classes on this gym text"
+  },
+  "exploreUpcoming": "Explore Upcoming",
+  "@exploreUpcoming": {
+    "description": "Explore Upcoming text"
+  },
+  "noClassFound": "No Class Found",
+  "@noClassFound": {
+    "description": "No Class Found text"
+  },
+  "noClassFoundSubtile": "There will be a list of classes displayed here.",
+  "@noClassFoundSubtile": {
+    "description": "No Class Found Subtile text"
+  },
+  "instructor": "Instructor",
+  "@instructor": {
+    "description": "Instructor text"
+  },
+  "duration": "Duration",
+  "@duration": {
+    "description": "Duration text"
+  },
+  "time": "Time",
+  "@time": {
+    "description": "Time text"
+  },
+  "spots": "spots",
+  "@spots": {
+    "description": "spots text"
+  },
+  "subscribe": "SUBSCRIBE",
+  "@subscribe": {
+    "description": "Subscribe text"
+  },
+  "free": "Free",
+  "@free": {
+    "description": "Free text"
+  },
+  "subscribed": "SUBSCRIBED",
+  "@subscribed": {
+    "description": "Subscribed text"
+  },
+  "attend": "ATTEND",
+  "@attend": {
+    "description": "Attend text"
+  },
+  "cancel": "CANCEL",
+  "@cancel": {
+    "description": "Cancel text"
   }
 }

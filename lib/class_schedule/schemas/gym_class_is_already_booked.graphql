@@ -1,0 +1,11 @@
+query GymClassIsAlreadyBookedV2(
+  $scheduleId: ID!
+  $bookedFor: Date!
+  $bookedTime: LocalTime!
+) {
+  gymClassIsAlreadyBookedV2: gymClassIsAlreadyBookedV2(
+    scheduleId: $scheduleId
+  ) {
+    booked: booked
+  }
+}
