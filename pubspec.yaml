@@ -36,7 +36,7 @@ dependencies:
   table_calendar: ^3.0.9
 
 dev_dependencies:
-  bloc_test: ^9.1.4
+  bloc_test: ^9.1.6
   build_runner: ^2.4.8
   flutter_test:
     sdk: flutter
