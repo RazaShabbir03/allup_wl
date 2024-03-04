@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 class HelperFunctions {
   ///clear stack and navigate to a new route
@@ -116,5 +117,54 @@ class HelperFunctions {
     } catch (e) {
       return 0;
     }
+  }
+
+  //check if same day
+  static bool isSameDay(DateTime? a, DateTime? b) {
+    if (a == null || b == null) {
+      return false;
+    }
+
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
+
+  //get week day from integers looking at locale
+  static String getWeekDay(int day, String locale) {
+    switch (day) {
+      case 1:
+        return locale == 'en' ? 'MON' : 'الاثنين';
+      case 2:
+        return locale == 'en' ? 'TUE' : 'يوم الثلاثاء';
+      case 3:
+        return locale == 'en' ? 'WED' : 'Mercredi';
+      case 4:
+        return locale == 'en' ? 'THU' : 'Jeudi';
+      case 5:
+        return locale == 'en' ? 'FRI' : 'Vendredi';
+      case 6:
+        return locale == 'en' ? 'SAT' : 'Samedi';
+      case 7:
+        return locale == 'en' ? 'SUN' : 'Dimanche';
+      default:
+        return '';
+    }
+  }
+
+  ///For year-month-day format from date if null return empty string else return formatted date to local
+  static String getFormattedDate(DateTime? date) {
+    if (date == null) {
+      return '';
+    }
+    return DateFormat('yyyy-MM-dd').format(date.toLocal());
+  }
+
+  static String getFormattedTime(String input) {
+    // Parse the input time string
+    DateTime parsedTime = DateFormat('HH:mm:ss').parse(input);
+
+    // Format the parsed time into "hh:mm a" format
+    String formattedTime = DateFormat('hh:mm a').format(parsedTime);
+
+    return formattedTime;
   }
 }

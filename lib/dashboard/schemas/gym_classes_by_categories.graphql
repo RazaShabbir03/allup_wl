@@ -1,0 +1,10 @@
+query GymClassesByCategory($gymId: ID!) {
+  gymClassesByCategoryV2: gymClassesByCategoryV2(gymId: $gymId) {
+    list: list {
+      categoryId: categoryId
+      categoryName: categoryName
+      image: image
+      count: count
+    }
+  }
+}

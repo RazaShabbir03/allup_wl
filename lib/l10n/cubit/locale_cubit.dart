@@ -8,6 +8,8 @@ part 'locale_state.dart';
 class LocaleCubit extends Cubit<LocalState> {
   LocaleCubit() : super(LocalInitState());
 
+  String get currentLanguageCode => getLanguageCode();
+
   Future<void> changeLanguage(String locale) async {
     await CacheHelper.cacheLanguage(locale);
     emit(ChangeLocalState(locale: Locale(locale)));

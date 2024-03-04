@@ -1,6 +1,3 @@
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:allup_user_app/auth/blocs/bloc/auth_bloc.dart';
 import 'package:allup_user_app/services/custom_header.dart';
 import 'package:allup_user_app/services/flavor_config.dart';
@@ -29,6 +26,17 @@ class GraphQLService {
     final link = authLink.concat(httpLink);
 
     return GraphQLClient(
+      defaultPolicies: DefaultPolicies(
+        watchQuery: Policies(
+          fetch: FetchPolicy.noCache,
+        ),
+        query: Policies(
+          fetch: FetchPolicy.noCache,
+        ),
+        mutate: Policies(
+          fetch: FetchPolicy.noCache,
+        ),
+      ),
       link: link,
       cache: GraphQLCache(),
     );

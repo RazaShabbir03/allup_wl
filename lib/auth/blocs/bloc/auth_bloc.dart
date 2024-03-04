@@ -6,6 +6,7 @@ import 'package:allup_user_app/widgets/cache_helper.dart';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -135,8 +136,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     ///Logout the user
     on<LogoutEvent>((event, emit) async {
       final response =
-          await authRepository.getBrandsList(appId: '1684285034-ufc');
-
+          await authRepository.getBrandsList(appId: AppConstants.appId);
+      await HydratedBloc.storage.clear();
       await CacheHelper.clearCache();
       emit(state.copyWith(
         gyms: response.brandList.list!.first!.gyms,

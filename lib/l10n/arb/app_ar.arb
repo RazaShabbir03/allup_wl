@@ -83,5 +83,57 @@
   "offers": "عروض",
   "@offers": {
     "description": "Offers text"
+  },
+  "classesOnThisGym": "دروس في هذه الصالة الرياضية",
+  "@classesOnThisGym": {
+    "description": "Classes on this gym text"
+  },
+  "exploreUpcoming": "استكشاف القادمة",
+  "@exploreUpcoming": {
+    "description": "Explore upcoming text"
+  },
+  "noClassFound": "لم يتم العثور على فئة",
+  "@noClassFound": {
+    "description": "No class found text"
+  },
+  "noClassFoundSubtile": "ستكون هناك قائمة بالفصول المعروضة هنا",
+  "@noClassFoundSubtile": {
+    "description": "No class found subtitle text"
+  },
+  "instructor": "مدرب",
+  "@instructor": {
+    "description": "Instructor text"
+  },
+  "duration": "مدة",
+  "@duration": {
+    "description": "Duration text"
+  },
+  "time": "وقت",
+  "@time": {
+    "description": "Time text"
+  },
+  "spots": "بقع",
+  "@spots": {
+    "description": "Spots text"
+  },
+  "subscribe": "يشترك",
+  "@subscribe": {
+    "description": "Subscribe text"
+  },
+  "free": "حر",
+  "@free": {
+    "description": "Free text"
+  },
+  "subscribed": "مشترك",
+  "@subscribed": {
+    "description": "Subscribed text"
+  },
+  "attend": "يحضر",
+  "@attend": {
+    "description": "Attend text"
+  },
+  "cancel": "يلغي",
+  "@cancel": {
+    "description": "Cancel text"
   }
 }

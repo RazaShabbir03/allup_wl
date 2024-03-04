@@ -1,6 +1,6 @@
 import 'package:allup_user_app/auth/blocs/bloc/auth_bloc.dart';
 import 'package:allup_user_app/auth/widgets/brand_search_bottom_sheet.dart';
-import 'package:allup_user_app/auth/widgets/loading_dialog_full_screen.dart';
+import 'package:allup_user_app/utils/loading_dialog_full_screen.dart';
 import 'package:allup_user_app/l10n/cubit/locale_cubit.dart';
 import 'package:allup_user_app/l10n/l10n.dart';
 import 'package:allup_user_app/routes/route_names.dart';
