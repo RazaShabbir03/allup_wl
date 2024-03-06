@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:allup_user_app/l10n/l10n.dart';
 import 'package:allup_user_app/utils/app_assets.dart';
 import 'package:allup_user_app/widgets/svg_widget.dart';
@@ -55,6 +57,7 @@ class SubscribeButtonWidget extends StatelessWidget {
                       ? Theme.of(context).colorScheme.primary
                       : Theme.of(context).colorScheme.primary,
                   fontSize: 11.sp,
+                  fontVariations: [const FontVariation('wght', 700)],
                   fontWeight: FontWeight.w600),
             ),
           ],

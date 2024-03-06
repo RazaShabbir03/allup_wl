@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BackButtonWidget extends StatelessWidget {
   const BackButtonWidget({required this.onPressed, super.key});
@@ -7,6 +8,7 @@ class BackButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      iconSize: 25.r,
       icon: Container(
         padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(

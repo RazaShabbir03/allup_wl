@@ -135,5 +135,37 @@
   "cancel": "يلغي",
   "@cancel": {
     "description": "Cancel text"
+  },
+  "cancelled": "ألغيت",
+  "@cancelled": {
+    "description": "Cancelled text"
+  },
+  "checkin": "تحقق في",
+  "@checkin": {
+    "description": "Check-in text"
+  },
+  "membershipCard": "بطاقة عضوية",
+  "@membershipCard": {
+    "description": "Membership card text"
+  },
+  "gymAccessCheckInMessage": "افتح الكاميرا وامسح رمز الاستجابة السريعة ضوئيًا لتتمكن من \nتسجيل الوصول",
+  "@gymAccessCheckInMessage": {
+    "description": "Gym access check-in message"
+  },
+  "membershipName": "اسم عضو",
+  "@membershipName": {
+    "description": "Membership name text"
+  },
+  "membershipType": "نوع العضوية",
+  "@membershipType": {
+    "description": "Membership type text"
+  },
+  "startDate": "تاريخ البدء",
+  "@startDate": {
+    "description": "Start date text"
+  },
+  "expiryDate": "تاريخ الانتهاء",
+  "@expiryDate": {
+    "description": "Expiry date text"
   }
 }

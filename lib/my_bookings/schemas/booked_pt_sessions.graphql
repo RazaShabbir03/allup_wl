@@ -1,0 +1,35 @@
+query BookedPTSessions(
+  $paging: PaginatorInput!
+  $params: SessionContractBookingsParams!
+) {
+  sessionContractBookings: sessionContractBookings(
+    paging: $paging
+    params: $params
+  ) {
+    list {
+      id: id
+      sessionDate: sessionDate
+      shortCode: shortCode
+      code: code
+      dayName: dayName
+      openTime: openTime
+      openTimeLabel: openTimeLabel
+      openDuration: openDuration
+      closeTime: closeTime
+      closeTimeLabel: closeTimeLabel
+      sessionContractId: sessionContractId
+      ratingScore: ratingScore
+      amount: amount
+      brandName: brandName
+      gymName: gymName
+      instructorName: instructorName
+      currentEvent: currentEvent
+      serviceName: serviceName
+      isAttended: isAttended
+      isAttendable: isAttendable
+      isPurchased: isPurchased
+      isCancellable: isCancellable
+      isAlreadyRatad: isAlreadyRatad
+    }
+  }
+}

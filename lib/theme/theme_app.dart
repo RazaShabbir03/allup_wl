@@ -57,6 +57,7 @@ class ThemeModeLight {
       ),
       shadowColor: const Color(0xFF494961),
       colorScheme: const ColorScheme.light(
+        scrim: Color(0xFF1F2432),
         primary: Colors.black,
         secondary: Color(0xFFD8E0E4),
         secondaryContainer: Color(0xFF465E8D),

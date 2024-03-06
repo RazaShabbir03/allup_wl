@@ -1,4 +1,5 @@
 import 'package:allup_user_app/class_schedule/repositories/schedule_gym_class_detail_repository.dart';
+import 'package:allup_user_app/scalars.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 

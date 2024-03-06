@@ -153,7 +153,7 @@ class ClassScheduleTileWidget extends StatelessWidget {
                   SubscribeButtonWidget(
                     isSubscribed: gymClass.isPurchased ?? false,
                     onPressed: () {
-                      DialogBoxes.showLoadingDialog(context,
+                      DialogBoxes.showTwoButtonAlertDialog(context,
                           barrierDismissible: true,
                           title: 'Are you sure?',
                           description:

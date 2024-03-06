@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:allup_user_app/scalars.dart';
 import 'package:flutter/widgets.dart' as widgets;
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
@@ -7,7 +8,7 @@ import 'package:graphql_flutter/graphql_flutter.dart' as graphql_flutter;
 class Variables$Query$GymClassIsAlreadyBookedV2 {
   factory Variables$Query$GymClassIsAlreadyBookedV2({
     required String scheduleId,
-    required String bookedFor,
+    required Date bookedFor,
     required String bookedTime,
   }) =>
       Variables$Query$GymClassIsAlreadyBookedV2._({
@@ -24,7 +25,7 @@ class Variables$Query$GymClassIsAlreadyBookedV2 {
     final l$scheduleId = data['scheduleId'];
     result$data['scheduleId'] = (l$scheduleId as String);
     final l$bookedFor = data['bookedFor'];
-    result$data['bookedFor'] = (l$bookedFor as String);
+    result$data['bookedFor'] = dateFromJson(l$bookedFor);
     final l$bookedTime = data['bookedTime'];
     result$data['bookedTime'] = (l$bookedTime as String);
     return Variables$Query$GymClassIsAlreadyBookedV2._(result$data);
@@ -34,7 +35,7 @@ class Variables$Query$GymClassIsAlreadyBookedV2 {
 
   String get scheduleId => (_$data['scheduleId'] as String);
 
-  String get bookedFor => (_$data['bookedFor'] as String);
+  Date get bookedFor => (_$data['bookedFor'] as Date);
 
   String get bookedTime => (_$data['bookedTime'] as String);
 
@@ -43,7 +44,7 @@ class Variables$Query$GymClassIsAlreadyBookedV2 {
     final l$scheduleId = scheduleId;
     result$data['scheduleId'] = l$scheduleId;
     final l$bookedFor = bookedFor;
-    result$data['bookedFor'] = l$bookedFor;
+    result$data['bookedFor'] = dateToJson(l$bookedFor);
     final l$bookedTime = bookedTime;
     result$data['bookedTime'] = l$bookedTime;
     return result$data;
@@ -107,7 +108,7 @@ abstract class CopyWith$Variables$Query$GymClassIsAlreadyBookedV2<TRes> {
 
   TRes call({
     String? scheduleId,
-    String? bookedFor,
+    Date? bookedFor,
     String? bookedTime,
   });
 }
@@ -135,7 +136,7 @@ class _CopyWithImpl$Variables$Query$GymClassIsAlreadyBookedV2<TRes>
         if (scheduleId != _undefined && scheduleId != null)
           'scheduleId': (scheduleId as String),
         if (bookedFor != _undefined && bookedFor != null)
-          'bookedFor': (bookedFor as String),
+          'bookedFor': (bookedFor as Date),
         if (bookedTime != _undefined && bookedTime != null)
           'bookedTime': (bookedTime as String),
       }));
@@ -149,7 +150,7 @@ class _CopyWithStubImpl$Variables$Query$GymClassIsAlreadyBookedV2<TRes>
 
   call({
     String? scheduleId,
-    String? bookedFor,
+    Date? bookedFor,
     String? bookedTime,
   }) =>
       _res;

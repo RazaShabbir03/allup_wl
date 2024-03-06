@@ -1,4 +1,5 @@
 import 'package:allup_user_app/class_schedule/schemas/scheduled_gym_classes.graphql.dart';
+import 'package:allup_user_app/scalars.dart';
 import 'package:allup_user_app/schema.graphql.dart';
 import 'package:allup_user_app/services/graph_ql_service.dart';
 import 'package:graphql/client.dart';
@@ -9,7 +10,7 @@ class ScheduledGymClassesRepository {
 
   Future<Query$ScheduledGymClasses> getScheduledGymClasses(
       {required String gymId,
-      required String forDate,
+      required Date forDate,
       Input$GISLocationInput? location,
       String? timeZoneIdentifier,
       String? instructorId,

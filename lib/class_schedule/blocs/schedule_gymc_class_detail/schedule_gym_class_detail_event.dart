@@ -14,7 +14,7 @@ class FetchClassDetails extends ScheduleGymClassDetailEvent {
     required this.bookedTime,
   });
   final String scheduleId;
-  final String bookedFor;
+  final Date bookedFor;
   final String bookedTime;
   @override
   List<Object> get props => [scheduleId, bookedFor, bookedTime];

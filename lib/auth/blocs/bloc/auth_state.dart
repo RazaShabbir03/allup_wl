@@ -5,6 +5,7 @@ class AuthState extends Equatable {
       {this.loginSubmitResponseStatus = AuthSubmitStatus.initial,
       this.authResponseStatus = AuthResponseStatus.initial,
       this.otpErrorMessage = '',
+      this.currentTimeZone = '',
       this.otpStatus = OTPStatus.initial,
       this.loginErrorMessage = '',
       this.brandList = const [],
@@ -15,6 +16,7 @@ class AuthState extends Equatable {
   final AuthSubmitStatus? loginSubmitResponseStatus;
   final AuthResponseStatus? authResponseStatus;
   final String? gymName;
+  final String currentTimeZone;
   final OTPStatus? otpStatus;
   final String otpErrorMessage;
   final String loginErrorMessage;
@@ -28,6 +30,7 @@ class AuthState extends Equatable {
       {AuthSubmitStatus? loginSubmitResponseStatus,
       AuthResponseStatus? authResponseStatus,
       OTPStatus? otpStatus,
+      String? currentTimeZone,
       String? gymName,
       String? otpErrorMessage,
       String? loginErrorMessage,
@@ -36,6 +39,7 @@ class AuthState extends Equatable {
       String? accessToken,
       String? selectedGymId}) {
     return AuthState(
+        currentTimeZone: currentTimeZone ?? this.currentTimeZone,
         loginSubmitResponseStatus: loginSubmitResponseStatus,
         loginErrorMessage: loginErrorMessage ?? this.loginErrorMessage,
         otpStatus: otpStatus,
@@ -49,17 +53,18 @@ class AuthState extends Equatable {
   }
 
   @override
-  List<Object> get props => [
-        loginSubmitResponseStatus ?? '',
+  List<Object?> get props => [
+        loginSubmitResponseStatus,
         loginErrorMessage,
-        otpStatus ?? '',
-        gymName ?? '',
+        otpStatus,
+        currentTimeZone,
+        gymName,
         otpErrorMessage,
-        authResponseStatus ?? '',
+        authResponseStatus,
         brandList,
-        selectedGymId ?? '',
+        selectedGymId,
         gyms,
-        accessToken ?? ''
+        accessToken
       ];
 }
 

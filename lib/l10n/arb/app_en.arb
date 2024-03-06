@@ -135,5 +135,37 @@
   "cancel": "CANCEL",
   "@cancel": {
     "description": "Cancel text"
+  },
+  "cancelled": "CANCELLED",
+  "@cancelled": {
+    "description": "Cancelled text"
+  },
+  "checkin": "CHECK-IN",
+  "@checkin": {
+    "description": "Check-in text"
+  },
+  "membershipCard": "MEMBERSHIP CARD",
+  "@membershipCard": {
+    "description": "Membership Card text"
+  },
+  "gymAccessCheckInMessage": "Open your camera and scan the QR code for \nyou to Check-in",
+  "@gymAccessCheckInMessage": {
+    "description": "Gym Access Check-in message"
+  },
+  "membershipName": "Membership Name",
+  "@membershipName": {
+    "description": "Membership Name text"
+  },
+  "membershipType": "Membership Type",
+  "@membershipType": {
+    "description": "Membership Type text"
+  },
+  "startDate": "Start Date",
+  "@startDate": {
+    "description": "Start Date text"
+  },
+  "expiryDate": "Expiry Date",
+  "@expiryDate": {
+    "description": "Expiry Date text"
   }
 }

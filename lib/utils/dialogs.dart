@@ -1,10 +1,8 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DialogBoxes {
-  static void showLoadingDialog(BuildContext context,
+  static void showTwoButtonAlertDialog(BuildContext context,
       {required String title,
       required VoidCallback onDismiss,
       required VoidCallback onConfirm,

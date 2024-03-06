@@ -1,0 +1,7 @@
+mutation addIntructorEvent($input: AddIntructorEventInput!) {
+  addIntructorEvent: addIntructorEvent(input: $input) {
+    error: error
+    errors: errors
+    success: success
+  }
+}

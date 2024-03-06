@@ -521,7 +521,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = T79H45P63M;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "Allup User App";
-				FLUTTER_BUILD_NUMBER = 5;
+				FLUTTER_BUILD_NUMBER = 6;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -624,7 +624,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = T79H45P63M;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "Allup User App";
-				FLUTTER_BUILD_NUMBER = 5;
+				FLUTTER_BUILD_NUMBER = 6;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -722,7 +722,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = T79H45P63M;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "Allup User App";
-				FLUTTER_BUILD_NUMBER = 5;
+				FLUTTER_BUILD_NUMBER = 6;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -824,7 +824,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = T79H45P63M;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[DEV] Allup User App";
-				FLUTTER_BUILD_NUMBER = 5;
+				FLUTTER_BUILD_NUMBER = 6;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -924,7 +924,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = T79H45P63M;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[DEV] Allup User App";
-				FLUTTER_BUILD_NUMBER = 5;
+				FLUTTER_BUILD_NUMBER = 6;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1023,7 +1023,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = T79H45P63M;
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[DEV] Allup User App";
-				FLUTTER_BUILD_NUMBER = 5;
+				FLUTTER_BUILD_NUMBER = 6;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1123,7 +1123,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[STG] Allup User App";
-				FLUTTER_BUILD_NUMBER = 5;
+				FLUTTER_BUILD_NUMBER = 6;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1222,7 +1222,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[STG] Allup User App";
-				FLUTTER_BUILD_NUMBER = 5;
+				FLUTTER_BUILD_NUMBER = 6;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1316,7 +1316,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FLAVOR_APP_NAME = "[STG] Allup User App";
-				FLUTTER_BUILD_NUMBER = 5;
+				FLUTTER_BUILD_NUMBER = 6;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

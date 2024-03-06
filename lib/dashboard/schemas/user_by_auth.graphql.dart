@@ -1,5 +1,6 @@
 import '../../schema.graphql.dart';
 import 'dart:async';
+import 'package:allup_user_app/scalars.dart';
 import 'package:flutter/widgets.dart' as widgets;
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
@@ -920,7 +921,7 @@ class Query$UserByAuth$userByAuth$user$parentLead {
       firstName: (l$firstName as String),
       lastName: (l$lastName as String?),
       photo: (l$photo as String?),
-      dob: (l$dob as String?),
+      dob: l$dob == null ? null : dateFromJson(l$dob),
     );
   }
 
@@ -932,7 +933,7 @@ class Query$UserByAuth$userByAuth$user$parentLead {
 
   final String? photo;
 
-  final String? dob;
+  final Date? dob;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
@@ -945,7 +946,7 @@ class Query$UserByAuth$userByAuth$user$parentLead {
     final l$photo = photo;
     _resultData['photo'] = l$photo;
     final l$dob = dob;
-    _resultData['dob'] = l$dob;
+    _resultData['dob'] = l$dob == null ? null : dateToJson(l$dob);
     return _resultData;
   }
 
@@ -1027,7 +1028,7 @@ abstract class CopyWith$Query$UserByAuth$userByAuth$user$parentLead<TRes> {
     String? firstName,
     String? lastName,
     String? photo,
-    String? dob,
+    Date? dob,
   });
 }
 
@@ -1059,7 +1060,7 @@ class _CopyWithImpl$Query$UserByAuth$userByAuth$user$parentLead<TRes>
         lastName:
             lastName == _undefined ? _instance.lastName : (lastName as String?),
         photo: photo == _undefined ? _instance.photo : (photo as String?),
-        dob: dob == _undefined ? _instance.dob : (dob as String?),
+        dob: dob == _undefined ? _instance.dob : (dob as Date?),
       ));
 }
 
@@ -1074,7 +1075,7 @@ class _CopyWithStubImpl$Query$UserByAuth$userByAuth$user$parentLead<TRes>
     String? firstName,
     String? lastName,
     String? photo,
-    String? dob,
+    Date? dob,
   }) =>
       _res;
 }

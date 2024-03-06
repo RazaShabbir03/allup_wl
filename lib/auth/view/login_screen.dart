@@ -165,12 +165,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   Text(
                                     (state.gyms.firstWhereOrNull(
-                                              (element) =>
-                                                  element!.id ==
-                                                  state.selectedGymId,
-                                            ) ??
-                                            state.gyms.first!)
-                                        .name,
+                                                  (element) =>
+                                                      element!.id ==
+                                                      state.selectedGymId,
+                                                ) ??
+                                                state.gyms.firstOrNull)
+                                            ?.name ??
+                                        '',
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleMedium!

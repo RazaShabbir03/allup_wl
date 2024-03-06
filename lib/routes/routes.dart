@@ -9,6 +9,12 @@ import 'package:allup_user_app/class_schedule/repositories/scheduled_gym_classes
 import 'package:allup_user_app/class_schedule/view/class_schedule_detail_screen.dart';
 import 'package:allup_user_app/class_schedule/view/class_schedule_screen.dart';
 import 'package:allup_user_app/dashboard/view/dashboard_screen.dart';
+import 'package:allup_user_app/gym_access/view/gym_access_screen.dart';
+import 'package:allup_user_app/my_bookings/blocs/my_classes/my_classes_bloc.dart';
+import 'package:allup_user_app/my_bookings/blocs/session_contracts/session_contracts_bloc.dart';
+import 'package:allup_user_app/my_bookings/repositories/my_classes_repository.dart';
+import 'package:allup_user_app/my_bookings/repositories/session_contract_repository.dart';
+import 'package:allup_user_app/my_bookings/view/my_bookings_screen.dart';
 import 'package:allup_user_app/profile/view/profile_detail_screen.dart';
 import 'package:allup_user_app/routes/route_names.dart';
 import 'package:allup_user_app/services/graph_ql_service.dart';
@@ -126,6 +132,46 @@ final router = GoRouter(navigatorKey: NavigationService.navigatorKey, routes: [
           bookedFor: state.uri.queryParameters['bookedFor']!,
           bookedTime: state.uri.queryParameters['bookedTime']!,
         ),
+      );
+    },
+  ),
+
+  ///Gym Access QR
+  GoRoute(
+    path: Routes.gymAccess,
+    builder: (context, state) {
+      return GymAccessScreen(
+        qrCode: state.uri.queryParameters['qrCode']!,
+        memberName: state.uri.queryParameters['memberName']!,
+        profileImage: state.uri.queryParameters['profileImage']!,
+        memberType: state.uri.queryParameters['memberType']!,
+        memberSince: state.uri.queryParameters['memberSince']!,
+        memberExpiry: state.uri.queryParameters['memberExpiry']!,
+        memberStatus: state.uri.queryParameters['memberStatus']!,
+        gymName: state.uri.queryParameters['gymName']!,
+      );
+    },
+  ),
+
+  /// My Bookings
+  GoRoute(
+    path: Routes.myBookings,
+    builder: (context, state) {
+      return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => SessionContractsBloc(
+              repository:
+                  SessionContractRepository(client: GraphQLService.instance),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => MyClassesBloc(
+              repository: MyClassesRepository(client: GraphQLService.instance),
+            ),
+          ),
+        ],
+        child: MyBookingsScreen(),
       );
     },
   ),

@@ -27,4 +27,6 @@ class Assets {
   static const subscribedIcon = 'assets/svgs/check_mark.svg';
   static const attendQRIcon = 'assets/svgs/attend_qr.svg';
   static const cancelButtonIcon = 'assets/svgs/cancel_button_icon.svg';
+  static const productLogo = 'assets/skinnable_images/product_logo.png';
+  static const missedIcon = 'assets/svgs/missed_icon.svg';
 }

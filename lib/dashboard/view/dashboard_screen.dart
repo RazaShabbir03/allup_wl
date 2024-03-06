@@ -307,7 +307,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                               gymMembershipInfo:
                                                   state.gymMembershipInfo,
                                             ),
-                                            const HomeTabsHorizontalWidget(),
+                                            HomeTabsHorizontalWidget(
+                                              gymName:
+                                                  BlocProvider.of<AuthBloc>(
+                                                          context)
+                                                      .state
+                                                      .gymName!,
+                                              dashboardState: state,
+                                            ),
                                             SizedBox(
                                               height: 15.h,
                                             )

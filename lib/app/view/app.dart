@@ -50,7 +50,7 @@ class App extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 theme: ThemeModeLight.themeData(context),
                 locale: Locale(
-                    BlocProvider.of<LocaleCubit>(context).getLanguageCode()),
+                    BlocProvider.of<LocaleCubit>(context).currentLanguageCode),
                 localizationsDelegates: AppLocalizations.localizationsDelegates,
                 supportedLocales: AppLocalizations.supportedLocales,
                 localeResolutionCallback: (currentLocal, supportedLocales) {

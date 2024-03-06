@@ -6,7 +6,7 @@ import 'package:allup_user_app/widgets/cache_helper.dart';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -19,7 +19,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<CheckAuth>((event, emit) async {
       try {
         emit(state.copyWith(
+            // currentTimeZone: currentTimeZone,
             loginSubmitResponseStatus: AuthSubmitStatus.loading));
+        final String currentTimeZone =
+            await FlutterNativeTimezone.getLocalTimezone();
+        emit(state.copyWith(currentTimeZone: currentTimeZone));
+        print(currentTimeZone);
         final response =
             await authRepository.getBrandsList(appId: AppConstants.appId);
         final accessToken = CacheHelper.getCachedAccessToken();
@@ -137,7 +142,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LogoutEvent>((event, emit) async {
       final response =
           await authRepository.getBrandsList(appId: AppConstants.appId);
-      await HydratedBloc.storage.clear();
+      // await HydratedBloc.storage.clear();
       await CacheHelper.clearCache();
       emit(state.copyWith(
         gyms: response.brandList.list!.first!.gyms,

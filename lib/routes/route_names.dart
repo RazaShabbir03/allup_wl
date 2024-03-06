@@ -8,4 +8,6 @@ class Routes {
   static const String profileDetailRoute = '/profile-details';
   static const String classSchedule = '/class-schedule';
   static const String classScheduleDetail = '/class-schedule-detail';
+  static const String gymAccess = '/gym-access';
+  static const String myBookings = '/my-bookings';
 }
