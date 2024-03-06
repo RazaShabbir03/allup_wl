@@ -30,7 +30,7 @@ dependencies:
   hydrated_bloc: ^9.1.4
   intl: ^0.18.0
   path_provider: ^2.1.2
-  pinput: ^3.0.1
+  pinput: ^4.0.0
   shared_preferences: ^2.2.2
   shimmer: ^3.0.0
   table_calendar: ^3.0.9
