@@ -18,7 +18,7 @@ class AttendButton extends StatelessWidget {
       height: 26,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Theme.of(context).colorScheme.onSecondary,
+          backgroundColor: Theme.of(context).colorScheme.onSecondary,
           disabledBackgroundColor: Theme.of(context).disabledColor,
           elevation: 0,
           padding: EdgeInsets.symmetric(

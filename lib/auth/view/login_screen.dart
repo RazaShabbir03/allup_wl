@@ -300,7 +300,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: double.infinity,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  primary:
+                                  backgroundColor:
                                       Theme.of(context).colorScheme.primary,
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 20.w,

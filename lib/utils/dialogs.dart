@@ -76,7 +76,7 @@ class MyDialog extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).colorScheme.primary,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -99,7 +99,8 @@ class MyDialog extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   elevation: 0.0,
-                  primary: Theme.of(context).disabledColor.withOpacity(0.3),
+                  backgroundColor:
+                      Theme.of(context).disabledColor.withOpacity(0.3),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

@@ -22,7 +22,7 @@ class SubscribeButtonWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(
             horizontal: 10.w,
           ),
-          primary: isSubscribed
+          backgroundColor: isSubscribed
               ? Theme.of(context).colorScheme.secondary
               : Theme.of(context).colorScheme.background,
           elevation: 0.0,
