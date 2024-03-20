@@ -25,3 +25,10 @@ class RefreshDashboard extends DashboardEvent {
   });
   final String gymId;
 }
+
+class RefreshDashboardFromTerminatedApp extends DashboardEvent {
+  const RefreshDashboardFromTerminatedApp({
+    required this.gymId,
+  });
+  final String gymId;
+}

@@ -15,8 +15,9 @@ import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
-  const OTPVerificationScreen({super.key, required this.phone});
+  const OTPVerificationScreen({required this.phone, this.refId, super.key});
   final String phone;
+  final String? refId;
 
   @override
   State<OTPVerificationScreen> createState() => _OTPVerificationScreenState();
@@ -138,6 +139,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                                   isButtonEnabled!.value = true;
                                   context.read<AuthBloc>().add(
                                         VerifyOTPEvent(
+                                          refId: widget.refId,
                                           phoneNumber: widget.phone,
                                           otp: value,
                                         ),
@@ -170,6 +172,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                                         ? () {
                                             context.read<AuthBloc>().add(
                                                   VerifyOTPEvent(
+                                                    refId: widget.refId,
                                                     phoneNumber: widget.phone,
                                                     otp: otpController!.text,
                                                   ),

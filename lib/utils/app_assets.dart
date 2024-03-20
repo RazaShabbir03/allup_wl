@@ -29,4 +29,18 @@ class Assets {
   static const cancelButtonIcon = 'assets/svgs/cancel_button_icon.svg';
   static const productLogo = 'assets/skinnable_images/product_logo.png';
   static const missedIcon = 'assets/svgs/missed_icon.svg';
+  static const bg2 = 'assets/images/bg_2.png';
+  static const switchAccountIcon = 'assets/svgs/switch_acc_icon.svg';
+  static const appVersionIcon = 'assets/svgs/app_version_icon.svg';
+  static const paymentIcon = 'assets/svgs/payment_icon.svg';
+  static const termsAndConditionsIcon =
+      'assets/svgs/terms_and_condition_icon.svg';
+  static const signOutIcon = 'assets/svgs/signout_icon.svg';
+  static const noImagePlaceHolder =
+      'assets/skinnable_images/noImagePlaceHolder@3x.png';
+  static const classesIcon = 'assets/svgs/classes_icon.svg';
+  static const expiredIcon = 'assets/svgs/expired_icon.svg';
+  static const registerTextfieldPrefixIcon =
+      'assets/svgs/register_textfield_prefix.svg';
+  static const emailPrefixIcon = 'assets/svgs/email_prefix_icon.svg';
 }

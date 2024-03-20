@@ -24,13 +24,20 @@ class HomeTabsHorizontalWidget extends StatelessWidget {
           const SizedBox(
             width: 10,
           ),
-          HomeTabTileWidget(
-              title: text.gymAccess,
-              iconPath: Assets.gymAccessIcon,
-              onTap: () {
-                context.push(
-                    '${Routes.gymAccess}?qrCode=${dashboardState.purchasedMembershipResponse?.singleMemberships?.first?.qrCode ?? ''}&memberName=${dashboardState.user?.firstName ?? ''} ${dashboardState.user?.lastName ?? ''}&memberType=${dashboardState.purchasedMembershipResponse?.singleMemberships?.first?.name ?? ''}&memberSince=${dashboardState.purchasedMembershipResponse?.singleMemberships?.first?.startDate ?? ''}&memberExpiry=${dashboardState.purchasedMembershipResponse?.singleMemberships?.first?.endDate ?? ''}&memberStatus=${dashboardState.purchasedMembershipResponse?.singleMemberships?.first?.status ?? ''}&profileImage=${dashboardState.user?.photo ?? ''}&gymName=${gymName}');
-              }),
+          if (dashboardState.purchasedMembershipResponse?.singleMemberships !=
+                  null &&
+              (dashboardState.purchasedMembershipResponse?.singleMemberships
+                      ?.isNotEmpty ??
+                  false))
+            HomeTabTileWidget(
+                title: text.gymAccess,
+                iconPath: Assets.gymAccessIcon,
+                onTap: () {
+                  context.push(
+                      '${Routes.gymAccess}?qrCode=${dashboardState.purchasedMembershipResponse?.singleMemberships?.first?.qrCode ?? ''}&memberName=${dashboardState.user?.firstName ?? ''} ${dashboardState.user?.lastName ?? ''}&memberType=${dashboardState.purchasedMembershipResponse?.singleMemberships?.first?.name ?? ''}&memberSince=${dashboardState.purchasedMembershipResponse?.singleMemberships?.first?.startDate ?? ''}&memberExpiry=${dashboardState.purchasedMembershipResponse?.singleMemberships?.first?.endDate ?? ''}&memberStatus=${dashboardState.purchasedMembershipResponse?.singleMemberships?.first?.status ?? ''}&profileImage=${dashboardState.user?.photo ?? ''}&gymName=${gymName}');
+                })
+          else
+            const SizedBox(),
           HomeTabTileWidget(
             onTap: () {
               context.push(Routes.myBookings);
@@ -39,7 +46,9 @@ class HomeTabsHorizontalWidget extends StatelessWidget {
             iconPath: Assets.myBookingIcon,
           ),
           HomeTabTileWidget(
-            onTap: () {},
+            onTap: () {
+              context.push(Routes.multiClassSchedule);
+            },
             title: text.classSchedule,
             iconPath: Assets.classScheduleIcon,
           ),
@@ -54,7 +63,9 @@ class HomeTabsHorizontalWidget extends StatelessWidget {
             iconPath: Assets.referAFriendIcon,
           ),
           HomeTabTileWidget(
-            onTap: () {},
+            onTap: () {
+              context.push(Routes.myOffers);
+            },
             title: text.offers,
             iconPath: Assets.offersIcon,
           ),

@@ -167,5 +167,41 @@
   "expiryDate": "تاريخ الانتهاء",
   "@expiryDate": {
     "description": "Expiry date text"
+  },
+  "appVersion": "نسخة التطبيق",
+  "@appVersion": {
+    "description": "App version text"
+  },
+  "termsAndConditions": "الأحكام والشروط",
+  "@termsAndConditions": {
+    "description": "Terms and conditions text"
+  },
+  "payment": "قسط",
+  "@payment": {
+    "description": "Payment text"
+  },
+  "switchAccount": "تبديل الحساب",
+  "@switchAccount": {
+    "description": "Switch account text"
+  },
+  "signOut": "خروج",
+  "@signOut": {
+    "description": "Sign out text"
+  },
+  "termsConditions": "البنود و الظروف",
+  "@TermsConditions": {
+    "description": "Terms and conditions text"
+  },
+  "expired": "منتهي الصلاحية",
+  "@expired": {
+    "description": "Expired text"
+  },
+  "registerTitle": "اوشكت على الوصول۔۔۔",
+  "@registerTitle": {
+    "description": "Register page title"
+  },
+  "registerSubtitle": "سوف يتم ذلك في دقيقة واحدة!",
+  "@registerSubtitle": {
+    "description": "Register page subtitle"
   }
 }

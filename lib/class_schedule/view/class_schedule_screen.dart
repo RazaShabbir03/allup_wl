@@ -114,7 +114,7 @@ class _ClassScheduleScreenState extends State<ClassScheduleScreen> {
               ),
               SliverOverlapAbsorber(
                   handle: calendarWidget,
-                  sliver: ScheduleClassesCalendarWidget()),
+                  sliver: const ScheduleClassesCalendarWidget()),
             ],
             body: CustomScrollView(
               slivers: [
@@ -127,9 +127,10 @@ class _ClassScheduleScreenState extends State<ClassScheduleScreen> {
                     builder: (context, state) {
                       if (state.status == ScheduledGymClassesStatus.loading) {
                         return SizedBox(
-                            height: size.height * 0.5,
-                            width: double.infinity,
-                            child: LoadingDialogFullScreen());
+                          height: size.height * 0.5,
+                          width: double.infinity,
+                          child: const LoadingDialogFullScreen(),
+                        );
                       } else if (state.gymClasses.isEmpty) {
                         return SizedBox(
                             height: size.height * 0.5,
@@ -145,7 +146,7 @@ class _ClassScheduleScreenState extends State<ClassScheduleScreen> {
                             shrinkWrap: true,
                             itemCount: state.gymClasses.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return InkWell(
+                              return GestureDetector(
                                 onTap: () {
                                   context.push(
                                       '${Routes.classScheduleDetail}?scheduleId=${state.gymClasses[index].scheduleId}&bookedFor=${HelperFunctions.getFormattedDate(state.selectedDate)}&bookedTime=${state.gymClasses[index].openTime}',

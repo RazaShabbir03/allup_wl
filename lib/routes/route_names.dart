@@ -10,4 +10,10 @@ class Routes {
   static const String classScheduleDetail = '/class-schedule-detail';
   static const String gymAccess = '/gym-access';
   static const String myBookings = '/my-bookings';
+  static const String myOffers = '/my-offers';
+  static const String tncRoute = '/tnc';
+  static const String multiClassSchedule = '/multi-class-schedule';
+  static const String classScheduleInstructorRoute =
+      '/class-schedule-instructor';
+  static const String switchAccount = '/switch-account';
 }

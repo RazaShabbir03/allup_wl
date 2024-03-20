@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FadedGradientImageWithText extends StatelessWidget {
@@ -7,8 +7,8 @@ class FadedGradientImageWithText extends StatelessWidget {
     required this.onTap,
     this.imageUrl,
     this.text,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   final String? imageUrl;
   final String? text;
   final VoidCallback onTap;

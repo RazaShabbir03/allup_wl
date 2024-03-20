@@ -1,0 +1,17 @@
+query LinkedAccounts($params: UserSlotsByAuthFilters) {
+  userSlotsByAuth: userSlotsByAuth(params: $params) {
+    found: found
+    slots: slots {
+      id: id
+      firstName: firstName
+      lastName: lastName
+      description: description
+      email: email
+      countryIsoCode: countryIsoCode
+      countryId: countryId
+      photo: photo
+      dob: dob
+      gender: gender
+    }
+  }
+}

@@ -64,7 +64,8 @@ class _LoginScreenState extends State<LoginScreen> {
           if (state.loginSubmitResponseStatus == AuthSubmitStatus.success) {
             Navigator.of(context).pop();
             context.push(
-                '${Routes.otpRoute}/${_phoneController!.text.trim().replaceAll(' ', '')}');
+              '${Routes.otpRoute}/${_phoneController!.text.trim().replaceAll(' ', '')}/${state.refId}',
+            );
           }
           if (state.loginSubmitResponseStatus == AuthSubmitStatus.loading) {
             DialogBox.showLoadingDialog(context);

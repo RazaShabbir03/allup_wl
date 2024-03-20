@@ -44,7 +44,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             DialogBox.showLoadingDialog(context);
           }
           if (state.dashboardStatus == DashboardStatus.success) {
-            DialogBox.hideLoadingDialog(context);
+            // DialogBox.hideLoadingDialog(context);
           }
           if (state.dashboardStatus == DashboardStatus.error) {
             DialogBox.hideLoadingDialog(context);
@@ -96,7 +96,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    state.user?.firstName ?? '',
+                                    state.fullName ?? '',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: Theme.of(context)

@@ -4,7 +4,7 @@ sealed class AuthEvent extends Equatable {
   const AuthEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 enum AuthResponseStatus { initial, loading, valid, nouser, error }
@@ -42,24 +42,29 @@ class LoginEvent extends AuthEvent {
 ///To sign-up a user associated with a gym
 final class RegisterEvent extends AuthEvent {
   const RegisterEvent(
-      {required this.firstName, required this.lastName, required this.email});
+      {required this.firstName,
+      required this.lastName,
+      required this.gymId,
+      required this.phoneNumber,
+      this.email});
   final String firstName;
   final String lastName;
-  final String email;
-
-  @override
-  List<Object> get props => [firstName, lastName, email];
+  final String gymId;
+  final String? email;
+  final String phoneNumber;
 }
 
 ///To verify the OTP
 
 final class VerifyOTPEvent extends AuthEvent {
-  const VerifyOTPEvent({required this.otp, required this.phoneNumber});
+  const VerifyOTPEvent(
+      {required this.otp, required this.phoneNumber, this.refId});
   final String otp;
   final String phoneNumber;
+  final String? refId;
 
   @override
-  List<Object> get props => [otp];
+  List<Object?> get props => [otp, phoneNumber, refId];
 }
 
 ///To select a gym from login page

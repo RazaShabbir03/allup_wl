@@ -108,14 +108,13 @@ class HelperFunctions {
       if (intEndDate == null) {
         return 0;
       }
-      final DateTime now = DateTime.now();
+      final now = DateTime.now();
       //check if datetime now is greater than end date
       if (now.isAfter(DateTime.fromMillisecondsSinceEpoch(intEndDate))) {
         return 0;
       }
-      final DateTime endDateTime =
-          DateTime.fromMillisecondsSinceEpoch(intEndDate);
-      final Duration difference = endDateTime.difference(now);
+      final endDateTime = DateTime.fromMillisecondsSinceEpoch(intEndDate);
+      final difference = endDateTime.difference(now);
       return difference.inDays;
     } catch (e) {
       return 0;
@@ -173,12 +172,12 @@ class HelperFunctions {
       return '';
     }
     // Parse the input time string
-    DateTime parsedTime = DateFormat(
+    var parsedTime = DateFormat(
       'HH:mm:ss',
     ).parse(input);
 
     // Format the parsed time into "hh:mm a" format
-    String formattedTime = DateFormat('hh:mm a').format(parsedTime);
+    var formattedTime = DateFormat('hh:mm a').format(parsedTime);
 
     return formattedTime;
   }

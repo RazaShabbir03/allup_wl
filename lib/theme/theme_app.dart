@@ -47,6 +47,7 @@ class ThemeModeLight {
         ),
       ),
       focusColor: const Color(0xFFCC3C86),
+
       dividerColor: const Color(0xFFD8E0E4),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.black,
@@ -55,6 +56,8 @@ class ThemeModeLight {
           fontSize: 41.sp,
         ),
       ),
+      hintColor: const Color(0xFF8EADBF),
+
       shadowColor: const Color(0xFF494961),
       colorScheme: const ColorScheme.light(
         scrim: Color(0xFF1F2432),

@@ -120,7 +120,7 @@
   "@subscribe": {
     "description": "Subscribe text"
   },
-  "free": "Free",
+  "free": "FREE",
   "@free": {
     "description": "Free text"
   },
@@ -167,5 +167,41 @@
   "expiryDate": "Expiry Date",
   "@expiryDate": {
     "description": "Expiry Date text"
+  },
+  "appVersion": "App Version",
+  "@appVersion": {
+    "description": "App Version text"
+  },
+  "termsAndConditions": "Terms and Conditions",
+  "@termsAndConditions": {
+    "description": "Terms and Conditions text"
+  },
+  "payment": "Payment",
+  "@payment": {
+    "description": "Payment text"
+  },
+  "switchAccount": "Switch Account",
+  "@switchAccount": {
+    "description": "Switch Account text"
+  },
+  "signOut": "SIGN OUT",
+  "@signOut": {
+    "description": "Sign Out text"
+  },
+  "termsConditions": "Terms & Conditions",
+  "@termsConditions": {
+    "description": "Terms & Conditions text"
+  },
+  "expired": "EXPIRED",
+  "@expired": {
+    "description": "Expired text"
+  },
+  "registerTitle": "ALMOST THERE...",
+  "@registerTitle": {
+    "description": "Register page title"
+  },
+  "registerSubtitle": "You'll be done in a minute!",
+  "@registerSubtitle": {
+    "description": "Register page subtitle"
   }
 }

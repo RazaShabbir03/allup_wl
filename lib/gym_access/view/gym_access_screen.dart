@@ -246,7 +246,8 @@ class GymDetailWidget extends StatelessWidget {
                       fontSize: 13.sp),
                 ),
                 Text(
-                  HelperFunctions.getDateFromEpochTime(int.parse(memberSince)),
+                  HelperFunctions.getDateFromEpochTime(
+                      int.tryParse(memberSince)),
                   style: Theme.of(context).textTheme.displaySmall!.copyWith(
                         color: Theme.of(context).colorScheme.primary,
                       ),
@@ -263,7 +264,8 @@ class GymDetailWidget extends StatelessWidget {
                       fontSize: 13.sp),
                 ),
                 Text(
-                  HelperFunctions.getDateFromEpochTime(int.parse(memberExpiry)),
+                  HelperFunctions.getDateFromEpochTime(
+                      int.tryParse(memberExpiry)),
                   style: Theme.of(context).textTheme.displaySmall!.copyWith(
                         color: Theme.of(context).colorScheme.primary,
                       ),

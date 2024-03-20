@@ -79,6 +79,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
         emit(
           state.copyWith(
+            fullName:
+                '${userByAuthResponse.userByAuth.user!.firstName} ${userByAuthResponse.userByAuth.user?.lastName ?? ''}',
             purchasedMembershipResponse:
                 gymMembershipDetailsResponse.memberships?.data,
             classCategories: classCategoryResponse.gymClassesByCategoryV2.list,
@@ -91,6 +93,89 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         );
       } catch (e) {
         emit(state.copyWith(dashboardStatus: DashboardStatus.error));
+      }
+    });
+
+    on<RefreshDashboardFromTerminatedApp>((event, emit) async {
+      emit(
+        state.copyWith(
+          refreshDashboardStatus: RefreshDashboardStatus.loading,
+        ),
+      );
+      try {
+        final userByAuthResponse =
+            await repository.getUserByAuth(gymId: event.gymId);
+        final purchasedMembershipResponse =
+            await repository.getPurchasedGymMemberships(
+          gymId: event.gymId,
+          appId: AppConstants.appId,
+        );
+        final gymBannersResponse =
+            await repository.getGymBanners(gymId: event.gymId);
+        final classCategoryResponse = await repository.getClassCategories(
+          gymId: event.gymId,
+        );
+        final gymMembershipDetailsResponse =
+            await repository.getGymMembershipDetails(
+          gymId: event.gymId,
+          appId: AppConstants.appId,
+        );
+        final banners = gymBannersResponse.gymBanners.list;
+        final groupMembers =
+            purchasedMembershipResponse.memberships?.data?.groupMemberships;
+        final singleMembers =
+            purchasedMembershipResponse.memberships?.data?.singleMemberships;
+        final sessionPacks =
+            purchasedMembershipResponse.memberships?.data?.sessionPacks;
+        final gymMembershipInfoResponse = await repository.getGymMembershipInfo(
+          gymId: event.gymId,
+          smId: singleMembers != null
+              ? singleMembers.isNotEmpty
+                  ? purchasedMembershipResponse
+                      .memberships?.data?.singleMemberships?.first?.id
+                  : null
+              : null,
+          gmId: groupMembers != null
+              ? groupMembers.isNotEmpty
+                  ? groupMembers.first?.id
+                  : null
+              : null,
+          memId: (singleMembers != null
+                  ? singleMembers.isNotEmpty
+                      ? purchasedMembershipResponse
+                          .memberships?.data?.singleMemberships?.first?.id
+                      : groupMembers != null
+                          ? groupMembers.isNotEmpty
+                              ? groupMembers.first?.id
+                              : sessionPacks != null
+                                  ? sessionPacks.isNotEmpty
+                                      ? sessionPacks.first?.id
+                                      : null
+                                  : null
+                          : null
+                  : '') ??
+              '',
+        );
+
+        emit(
+          state.copyWith(
+            fullName:
+                '${userByAuthResponse.userByAuth.user!.firstName} ${userByAuthResponse.userByAuth.user?.lastName ?? ''}',
+            purchasedMembershipResponse:
+                gymMembershipDetailsResponse.memberships?.data,
+            classCategories: classCategoryResponse.gymClassesByCategoryV2.list,
+            refreshDashboardStatus: RefreshDashboardStatus.success,
+            gymBanners: banners,
+            gymMembershipInfo: gymMembershipInfoResponse,
+            user: userByAuthResponse.userByAuth.user,
+          ),
+        );
+      } catch (e) {
+        emit(
+          state.copyWith(
+            refreshDashboardStatus: RefreshDashboardStatus.error,
+          ),
+        );
       }
     });
 

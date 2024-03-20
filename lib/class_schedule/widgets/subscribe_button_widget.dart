@@ -9,13 +9,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SubscribeButtonWidget extends StatelessWidget {
   const SubscribeButtonWidget(
-      {super.key, this.onPressed, this.isSubscribed = false});
+      {super.key,
+      this.onPressed,
+      this.isSubscribed = false,
+      this.isEnabled = true});
   final VoidCallback? onPressed;
   final bool isSubscribed;
+  final bool isEnabled;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 26,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -23,20 +27,23 @@ class SubscribeButtonWidget extends StatelessWidget {
             horizontal: 10.w,
           ),
           backgroundColor: isSubscribed
-              ? Theme.of(context).colorScheme.secondary
-              : Theme.of(context).colorScheme.background,
-          elevation: 0.0,
+              ? Theme.of(context).colorScheme.background
+              : isEnabled
+                  ? Theme.of(context).colorScheme.background
+                  : Theme.of(context).colorScheme.primary.withOpacity(0.2),
+          elevation: 0,
           side: BorderSide(
             color: isSubscribed
                 ? Theme.of(context).colorScheme.secondary
-                : Theme.of(context).colorScheme.primary,
-            width: 1,
+                : isEnabled
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).colorScheme.secondary,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
           ),
         ),
-        onPressed: isSubscribed ? null : onPressed,
+        onPressed: (isSubscribed || !isEnabled) ? null : onPressed,
         child: Row(
           children: [
             SvgWidget(
@@ -45,7 +52,9 @@ class SubscribeButtonWidget extends StatelessWidget {
               path: isSubscribed ? Assets.subscribedIcon : Assets.subscribeIcon,
               color: isSubscribed
                   ? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).colorScheme.primary,
+                  : isEnabled
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.background,
             ),
             SizedBox(
               width: 5.w,
@@ -55,7 +64,9 @@ class SubscribeButtonWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                   color: isSubscribed
                       ? Theme.of(context).colorScheme.primary
-                      : Theme.of(context).colorScheme.primary,
+                      : isEnabled
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.background,
                   fontSize: 11.sp,
                   fontVariations: [const FontVariation('wght', 700)],
                   fontWeight: FontWeight.w600),

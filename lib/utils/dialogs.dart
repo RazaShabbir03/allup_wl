@@ -49,6 +49,8 @@ class MyDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       child: AlertDialog(
+        surfaceTintColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.background,
         // insetPadding: EdgeInsets.zero,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         shape: RoundedRectangleBorder(

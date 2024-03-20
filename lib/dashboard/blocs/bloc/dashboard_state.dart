@@ -8,6 +8,7 @@ class DashboardState extends Equatable {
       this.gymMembershipInfo,
       this.dashboardStatus = DashboardStatus.initial,
       this.gymId,
+      this.fullName,
       this.purchasedMembershipResponse,
       this.refreshDashboardStatus = RefreshDashboardStatus.initial});
 
@@ -18,6 +19,7 @@ class DashboardState extends Equatable {
   final RefreshDashboardStatus? refreshDashboardStatus;
   final List<Query$GymClassesByCategory$gymClassesByCategoryV2$list?>
       classCategories;
+  final String? fullName;
   final String? gymId;
   final Query$PurchasedGymMemberships$memberships$data?
       purchasedMembershipResponse;
@@ -30,6 +32,7 @@ class DashboardState extends Equatable {
           classCategories,
       Query$PurchasedGymMemberships$memberships$data?
           purchasedMembershipResponse,
+      String? fullName,
       DashboardStatus? dashboardStatus,
       RefreshDashboardStatus? refreshDashboardStatus,
       List<Query$GymBanners$gymBanners$list?>? gymBanners,
@@ -39,6 +42,7 @@ class DashboardState extends Equatable {
           purchasedMembershipResponse ?? this.purchasedMembershipResponse,
       user: user ?? this.user,
       gymMembershipInfo: gymMembershipInfo ?? this.gymMembershipInfo,
+      fullName: fullName ?? this.fullName,
       classCategories: classCategories ?? this.classCategories,
       dashboardStatus: dashboardStatus ?? this.dashboardStatus,
       gymId: gymId ?? this.gymId,
@@ -53,6 +57,7 @@ class DashboardState extends Equatable {
         dashboardStatus,
         purchasedMembershipResponse,
         classCategories,
+        fullName,
         gymId,
         refreshDashboardStatus,
         gymMembershipInfo,
