@@ -9,7 +9,10 @@ class DashboardState extends Equatable {
       this.dashboardStatus = DashboardStatus.initial,
       this.gymId,
       this.fullName,
+      this.displayPicture,
       this.purchasedMembershipResponse,
+      this.childAccountId,
+      this.switchAccountDashboardStatus = SwitchAccountDashboardStatus.initial,
       this.refreshDashboardStatus = RefreshDashboardStatus.initial});
 
   final Query$UserByAuth$userByAuth$user? user;
@@ -17,10 +20,13 @@ class DashboardState extends Equatable {
   final List<Query$GymBanners$gymBanners$list?> gymBanners;
   final DashboardStatus dashboardStatus;
   final RefreshDashboardStatus? refreshDashboardStatus;
+  final SwitchAccountDashboardStatus? switchAccountDashboardStatus;
   final List<Query$GymClassesByCategory$gymClassesByCategoryV2$list?>
       classCategories;
   final String? fullName;
+  final String? displayPicture;
   final String? gymId;
+  final String? childAccountId;
   final Query$PurchasedGymMemberships$memberships$data?
       purchasedMembershipResponse;
 
@@ -33,18 +39,24 @@ class DashboardState extends Equatable {
       Query$PurchasedGymMemberships$memberships$data?
           purchasedMembershipResponse,
       String? fullName,
+      String? displayPicture,
       DashboardStatus? dashboardStatus,
       RefreshDashboardStatus? refreshDashboardStatus,
+      SwitchAccountDashboardStatus? switchAccountDashboardStatus,
       List<Query$GymBanners$gymBanners$list?>? gymBanners,
+      String? childAccountId,
       String? gymId}) {
     return DashboardState(
+      childAccountId: childAccountId ?? this.childAccountId,
       purchasedMembershipResponse:
           purchasedMembershipResponse ?? this.purchasedMembershipResponse,
       user: user ?? this.user,
       gymMembershipInfo: gymMembershipInfo ?? this.gymMembershipInfo,
       fullName: fullName ?? this.fullName,
+      displayPicture: displayPicture ?? this.displayPicture,
       classCategories: classCategories ?? this.classCategories,
       dashboardStatus: dashboardStatus ?? this.dashboardStatus,
+      switchAccountDashboardStatus: switchAccountDashboardStatus,
       gymId: gymId ?? this.gymId,
       refreshDashboardStatus: refreshDashboardStatus,
       gymBanners: gymBanners ?? this.gymBanners,
@@ -55,9 +67,12 @@ class DashboardState extends Equatable {
   List<Object?> get props => [
         user,
         dashboardStatus,
+        switchAccountDashboardStatus,
         purchasedMembershipResponse,
         classCategories,
+        displayPicture,
         fullName,
+        childAccountId,
         gymId,
         refreshDashboardStatus,
         gymMembershipInfo,
@@ -136,3 +151,9 @@ class DashboardState extends Equatable {
 // }
 
 final class DashboardInitial extends DashboardState {}
+
+enum DashboardStatus { initial, loading, success, error }
+
+enum RefreshDashboardStatus { initial, loading, success, error }
+
+enum SwitchAccountDashboardStatus { initial, loading, success, error }

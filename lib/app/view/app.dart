@@ -43,13 +43,6 @@ class App extends StatelessWidget {
                       repository:
                           DashboardRepository(client: GraphQLService.instance)),
                 ),
-                BlocProvider(
-                  create: (context) => SwitchAccountBloc(
-                    repository: SwitchAccountRepository(
-                      client: GraphQLService.instance,
-                    ),
-                  ),
-                )
               ],
               child: MaterialApp.router(
                 routeInformationParser: router.routeInformationParser,

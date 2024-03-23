@@ -129,6 +129,8 @@ class ProfileDetail extends StatelessWidget {
                           onPressed: () {
                             BlocProvider.of<AuthBloc>(context)
                                 .add(const LogoutEvent());
+                            BlocProvider.of<DashboardBloc>(context)
+                                .add(const SignOutEventDashboard());
                             context.go(Routes.loginRoute);
                           },
                           style: ElevatedButton.styleFrom(

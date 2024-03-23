@@ -250,7 +250,14 @@ final router = GoRouter(navigatorKey: NavigationService.navigatorKey, routes: [
   GoRoute(
     path: Routes.switchAccount,
     builder: (context, state) {
-      return const SwitchAccountScreen();
+      return BlocProvider(
+        create: (context) => SwitchAccountBloc(
+          repository: SwitchAccountRepository(
+            client: GraphQLService.instance,
+          ),
+        ),
+        child: const SwitchAccountScreen(),
+      );
     },
   ),
 ]);

@@ -4,10 +4,12 @@ class SwitchAccountState extends Equatable {
   const SwitchAccountState({
     this.switchAccountStatus = SwitchAccountStatus.loading,
     this.fetchStatus = SwitchAccountFetchStatus.loading,
+    this.purchasedMembershipResponse,
     this.slots = const [],
     this.selectedSlot,
     this.selectedGymId,
     this.switchAccountErrorMessage,
+    this.gymMembershipInfo,
   });
   final SwitchAccountStatus? switchAccountStatus;
   final SwitchAccountFetchStatus fetchStatus;
@@ -15,6 +17,8 @@ class SwitchAccountState extends Equatable {
   final Slot? selectedSlot;
   final String? selectedGymId;
   final String? switchAccountErrorMessage;
+  final Query$PurchasedGymMemberships? purchasedMembershipResponse;
+  final Query$GymMembershipInfo? gymMembershipInfo;
 
   //copyWith
   SwitchAccountState copyWith({
@@ -24,6 +28,8 @@ class SwitchAccountState extends Equatable {
     Slot? selectedSlot,
     String? selectedGymId,
     String? switchAccountErrorMessage,
+    Query$PurchasedGymMemberships? purchasedMembershipResponse,
+    Query$GymMembershipInfo? gymMembershipInfo,
   }) {
     return SwitchAccountState(
       switchAccountStatus: switchAccountStatus,
@@ -32,6 +38,8 @@ class SwitchAccountState extends Equatable {
       selectedSlot: selectedSlot ?? this.selectedSlot,
       selectedGymId: selectedGymId ?? this.selectedGymId,
       switchAccountErrorMessage: switchAccountErrorMessage,
+      purchasedMembershipResponse: purchasedMembershipResponse,
+      gymMembershipInfo: gymMembershipInfo,
     );
   }
 
@@ -40,9 +48,11 @@ class SwitchAccountState extends Equatable {
         switchAccountStatus,
         fetchStatus,
         slots,
+        purchasedMembershipResponse,
         selectedSlot,
         selectedGymId,
-        switchAccountErrorMessage
+        switchAccountErrorMessage,
+        gymMembershipInfo,
       ];
 }
 

@@ -1,4 +1,6 @@
 import 'package:allup_user_app/constants/app_constants.dart';
+import 'package:allup_user_app/dashboard/schemas/gym_membership_info.graphql.dart';
+import 'package:allup_user_app/dashboard/schemas/purchase_memberhip.graphql.dart';
 import 'package:allup_user_app/profile/repositories/switch_account_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -14,17 +16,14 @@ class SwitchAccountBloc extends Bloc<SwitchAccountEvent, SwitchAccountState> {
       emit(
         state.copyWith(
           fetchStatus: SwitchAccountFetchStatus.loading,
+          selectedGymId: event.gymId,
         ),
       );
       try {
         final linkedAccounts = await repository.getLinkedAccounts(
           gymId: event.gymId,
         );
-        final slots = <Slot>[
-          event.parentSlot.copyWith(
-            isSelected: true,
-          )
-        ];
+        final slots = <Slot>[event.parentSlot];
         linkedAccounts.userSlotsByAuth.slots?.forEach((element) {
           slots.add(
             Slot(
@@ -35,11 +34,23 @@ class SwitchAccountBloc extends Bloc<SwitchAccountEvent, SwitchAccountState> {
             ),
           );
         });
+        if (event.childAccountId != null && event.childAccountId != '') {
+          for (final element in slots) {
+            if (element.id == event.childAccountId) {
+              //replace the item with the new one on the same index
+              slots[slots.indexOf(element)] =
+                  element.copyWith(isSelected: true);
+            }
+          }
+        } else {
+          slots.first = slots.first.copyWith(isSelected: true);
+        }
+
         emit(
           state.copyWith(
             fetchStatus: SwitchAccountFetchStatus.success,
             slots: slots,
-            selectedGymId: event.gymId,
+            selectedSlot: event.parentSlot,
           ),
         );
       } catch (e) {
@@ -80,8 +91,48 @@ class SwitchAccountBloc extends Bloc<SwitchAccountEvent, SwitchAccountState> {
               return e.copyWith(isSelected: false);
             }
           }).toList();
+
+          final groupMembers =
+              purchasedMembership.memberships?.data?.groupMemberships;
+          final singleMembers =
+              purchasedMembership.memberships?.data?.singleMemberships;
+          final sessionPacks =
+              purchasedMembership.memberships?.data?.sessionPacks;
+          final gymMembershipInfoResponse =
+              await repository.getGymMembershipInfo(
+            childAccountId: event.slot.id,
+            gymId: state.selectedGymId!,
+            smId: singleMembers != null
+                ? singleMembers.isNotEmpty
+                    ? purchasedMembership
+                        .memberships?.data?.singleMemberships?.first?.id
+                    : null
+                : null,
+            gmId: groupMembers != null
+                ? groupMembers.isNotEmpty
+                    ? groupMembers.first?.id
+                    : null
+                : null,
+            memId: (singleMembers != null
+                    ? singleMembers.isNotEmpty
+                        ? purchasedMembership
+                            .memberships?.data?.singleMemberships?.first?.id
+                        : groupMembers != null
+                            ? groupMembers.isNotEmpty
+                                ? groupMembers.first?.id
+                                : sessionPacks != null
+                                    ? sessionPacks.isNotEmpty
+                                        ? sessionPacks.first?.id
+                                        : null
+                                    : null
+                            : null
+                    : '') ??
+                '',
+          );
           emit(
             state.copyWith(
+              gymMembershipInfo: gymMembershipInfoResponse,
+              purchasedMembershipResponse: purchasedMembership,
               switchAccountStatus: SwitchAccountStatus.success,
               selectedSlot: event.slot,
               slots: slots,
@@ -108,26 +159,29 @@ class Slot {
     required this.lastName,
     this.photo,
     this.isSelected = false,
+    this.isParent = false,
   });
   final String id;
   final String firstName;
   final String lastName;
   final String? photo;
   final bool isSelected;
+  final bool isParent;
 
-  Slot copyWith({
-    String? id,
-    String? firstName,
-    String? lastName,
-    String? photo,
-    bool? isSelected,
-  }) {
+  Slot copyWith(
+      {String? id,
+      String? firstName,
+      String? lastName,
+      String? photo,
+      bool? isSelected,
+      bool? isParent}) {
     return Slot(
       id: id ?? this.id,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       photo: photo ?? this.photo,
       isSelected: isSelected ?? this.isSelected,
+      isParent: isParent ?? this.isParent,
     );
   }
 }

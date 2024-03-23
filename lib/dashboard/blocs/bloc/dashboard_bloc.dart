@@ -79,6 +79,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
         emit(
           state.copyWith(
+            displayPicture: userByAuthResponse.userByAuth.user?.photo,
             fullName:
                 '${userByAuthResponse.userByAuth.user!.firstName} ${userByAuthResponse.userByAuth.user?.lastName ?? ''}',
             purchasedMembershipResponse:
@@ -159,6 +160,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
         emit(
           state.copyWith(
+            gymId: event.gymId,
+            displayPicture: userByAuthResponse.userByAuth.user?.photo,
             fullName:
                 '${userByAuthResponse.userByAuth.user!.firstName} ${userByAuthResponse.userByAuth.user?.lastName ?? ''}',
             purchasedMembershipResponse:
@@ -191,6 +194,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         final purchasedMembershipResponse =
             await repository.getPurchasedGymMemberships(
           gymId: event.gymId,
+          userId: state.childAccountId,
           appId: AppConstants.appId,
         );
         final gymBannersResponse =
@@ -258,6 +262,36 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
           ),
         );
       }
+    });
+
+    on<SwitchAccountDashboardRefresh>((event, emit) async {
+      emit(
+        state.copyWith(
+          switchAccountDashboardStatus: SwitchAccountDashboardStatus.loading,
+        ),
+      );
+      try {
+        emit(
+          state.copyWith(
+            displayPicture: event.displayPicture,
+            fullName: event.fullName,
+            childAccountId: event.userId,
+            purchasedMembershipResponse:
+                event.purchasedMembershipResponse.memberships?.data,
+            switchAccountDashboardStatus: SwitchAccountDashboardStatus.success,
+            gymMembershipInfo: event.gymMembershipInfo,
+          ),
+        );
+      } catch (e) {
+        emit(
+          state.copyWith(
+            switchAccountDashboardStatus: SwitchAccountDashboardStatus.error,
+          ),
+        );
+      }
+    });
+    on<SignOutEventDashboard>((event, emit) async {
+      emit(state.copyWith(childAccountId: ''));
     });
   }
 

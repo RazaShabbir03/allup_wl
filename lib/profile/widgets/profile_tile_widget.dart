@@ -63,7 +63,7 @@ class ProfileCardWidget extends StatelessWidget {
                             horizontal: 0.05.sw,
                           ),
                           child: Text(
-                            '${dashboardState.user?.firstName ?? ''} ${dashboardState.user?.lastName ?? ''}',
+                            '${dashboardState.fullName}',
                             style: Theme.of(context)
                                 .textTheme
                                 .displayLarge!
@@ -145,7 +145,7 @@ class ProfileCardWidget extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topCenter,
                 child: DpPlaceHolderWidget(
-                  imagePath: dashboardState.user?.photo,
+                  imagePath: dashboardState.displayPicture,
                   radius: 40.r,
                 ),
               ),

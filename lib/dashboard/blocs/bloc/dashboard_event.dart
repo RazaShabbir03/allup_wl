@@ -7,10 +7,6 @@ sealed class DashboardEvent extends Equatable {
   List<Object> get props => [];
 }
 
-enum DashboardStatus { initial, loading, success, error }
-
-enum RefreshDashboardStatus { initial, loading, success, error }
-
 class GetDashboardEvents extends DashboardEvent {
   const GetDashboardEvents({required this.gymId});
   final String gymId;
@@ -31,4 +27,22 @@ class RefreshDashboardFromTerminatedApp extends DashboardEvent {
     required this.gymId,
   });
   final String gymId;
+}
+
+class SwitchAccountDashboardRefresh extends DashboardEvent {
+  const SwitchAccountDashboardRefresh(
+      {required this.purchasedMembershipResponse,
+      required this.fullName,
+      required this.gymMembershipInfo,
+      this.displayPicture,
+      this.userId});
+  final Query$PurchasedGymMemberships purchasedMembershipResponse;
+  final Query$GymMembershipInfo? gymMembershipInfo;
+  final String fullName;
+  final String? userId;
+  final String? displayPicture;
+}
+
+class SignOutEventDashboard extends DashboardEvent {
+  const SignOutEventDashboard();
 }

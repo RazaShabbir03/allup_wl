@@ -1,12 +1,11 @@
-import 'package:allup_user_app/auth/blocs/bloc/auth_bloc.dart';
 import 'package:allup_user_app/dashboard/blocs/bloc/dashboard_bloc.dart';
 import 'package:allup_user_app/profile/blocs/switch_acccount_bloc/switch_account_bloc.dart';
+import 'package:allup_user_app/profile/widgets/switch_account_list_view.dart';
+import 'package:allup_user_app/routes/route_names.dart';
 import 'package:allup_user_app/utils/app_assets.dart';
 import 'package:allup_user_app/utils/custom_toast_bottom.dart';
-import 'package:allup_user_app/utils/dialogs.dart';
 import 'package:allup_user_app/utils/loading_dialog_full_screen.dart';
 import 'package:allup_user_app/widgets/back_button_widget.dart';
-import 'package:allup_user_app/widgets/dp_placeholder_widget.dart';
 import 'package:allup_user_app/widgets/image_asset_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,26 +27,60 @@ class SwitchAccountScreen extends StatelessWidget {
               width: double.infinity,
               image: Assets.loginScreenBgPicture),
           SafeArea(
-            child: BlocListener<SwitchAccountBloc, SwitchAccountState>(
-              listener: (context, state) {
-                if (state.switchAccountStatus == SwitchAccountStatus.loading) {
-                  DialogBox.showLoadingDialog(context);
-                }
-                if (state.switchAccountStatus == SwitchAccountStatus.success) {
-                  DialogBox.hideLoadingDialog(context);
-                  ToastUtils.showSuccessToast(
-                    context,
-                    'Account switched successfully',
-                  );
-                }
-                if (state.switchAccountStatus == SwitchAccountStatus.error) {
-                  DialogBox.hideLoadingDialog(context);
-                  ToastUtils.showErrorToast(
-                    context,
-                    state.switchAccountErrorMessage ?? 'Error occurred',
-                  );
-                }
-              },
+            child: MultiBlocListener(
+              listeners: [
+                BlocListener<SwitchAccountBloc, SwitchAccountState>(
+                  listener: (context, state) {
+                    if (state.switchAccountStatus ==
+                        SwitchAccountStatus.loading) {
+                      DialogBox.showLoadingDialog(context);
+                    }
+                    if (state.switchAccountStatus ==
+                        SwitchAccountStatus.success) {
+                      DialogBox.hideLoadingDialog(context);
+                      BlocProvider.of<DashboardBloc>(context)
+                          .add(SwitchAccountDashboardRefresh(
+                        displayPicture: state.selectedSlot?.photo,
+                        gymMembershipInfo: state.gymMembershipInfo,
+                        userId: state.selectedSlot?.id,
+                        fullName:
+                            '${state.selectedSlot?.firstName} ${(state.selectedSlot?.lastName ?? '')}',
+                        purchasedMembershipResponse:
+                            BlocProvider.of<SwitchAccountBloc>(context)
+                                .state
+                                .purchasedMembershipResponse!,
+                      ));
+                    }
+                    if (state.switchAccountStatus ==
+                        SwitchAccountStatus.error) {
+                      DialogBox.hideLoadingDialog(context);
+                      ToastUtils.showErrorToast(
+                        context,
+                        state.switchAccountErrorMessage ?? 'Error occurred',
+                      );
+                    }
+                  },
+                ),
+                BlocListener<DashboardBloc, DashboardState>(
+                  listener: (context, state) {
+                    if (state.switchAccountDashboardStatus ==
+                        SwitchAccountDashboardStatus.success) {
+                      if (BlocProvider.of<SwitchAccountBloc>(context)
+                              .state
+                              .purchasedMembershipResponse !=
+                          null) {
+                        context.go(
+                          Routes.dashboardRoute,
+                        );
+                        ToastUtils.showSuccessToast(
+                          context,
+                          'Account switched successfully',
+                        );
+                      }
+                    }
+                  },
+                ),
+              ],
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -69,130 +102,7 @@ class SwitchAccountScreen extends StatelessWidget {
                   SizedBox(
                     height: 20.h,
                   ),
-                  SizedBox(
-                    height: 170.h,
-                    child: BlocBuilder<SwitchAccountBloc, SwitchAccountState>(
-                      builder: (context, state) {
-                        if (state is SwitchAccountInitial) {
-                          BlocProvider.of<SwitchAccountBloc>(context)
-                              .add(GetLinkedAccountsEvent(
-                            gymId: BlocProvider.of<AuthBloc>(context)
-                                .state
-                                .selectedGymId!,
-                            parentSlot: Slot(
-                                firstName:
-                                    BlocProvider.of<DashboardBloc>(context)
-                                            .state
-                                            .user
-                                            ?.firstName ??
-                                        '',
-                                lastName:
-                                    BlocProvider.of<DashboardBloc>(context)
-                                            .state
-                                            .user
-                                            ?.firstName ??
-                                        '',
-                                id: BlocProvider.of<DashboardBloc>(context)
-                                        .state
-                                        .user
-                                        ?.id ??
-                                    '',
-                                photo: BlocProvider.of<DashboardBloc>(context)
-                                        .state
-                                        .user
-                                        ?.photo ??
-                                    ''),
-                          ));
-                        }
-                        if (state.fetchStatus ==
-                            SwitchAccountFetchStatus.loading) {
-                          return const Center(
-                            child: LoadingDialogFullScreen(),
-                          );
-                        }
-                        return ListView.separated(
-                          separatorBuilder: (context, index) => SizedBox(
-                            width: 10.w,
-                          ),
-                          shrinkWrap: true,
-                          padding: EdgeInsets.symmetric(horizontal: 20.w),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: state.slots.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              padding: EdgeInsets.all(10.w),
-                              margin: EdgeInsets.only(bottom: 20.w),
-                              height: 140.h,
-                              width: 120.w,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 3,
-                                  color: state.slots[index].isSelected!
-                                      ? Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .background,
-                                ),
-                                color: Theme.of(context).colorScheme.background,
-                                borderRadius: BorderRadius.circular(10.r),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Theme.of(context)
-                                        .shadowColor
-                                        .withOpacity(0.3),
-                                    blurRadius: 15,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(10.r),
-                                onTap: () {
-                                  DialogBoxes.showTwoButtonAlertDialog(context,
-                                      description:
-                                          'Are you sure to switch the account?',
-                                      title: 'Confirmation', onDismiss: () {
-                                    context.pop();
-                                  }, onConfirm: () {
-                                    BlocProvider.of<SwitchAccountBloc>(context)
-                                        .add(
-                                      SwitchDifferentAccount(
-                                        slot: state.slots[index],
-                                      ),
-                                    );
-                                    context.pop();
-                                  });
-                                },
-                                child: Column(
-                                  children: [
-                                    DpPlaceHolderWidget(
-                                      radius: 40.r,
-                                      imagePath: state.slots[index].photo,
-                                    ),
-                                    const Spacer(),
-                                    Text(
-                                        '${state.slots[index].firstName} ${state.slots[index].lastName}',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .displayMedium!
-                                            .copyWith(
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                                fontSize: 20.sp,
-                                                fontWeight: FontWeight.w500)),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  )
+                  const SwitchAccountListWidget(),
                 ],
               ),
             ),

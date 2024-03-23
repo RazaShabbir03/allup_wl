@@ -8,9 +8,11 @@ sealed class SwitchAccountEvent extends Equatable {
 }
 
 class GetLinkedAccountsEvent extends SwitchAccountEvent {
-  const GetLinkedAccountsEvent({required this.gymId, required this.parentSlot});
+  const GetLinkedAccountsEvent(
+      {required this.gymId, required this.parentSlot, this.childAccountId});
   final String gymId;
   final Slot parentSlot;
+  final String? childAccountId;
 
   @override
   List<Object> get props => [gymId, parentSlot];

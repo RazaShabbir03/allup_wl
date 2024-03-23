@@ -83,7 +83,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 context.push(Routes.profileDetailRoute);
                               },
                               child: DpPlaceHolderWidget(
-                                imagePath: state.user?.photo,
+                                imagePath: state.displayPicture,
                                 radius: 30.r,
                               ),
                             ),

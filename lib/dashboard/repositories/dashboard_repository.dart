@@ -6,6 +6,7 @@ import 'package:allup_user_app/dashboard/schemas/purchase_memberhip.graphql.dart
 import 'package:allup_user_app/dashboard/schemas/user_by_auth.graphql.dart';
 import 'package:allup_user_app/schema.graphql.dart';
 import 'package:allup_user_app/services/graph_ql_service.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 class DashboardRepository {
   DashboardRepository({required this.client});
@@ -45,6 +46,8 @@ class DashboardRepository {
       String? smId}) async {
     final response = await client.getclient.query$GymMembershipInfo(
       Options$Query$GymMembershipInfo(
+        fetchPolicy: FetchPolicy.noCache,
+        cacheRereadPolicy: CacheRereadPolicy.ignoreAll,
         variables: Variables$Query$GymMembershipInfo(
           memId: memId,
           gymId: gymId,
@@ -62,12 +65,12 @@ class DashboardRepository {
   }
 
   Future<Query$PurchasedGymMemberships> getPurchasedGymMemberships(
-      {required String gymId, required String appId}) async {
+      {required String gymId, required String appId, String? userId}) async {
     final response = await client.getclient.query$PurchasedGymMemberships(
       Options$Query$PurchasedGymMemberships(
         variables: Variables$Query$PurchasedGymMemberships(
-            filter:
-                Input$GetMembershipsQueryFilter(gymId: gymId, appId: appId)),
+            filter: Input$GetMembershipsQueryFilter(
+                gymId: gymId, appId: appId, userId: userId)),
       ),
     );
     final data = response.parsedData;

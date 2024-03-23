@@ -6,8 +6,10 @@ import 'package:graphql/client.dart';
 class CustomAuthLink extends Link {
   CustomAuthLink({
     this.token,
+    this.subCustomerId,
   });
   final String? token;
+  final String? subCustomerId;
 
   @override
   Stream<Response> request(Request request, [NextLink? forward]) async* {
@@ -22,9 +24,10 @@ class CustomAuthLink extends Link {
           ...headers?.headers ?? <String, String>{},
           // and add a new headers
           //conditonally add token
-          'Authorization': token == null ? '' : token!,
+          'Authorization': token ?? '',
           'x-token-type': 'API',
           'x-app-source': Platform.isIOS ? 'IOS' : 'ANDROID',
+          'x-sub-customer-id': subCustomerId ?? '',
         },
       ),
     );
