@@ -6,7 +6,7 @@ import 'package:allup_user_app/widgets/cache_helper.dart';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -20,10 +20,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         emit(state.copyWith(
             loginSubmitResponseStatus: AuthSubmitStatus.loading));
+        final String currentTimeZone =
+            await FlutterNativeTimezone.getLocalTimezone();
+        emit(state.copyWith(currentTimeZone: currentTimeZone));
         final response =
             await authRepository.getBrandsList(appId: AppConstants.appId);
         final accessToken = CacheHelper.getCachedAccessToken();
-        // final gymId = CacheHelper.getCachedGymId();
         if (accessToken == null) {
           emit(state.copyWith(
               selectedGymId: response.brandList.list!.first!.gyms!.first!.id,
@@ -61,10 +63,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         emit(state.copyWith(otpStatus: OTPStatus.loading));
         final response = await authRepository.verifyOTP(
-          gymId: state.selectedGymId!,
-          contactNumber: event.phoneNumber,
-          otp: event.otp,
-        );
+            gymId: state.selectedGymId!,
+            contactNumber: event.phoneNumber,
+            otp: event.otp,
+            refId: event.refId);
         if (response.verifyOTP.error != null) {
           if (response.verifyOTP.errorMessage == 'INVALID_OTP') {
             emit(state.copyWith(
@@ -105,21 +107,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           );
           if (response.sendOTP.error != null) {
             if (response.sendOTP.error == Enum$SendOTPPError.INVALID_LEAD) {
-              print(response.sendOTP.error);
               emit(state.copyWith(
                   loginSubmitResponseStatus: AuthSubmitStatus.signup));
             } else if (response.sendOTP.error ==
                 Enum$SendOTPPError.LEAD_SOFT_DELETED) {
-              print(response.sendOTP.error);
               emit(state.copyWith(
                   loginSubmitResponseStatus: AuthSubmitStatus.softDelete));
             } else {
-              print(response.sendOTP.error);
               emit(state.copyWith(
                   loginSubmitResponseStatus: AuthSubmitStatus.error));
             }
           } else {
-            print(response.sendOTP.send);
             emit(state.copyWith(
                 loginSubmitResponseStatus: AuthSubmitStatus.success));
           }
@@ -137,11 +135,43 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LogoutEvent>((event, emit) async {
       final response =
           await authRepository.getBrandsList(appId: AppConstants.appId);
-      await HydratedBloc.storage.clear();
+      // await HydratedBloc.storage.clear();
       await CacheHelper.clearCache();
       emit(state.copyWith(
         gyms: response.brandList.list!.first!.gyms,
       ));
+    });
+
+    ///To sign-up a user associated with a gym
+    on<RegisterEvent>((event, emit) async {
+      try {
+        emit(state.copyWith(
+            registerSubmitResponseStatus: AuthSubmitStatus.loading));
+        await authRepository.sendOTP(
+          gymId: event.gymId,
+          contactNumber: event.phoneNumber,
+        );
+        final response = await authRepository.createTempLead(
+          contactNumber: event.phoneNumber,
+          gymId: state.selectedGymId!,
+          firstName: event.firstName,
+          lastName: event.lastName,
+          email: event.email,
+        );
+        if (response.createTemporaryLead?.errorMessage != null) {
+          emit(state.copyWith(
+              registerSubmitResponseStatus: AuthSubmitStatus.error,
+              registerErrorMessage:
+                  response.createTemporaryLead!.errorMessage));
+        } else {
+          emit(state.copyWith(
+              refId: response.createTemporaryLead?.customer?.id,
+              registerSubmitResponseStatus: AuthSubmitStatus.success));
+        }
+      } catch (e) {
+        emit(state.copyWith(
+            registerSubmitResponseStatus: AuthSubmitStatus.error));
+      }
     });
   }
   final AuthRepository authRepository;

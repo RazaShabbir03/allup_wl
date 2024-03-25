@@ -1,0 +1,23 @@
+query PurchasedSessionContractsForGym(
+  $paging: PaginatorInput
+  $params: SessionContractFilter!
+) {
+  sessionContractByAuth: sessionContractByAuth(
+    paging: $paging
+    params: $params
+  ) {
+    list: list {
+      id: id
+      status: status
+      instructorId: instructorId
+      service: service {
+        name: name
+      }
+    }
+    paging: paging {
+      totalPages: totalPages
+      limit: limit
+      page: page
+    }
+  }
+}

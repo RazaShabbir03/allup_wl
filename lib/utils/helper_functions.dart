@@ -1,7 +1,10 @@
+import 'package:allup_user_app/l10n/cubit/locale_cubit.dart';
 import 'package:allup_user_app/l10n/l10n.dart';
+import 'package:allup_user_app/services/navigation_service.dart';
 import 'package:allup_user_app/utils/app_text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -105,14 +108,13 @@ class HelperFunctions {
       if (intEndDate == null) {
         return 0;
       }
-      final DateTime now = DateTime.now();
+      final now = DateTime.now();
       //check if datetime now is greater than end date
       if (now.isAfter(DateTime.fromMillisecondsSinceEpoch(intEndDate))) {
         return 0;
       }
-      final DateTime endDateTime =
-          DateTime.fromMillisecondsSinceEpoch(intEndDate);
-      final Duration difference = endDateTime.difference(now);
+      final endDateTime = DateTime.fromMillisecondsSinceEpoch(intEndDate);
+      final difference = endDateTime.difference(now);
       return difference.inDays;
     } catch (e) {
       return 0;
@@ -158,13 +160,38 @@ class HelperFunctions {
     return DateFormat('yyyy-MM-dd').format(date.toLocal());
   }
 
-  static String getFormattedTime(String input) {
+  static String getHumanReadableDate(DateTime? date) {
+    if (date == null) {
+      return '';
+    }
+    return DateFormat('dd MMM yy').format(date.toLocal());
+  }
+
+  static String getFormattedTime(String? input) {
+    if (input == null) {
+      return '';
+    }
     // Parse the input time string
-    DateTime parsedTime = DateFormat('HH:mm:ss').parse(input);
+    var parsedTime = DateFormat(
+      'HH:mm:ss',
+    ).parse(input);
 
     // Format the parsed time into "hh:mm a" format
-    String formattedTime = DateFormat('hh:mm a').format(parsedTime);
+    var formattedTime = DateFormat('hh:mm a').format(parsedTime);
 
     return formattedTime;
+  }
+
+  //date from epoch time
+  static String getDateFromEpochTime(int? epochTime) {
+    if (epochTime == null) {
+      return '';
+    }
+    return DateFormat(
+            'yyyy-MM-dd',
+            BlocProvider.of<LocaleCubit>(
+                    NavigationService.navigatorKey.currentContext!)
+                .currentLanguageCode)
+        .format(DateTime.fromMillisecondsSinceEpoch(epochTime).toLocal());
   }
 }

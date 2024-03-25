@@ -1,10 +1,8 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DialogBoxes {
-  static void showLoadingDialog(BuildContext context,
+  static void showTwoButtonAlertDialog(BuildContext context,
       {required String title,
       required VoidCallback onDismiss,
       required VoidCallback onConfirm,
@@ -51,6 +49,8 @@ class MyDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       child: AlertDialog(
+        surfaceTintColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.background,
         // insetPadding: EdgeInsets.zero,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         shape: RoundedRectangleBorder(
@@ -78,7 +78,7 @@ class MyDialog extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).colorScheme.primary,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -101,7 +101,8 @@ class MyDialog extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   elevation: 0.0,
-                  primary: Theme.of(context).disabledColor.withOpacity(0.3),
+                  backgroundColor:
+                      Theme.of(context).disabledColor.withOpacity(0.3),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

@@ -1,0 +1,15 @@
+query personalTrainersInGym(
+  $paging: PaginatorInput
+  $params: InstructorsFilter!
+) {
+  instructors: instructors(paging: $paging, params: $params) {
+    list: list {
+      id: id
+      firstName: firstName
+      lastName: lastName
+      coverPhoto: coverPhoto
+      description: description
+      photo: photo
+    }
+  }
+}

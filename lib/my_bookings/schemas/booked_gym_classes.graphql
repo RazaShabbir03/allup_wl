@@ -1,0 +1,52 @@
+query BookedGymClasses(
+  $paging: PaginatorInput!
+  $params: MembershipGymClassesInput!
+) {
+  membershipGymClassesV2: membershipGymClassesV2(
+    paging: $paging
+    params: $params
+  ) {
+    list: list {
+      id: id
+      scheduleGroupId: scheduleGroupId
+      scheduleId: scheduleId
+      categoryName: categoryName
+      name: name
+      description: description
+      images: images
+      startDate: startDate
+      endDate: endDate
+      date: date
+      estimatedCaloriesBurnt: estimatedCaloriesBurnt
+      difficultyLevel: difficultyLevel
+      status: status
+      dropInClientPrice: dropInClientPrice
+      gymMemberClientPrice: gymMemberClientPrice
+      currencyCode: currencyCode
+      spots: spots
+      spotsAllotted: spotsAllotted
+      soldOut: soldOut
+      gymName: gymName
+      isPurchased: isPurchased
+      gymId: gymId
+      brandName: brandName
+      distance: distance
+      distanceInKm: distanceInKm
+      gymLongitude: gymLongitude
+      duration: duration
+      instructorFirstName: instructorFirstName
+      instructorLastName: instructorLastName
+      openTime: openTime
+      isAttended: isAttended
+      isPrivate: isPrivate
+      isAttendable: isAttendable
+      isCancellable: isCancellable
+      isExpired: isExpired
+      qrCode: qrCode
+    }
+    paging: paging {
+      page: page
+      limit: limit
+    }
+  }
+}

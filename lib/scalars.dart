@@ -22,6 +22,17 @@ class CurrencyValue {
   final double value;
 }
 
+class Date {
+  Date(this.date);
+  final DateTime date;
+}
+
+Date dateFromJson(dynamic data) => Date(
+      DateTime.parse(data as String),
+    );
+
+dynamic dateToJson(Date date) => date.date.toIso8601String();
+
 CurrencyValue currencyValueFromJson(dynamic data) => CurrencyValue(
       double.parse(data.toString()),
     );

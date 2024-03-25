@@ -69,7 +69,6 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                 color: Theme.of(context).colorScheme.primary,
                 fontSize: 22.sp,
               ),
-              outsideDaysVisible: false,
               outsideDecoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.background,
                 shape: BoxShape.circle,

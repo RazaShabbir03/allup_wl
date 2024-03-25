@@ -12,41 +12,32 @@ class CircleNetworkImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (imagePath == null) {
-      return Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
-          shape: BoxShape.circle,
+    return CachedNetworkImage(
+      color: Theme.of(context).colorScheme.secondary,
+      errorListener: (exception) {
+        print('Exception: $exception');
+      },
+      errorWidget: (context, url, error) => CircleAvatar(
+        radius: radius,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        child: SvgPicture.asset(
+          Assets.dpPlaceholder,
+          width: double.infinity,
         ),
-        child: SvgPicture.asset(Assets.dpPlaceholder),
-      );
-    } else {
-      return CachedNetworkImage(
-        color: Theme.of(context).colorScheme.secondary,
-        errorListener: (exception) {
-          print('Exception: $exception');
-        },
-        errorWidget: (context, url, error) => Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondary,
-            shape: BoxShape.circle,
-          ),
-          child: SvgPicture.asset(Assets.dpPlaceholder),
-        ),
-        imageUrl: imagePath!,
-        imageBuilder: (context, imageProvider) => CircleAvatar(
-          backgroundImage: imageProvider,
+      ),
+      imageUrl: imagePath ?? '',
+      imageBuilder: (context, imageProvider) => CircleAvatar(
+        backgroundImage: imageProvider,
+        radius: radius,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+      ),
+      placeholder: (context, url) => Shimmer.fromColors(
+        baseColor: Theme.of(context).colorScheme.onSecondary,
+        highlightColor: Theme.of(context).colorScheme.secondary,
+        child: CircleAvatar(
           radius: radius,
-          backgroundColor: Theme.of(context).colorScheme.secondary,
         ),
-        placeholder: (context, url) => Shimmer.fromColors(
-          baseColor: Theme.of(context).colorScheme.primary,
-          highlightColor: Theme.of(context).colorScheme.secondary,
-          child: CircleAvatar(
-            radius: radius,
-          ),
-        ),
-      );
-    }
+      ),
+    );
   }
 }

@@ -30,7 +30,8 @@ class HomePage extends StatelessWidget {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state.authResponseStatus == AuthResponseStatus.valid) {
-              BlocProvider.of<DashboardBloc>(context).add(RefreshDashboard(
+              BlocProvider.of<DashboardBloc>(context)
+                  .add(RefreshDashboardFromTerminatedApp(
                 gymId: BlocProvider.of<AuthBloc>(context).state.selectedGymId!,
               ));
             }

@@ -64,7 +64,8 @@ class _LoginScreenState extends State<LoginScreen> {
           if (state.loginSubmitResponseStatus == AuthSubmitStatus.success) {
             Navigator.of(context).pop();
             context.push(
-                '${Routes.otpRoute}/${_phoneController!.text.trim().replaceAll(' ', '')}');
+              '${Routes.otpRoute}/${_phoneController!.text.trim().replaceAll(' ', '')}/${state.refId}',
+            );
           }
           if (state.loginSubmitResponseStatus == AuthSubmitStatus.loading) {
             DialogBox.showLoadingDialog(context);
@@ -165,12 +166,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   Text(
                                     (state.gyms.firstWhereOrNull(
-                                              (element) =>
-                                                  element!.id ==
-                                                  state.selectedGymId,
-                                            ) ??
-                                            state.gyms.first!)
-                                        .name,
+                                                  (element) =>
+                                                      element!.id ==
+                                                      state.selectedGymId,
+                                                ) ??
+                                                state.gyms.firstOrNull)
+                                            ?.name ??
+                                        '',
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleMedium!
@@ -299,7 +301,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: double.infinity,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  primary:
+                                  backgroundColor:
                                       Theme.of(context).colorScheme.primary,
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 20.w,

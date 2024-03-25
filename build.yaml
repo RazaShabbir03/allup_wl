@@ -17,6 +17,11 @@ targets:
               fromJsonFunctionName: currencyValueFromJson
               toJsonFunctionName: currencyValueToJson
               import: package:allup_user_app/scalars.dart
+            Date:
+              type: Date
+              fromJsonFunctionName: dateFromJson
+              toJsonFunctionName: dateToJson
+              import: package:allup_user_app/scalars.dart
             # LocalTime:
             #   type: LocalTime
             #   fromJsonFunctionName: localTimeFromJson

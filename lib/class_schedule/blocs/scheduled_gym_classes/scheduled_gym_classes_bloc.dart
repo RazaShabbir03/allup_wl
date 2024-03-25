@@ -1,5 +1,6 @@
 import 'package:allup_user_app/class_schedule/repositories/scheduled_gym_classes_repository.dart';
 import 'package:allup_user_app/class_schedule/schemas/scheduled_gym_classes.graphql.dart';
+import 'package:allup_user_app/scalars.dart';
 import 'package:allup_user_app/schema.graphql.dart';
 import 'package:allup_user_app/utils/helper_functions.dart';
 import 'package:bloc/bloc.dart';
@@ -24,7 +25,7 @@ class ScheduledGymClassesBloc
         try {
           final gymClasses = await repository.getScheduledGymClasses(
             gymId: event.gymId,
-            forDate: HelperFunctions.getFormattedDate(event.forDate),
+            forDate: Date(event.forDate),
             location: event.location,
             timeZoneIdentifier: event.timeZoneIdentifier,
             instructorId: event.instructorId,

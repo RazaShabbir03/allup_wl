@@ -1,0 +1,6 @@
+query gymTnCById($id: ID!) {
+  gym: gym(id: $id) {
+    id: id
+    termsAndConditions: termsAndConditions
+  }
+}

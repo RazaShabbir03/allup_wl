@@ -1,4 +1,5 @@
 import 'package:allup_user_app/auth/schemas/brand_list.graphql.dart';
+import 'package:allup_user_app/auth/schemas/create_temp_lead.graphql.dart';
 import 'package:allup_user_app/auth/schemas/send_otp_auth.graphql.dart';
 import 'package:allup_user_app/auth/schemas/verify_otp.graphql.dart';
 import 'package:allup_user_app/schema.graphql.dart';
@@ -40,14 +41,38 @@ class AuthRepository {
     required String contactNumber,
     required String gymId,
     required String otp,
+    String? refId,
   }) async {
     final response = await client.getclient.mutate$VerifyOTPAuth(
       Options$Mutation$VerifyOTPAuth(
         variables: Variables$Mutation$VerifyOTPAuth(
           input: Input$VerifyOTPInput(
+              contactNumber: contactNumber,
+              gymId: gymId,
+              otp: otp,
+              refId: refId),
+        ),
+      ),
+    );
+    return response.parsedData!;
+  }
+
+  Future<Mutation$createTempLead> createTempLead({
+    required String firstName,
+    required String lastName,
+    required String contactNumber,
+    required String gymId,
+    String? email,
+  }) async {
+    final response = await client.getclient.mutate$createTempLead(
+      Options$Mutation$createTempLead(
+        variables: Variables$Mutation$createTempLead(
+          input: Input$CreateTemporaryLeadInput(
             contactNumber: contactNumber,
             gymId: gymId,
-            otp: otp,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
           ),
         ),
       ),

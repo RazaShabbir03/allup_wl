@@ -1,0 +1,12 @@
+mutation createTempLead($input: CreateTemporaryLeadInput!) {
+  createTemporaryLead: createTemporaryLead(input: $input) {
+    error: error
+    errorMessage: errorMessage
+    customer: customer {
+      id: id
+      firstName: firstName
+      lastName: lastName
+      phoneNumber: phoneNumber
+    }
+  }
+}

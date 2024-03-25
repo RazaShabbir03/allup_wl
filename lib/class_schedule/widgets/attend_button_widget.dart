@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:allup_user_app/l10n/l10n.dart';
 import 'package:allup_user_app/utils/app_assets.dart';
 import 'package:allup_user_app/widgets/svg_widget.dart';
@@ -16,7 +18,7 @@ class AttendButton extends StatelessWidget {
       height: 26,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Theme.of(context).colorScheme.onSecondary,
+          backgroundColor: Theme.of(context).colorScheme.onSecondary,
           disabledBackgroundColor: Theme.of(context).disabledColor,
           elevation: 0,
           padding: EdgeInsets.symmetric(
@@ -42,6 +44,7 @@ class AttendButton extends StatelessWidget {
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                   color: Theme.of(context).colorScheme.background,
                   fontSize: 11.sp,
+                  fontVariations: [const FontVariation('wght', 700)],
                   fontWeight: FontWeight.w800),
             ),
           ],

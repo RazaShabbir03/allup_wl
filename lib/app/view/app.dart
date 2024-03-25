@@ -4,6 +4,8 @@ import 'package:allup_user_app/dashboard/blocs/bloc/dashboard_bloc.dart';
 import 'package:allup_user_app/dashboard/repositories/dashboard_repository.dart';
 import 'package:allup_user_app/l10n/cubit/locale_cubit.dart';
 import 'package:allup_user_app/l10n/l10n.dart';
+import 'package:allup_user_app/profile/blocs/switch_acccount_bloc/switch_account_bloc.dart';
+import 'package:allup_user_app/profile/repositories/switch_account_repository.dart';
 import 'package:allup_user_app/routes/routes.dart';
 import 'package:allup_user_app/services/graph_ql_service.dart';
 import 'package:allup_user_app/services/navigation_service.dart';
@@ -50,7 +52,7 @@ class App extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 theme: ThemeModeLight.themeData(context),
                 locale: Locale(
-                    BlocProvider.of<LocaleCubit>(context).getLanguageCode()),
+                    BlocProvider.of<LocaleCubit>(context).currentLanguageCode),
                 localizationsDelegates: AppLocalizations.localizationsDelegates,
                 supportedLocales: AppLocalizations.supportedLocales,
                 localeResolutionCallback: (currentLocal, supportedLocales) {
